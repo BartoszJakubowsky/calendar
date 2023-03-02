@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+//import MainPage
+//import LoginPage
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//check admin -> dynamic require
+
+
+//check in cookies if user is cerivied -> 
+//set login
+//set MainPage
+
+import Route from './components/Route'
+import LoginPage from './pages/LoginPage'
+import MainPage from './pages/MainPage'
+import AdminUserPage from './pages/AdminUserPage'
+
+//only for test purpusses -> at the end it's goint to be admin
+import useCarts from './hooks/useCarts';
+
+function App()
+{
+
+      const {login} = useCarts();
+
+      return <div className='flex justify-center items-center'>
+                  <Route path='/'>
+                        <MainPage/>
+                  </Route>
+                  <Route path='login'>
+                        <LoginPage/>
+                  </Route>
+                  {login &&
+                  <Route path='admin'>
+                        <AdminUserPage/>
+                  </Route>}
+            </div>
 }
 
-export default App;
+export default App; 

@@ -1,0 +1,8 @@
+{
+  "calendars" : 
+  [
+    {"name": "Wózek Miłostowo", "order" : 1},
+    {"name": "Wózek Fontanna", "order" : 2},
+    {"name": "Wózek Jakiś Tam", "order" : 3}
+  ]
+}
