@@ -1,5 +1,5 @@
 import './index.css';
-import {CartsProvider} from './context/carts'
+import {CalendarsProvider} from './context/calendars'
 
 import React from "react";
 import ReactDOM  from "react-dom/client";
@@ -9,7 +9,7 @@ const el = document.getElementById('root');
 const root = ReactDOM.createRoot(el);
 
 root.render(
-            <CartsProvider>
+            <CalendarsProvider>
                 <App/>
-            </CartsProvider>
+            </CalendarsProvider>
             );

@@ -3,19 +3,16 @@ import useAuthenctication from '../hooks/useAuthentication';
 import axios from "axios";
 
 
-const CartsContext = createContext();
+const CalendarsContext = createContext();
 
-function CartsProvider({children})
+function CalendarsProvider({children})
 {
 
 
     const [login, setLogin] = useState(useAuthenctication());
     const [currentPath, setCurrentPath] = useState((login && '/') || 'login' );
-    const [calendars, setCalendars] = useState(axios.get('http://localhost:3001/calendars'));
-
-   console.log(calendars);
-
-
+    const [calendars, setCalendars] = useState(false);
+    const [convirm, setConvirm] = useState(false);
 
 useEffect(()=>
 {
@@ -23,9 +20,11 @@ useEffect(()=>
     window.history.replaceState(null, null, currentPath);
 
     //handler == navigation forward and back withot refresh when pushState was used
-   const handler = () => setCurrentPath(window.location.pathname);
-   window.addEventListener('popstate', handler);
+    const handler = () => setCurrentPath(window.location.pathname);
+    window.addEventListener('popstate', handler);
 
+
+    // getCalendars().then(calendars => setCalendars());
 
     return ()=>
     {
@@ -33,6 +32,12 @@ useEffect(()=>
     }
     
 }, []);
+
+
+// async function getCalendars() 
+// {
+//     return await axios.get('http://localhost:3001/calendars');
+// }
 
 
 const navigate = to => 
@@ -43,28 +48,27 @@ const navigate = to =>
 
 
 //To change -> given with started app
-const cartsNames = 
+const calendarNames = 
 [
     {name: 'Wózek Miłostowo', order: 1},
     {name: 'Wózek Fontanna', order: 2},
-    {name: 'Wózek Jeszcze Jakiś', order: 3}
+    {name: 'Wózek Inny', order: 3}
 ]
-
 
 
 const toProvide = 
 {
-    navigate, currentPath, login, setLogin, cartsNames
+    navigate, currentPath, login, setLogin, calendarNames, convirm, setConvirm
 }
 
 
     return (
-            <CartsContext.Provider value={toProvide}>
+            <CalendarsContext.Provider value={toProvide}>
                 {children}
-            </CartsContext.Provider>
+            </CalendarsContext.Provider>
             );
 }
 
 
-export {CartsProvider};
-export default CartsContext;
+export {CalendarsProvider};
+export default CalendarsContext;

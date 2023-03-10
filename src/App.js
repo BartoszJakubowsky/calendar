@@ -12,14 +12,17 @@ import Route from './components/Route'
 import LoginPage from './pages/LoginPage'
 import MainPage from './pages/MainPage'
 import AdminUserPage from './pages/AdminUserPage'
+import CreateCalendarPage from './pages/CreateCalendarPage'
+
 
 //only for test purpusses -> at the end it's goint to be admin
-import useCarts from './hooks/useCarts';
+import useCalendars from './hooks/useCalendars';
+import useAuthenctication from './hooks/useAuthentication';
 
 function App()
 {
-
-      const {login} = useCarts();
+      const {isAdmin} = useAuthenctication();
+      const {login} = useCalendars();
 
       return <div className='flex justify-center items-center'>
                   <Route path='/'>
@@ -32,6 +35,9 @@ function App()
                   <Route path='admin'>
                         <AdminUserPage/>
                   </Route>}
+                  {isAdmin && <Route path='stwórz_wózek'>
+                                    <CreateCalendarPage/>
+                              </Route>}
             </div>
 }
 

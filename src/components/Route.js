@@ -1,8 +1,8 @@
-import useCarts from '../hooks/useCarts';
+import useCalendars from '../hooks/useCalendars';
 
 function Route({path, children})
 {
-    const {currentPath} = useCarts();
+    const {currentPath} = useCalendars();
 
     if (path === currentPath)
         return children

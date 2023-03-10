@@ -9,50 +9,51 @@
 
 import CalendarCard from "../components/CalendarCard";
 import AdminCalendarCard from "../components/AdminCalendarCart";
+import Route from "../components/Route";
 
-import useCarts from '../hooks/useCarts';
+import useCalendars from '../hooks/useCalendars';
 import useAuthenctication from "../hooks/useAuthentication";
+import Convirm from "../components/Convirm";
+import { calculateNewValue } from "@testing-library/user-event/dist/utils";
+
+
 function MainPage({className}) 
 {
-    
-    const {calendars} = useCarts();
+    const {calendarNames, convirm, navigate} = useCalendars();
     const {isAdmin} = useAuthenctication();
 
-    const handleCartClick = event =>
-    {
-        console.log(event.target);
-    }
+    const handleCartClick = calendarName => navigate(calendarName);
+
     const handleCreateCartClick = event =>
     {
 
     }
 
     //to add -> link to each cart
-    const cartAsButton = calendars.map(calendar => 
+    const createCalendarCard = calendarNames.map(calendar => 
         {
             return  <CalendarCard 
                     key = {calendar.order}
                     calendar={calendar} 
-                    onClick={handleCartClick}>
+                    onClick={()=>handleCartClick(calendar.name)}>
                     {/* here's link */}
                     <div>{calendar.name}</div>
-                    {isAdmin && <AdminCalendarCard toggleIndex={calendar.order}/>}
+                    {isAdmin && <AdminCalendarCard toggleIndex={calendar.order} calendarName={calendar.name}/>}
                     </CalendarCard>
                
                 
         })
 
-
-
     return <div className="flex flex-col justify-center items-center h-screen overflow-hidden" >
-                    {cartAsButton}
+                    {createCalendarCard}
                     {/* Always show additional cart */}
-                    <CalendarCard
+                    {isAdmin && <CalendarCard
                         key={'add-cart'}
                         calendar = {{order: 'last'}}
-                        onClick = {handleCreateCartClick}
+                        onClick = {()=>handleCartClick('stwórz_wózek')}
                         >{"Dodaj nowy wózek"}
-                    </CalendarCard>
+                    </CalendarCard>}
+                    {convirm}
             </div>
 }
 
