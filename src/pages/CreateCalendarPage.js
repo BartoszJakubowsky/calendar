@@ -3,24 +3,30 @@ import { useState } from "react";
 
 import Input from '../components/createCalendarComponents/Input';
 import SelectMonths from "../components/createCalendarComponents/SelectMonths";
-
-
+import AdditionalSettings from "../components/createCalendarComponents/AdditionalSettings";
 
 export default function CreateCalendarPage() 
 {
 
 
     const [name, setName] = useState('');
+    const [year, setYear] = useState(new Date().getFullYear());
+    const [additional, setAdditional] = useState(false);
+    const [slotSettingsCard, setSlotSettingsCard] = useState(false);
+
 
     const handleNameChange = event => setName(event.target.value);
+    const handleMonth = (months) => console.log(months);
+    const handleYear = (year) => setYear(year)
+    
 
-
+    console.log(slotSettingsCard);
 
 
     
     return(
         <div className="relative w-screen h-screen bg-pink-400 overflow-hidden">
-            <div className="absolute left-1/4 w-1/2 h-3/4 
+            <div className="absolute left-1/4 w-1/2 h-fit 
                             flex flex-col justify-start items-center
                              border-black border-2 
                              mt-10 
@@ -39,14 +45,17 @@ export default function CreateCalendarPage()
 
                 <label className="">Wybierz miesiąc lub miesiące</label>    
                 <SelectMonths
-                
+                year={year}
+                handleMonth={handleMonth}                
+                handleYear={handleYear}
                 />
 
                 <label className="">Ustawienia dodatkowe</label>
-                <div>Tu będą ustawienia dodatkowe</div>
-                
+                <AdditionalSettings value={additional} onChange={setAdditional} slotCard={setSlotSettingsCard}/>
             </form>
             </div>
+            {slotSettingsCard}
         </div>
+
     );
 }
