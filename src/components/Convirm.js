@@ -10,7 +10,6 @@ export default function Convirm({message, additional, submit = 'Tak', handleSubm
 
     useEffect(()=>
     {
-        let blockFirstClick = false;
 
         const handleKey = key =>
         {
@@ -23,12 +22,6 @@ export default function Convirm({message, additional, submit = 'Tak', handleSubm
 
         const handleOutsideClick = event =>
         {
-
-            if (!blockFirstClick)
-            {
-                blockFirstClick = true;
-                return;
-            }
 
             if (event.target === divOut.current)
             {
