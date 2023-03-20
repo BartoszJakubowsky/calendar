@@ -20,9 +20,6 @@ export default function CreateCalendarPage()
     const handleYear = (year) => setYear(year)
     
 
-    console.log(slotSettingsCard);
-
-
     
     return(
         <div className="relative w-screen h-screen bg-pink-400 overflow-hidden">
@@ -49,7 +46,6 @@ export default function CreateCalendarPage()
                 handleMonth={handleMonth}                
                 handleYear={handleYear}
                 />
-
                 <label className="">Ustawienia dodatkowe</label>
                 <AdditionalSettings value={additional} onChange={setAdditional} slotCard={setSlotSettingsCard}/>
             </form>
