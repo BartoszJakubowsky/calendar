@@ -12,32 +12,37 @@ export default function AdditionalSettings({value, onChange, slotCard})
 
     const [time, setTime] = useState(false);
     const [slots, setSlots] = useState([]);
-    
     const handleSlotChange = slot =>
     {
 
+        // new slot
+        //slot
         if (!Array.isArray(slot))
         {
             const newSlots = [...slots, slot];
             setSlots(newSlots);
         }
+        //update slot or delete slot
         else
         {
             const oldSlot = slot[0];
             const newSlot = slot[1];
 
             const oldSlotIndex = slots.indexOf(oldSlot);
-
+            
+            //delete slot
+            //slot, false
             if (!newSlot)
             {
-                const newSlots = slots.map((oldSlot, index)=>
-                    {
-                        if (index !== oldSlotIndex)
-                            return (oldSlot)
-                    })
+                const newSlots = slots.filter((oldSlot, index) =>
+                {
+                    return index !== oldSlotIndex
+                })
                 
                     setSlots(newSlots);
             }
+            //update slot
+            //slot, slot
             else
             {
                 const newSlots = slots.map((oldSlot, index)=>
@@ -47,11 +52,10 @@ export default function AdditionalSettings({value, onChange, slotCard})
                     else
                         return oldSlot
                 })
+                setSlots(newSlots)
             }
 
         }
-        //slot, false
-        //slot, slot
 
 
     }

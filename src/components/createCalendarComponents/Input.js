@@ -5,7 +5,6 @@ export default function input({calendarName, handleNameChange, ...rest})
                     <input 
                     className={rest.className}
                     value={calendarName}
-                    required
                     type='text'
                     onChange={handleNameChange}/>
     );
