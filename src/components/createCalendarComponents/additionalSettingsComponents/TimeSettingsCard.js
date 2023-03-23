@@ -1,18 +1,17 @@
 import {useState } from "react";
 import Input from '../Input';
-import Close from '../../Close';
+import classNames from "classnames";
 
-
-
+import Close from '../../Close'
 
 let showRemoveButton;
 
-export default function SlotsSettingsCard({name, space ,order ,permission, close, onChange}) 
+export default function TimeSettingsCard({timeFrom, timeTo, timeSpace, onChange, timeCard}) 
 {
 
 
-    const [slotName, setSlotName] = useState(name || '');
-    const [slotSpace, setSlotSpace] = useState(space || 1);
+    const [timeFrom, setTimeFrom] = useState();
+    const [timeTo, setTimeTo] = useState(space || 1);
     const [slotOrder, setSlotOrder] = useState(order || 1);
 
         if (name === slotName && space === slotSpace && order === slotOrder)
@@ -53,16 +52,23 @@ export default function SlotsSettingsCard({name, space ,order ,permission, close
     return (
             <div className="bg-white w-72 h-fit mx-auto mt-24 border-2 border-black relative rounded-md flex flex-col">
                 <h3
-                className=" bg-lime-200 py-2 uppercase font-semibold rounded-md mb-2 pl-2"
-                >Dodatkowe ustawienia wózka
+                className=" bg-violet-200 py-2 uppercase font-semibold rounded-t-md mb-2 pl-2"
+                >Ustawienia czasu
                 <Close onClick={handleCloseClick}/>
                     
                 </h3>
-                <label className="mx-2">Nazwa dodatkowej opcji</label>
-                <Input 
-                className=" mx-2 my-2 rounded-md box-border h-10 border-2 border-opacity-100 hover:border-gray-400 duration-300 ease-in-out "
-                calendarName={slotName} 
-                handleNameChange={handleNameChange}/>
+                <label className="mx-2">Godziny od</label>
+                <input 
+                    type='time' 
+                    // min={6} 
+                    // max={18} 
+                    value={value} 
+                    onChange={handeTimeChange}
+                    className='w-20 h-10 border-grey-500 border-2'
+                 />
+
+
+
                 <label className="mx-2">Ilość miejsc</label>
                 <input 
                 type='number' 
@@ -90,3 +96,13 @@ export default function SlotsSettingsCard({name, space ,order ,permission, close
             </div>
     )
 }
+
+
+// <input 
+//                 type='time' 
+//                 min={6} 
+//                 max={18} 
+//                 value={value} 
+//                 onChange={handeTimeChange}
+//                 className='w-20 h-10 border-grey-500 border-2'
+//                 />} 

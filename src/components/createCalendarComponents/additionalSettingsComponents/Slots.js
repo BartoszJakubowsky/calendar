@@ -1,14 +1,12 @@
-import { useState } from "react"
 import SlotSettingsCard from './SlotsSettingsCard';
-import {HiPlus as addOptionIcon} from 'react-icons/hi';
 
 
 
-export default function Slots({slots, slotCard, onChange}) 
+export default function Slots({value, slotCard, onChange}) 
 {
     //in the future addidiotn settings with permisision
 
-    const showSlots = slots.map(slot=>
+    const showSlots = value.map(slot=>
     {
         const handleSlotChange = newSlot => onChange([slot, newSlot]);
         const handleClick = event => 

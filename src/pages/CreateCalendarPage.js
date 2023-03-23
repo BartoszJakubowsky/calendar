@@ -13,12 +13,17 @@ export default function CreateCalendarPage()
     const [year, setYear] = useState(new Date().getFullYear());
     const [additional, setAdditional] = useState(false);
     const [slotSettingsCard, setSlotSettingsCard] = useState(false);
+    const [timeSettingCard, setTimeSettingsCard] = useState(false);
+
+    const handleAdditional = settings =>
+    {
+        console.log(settings);
+    }
 
 
     const handleNameChange = event => setName(event.target.value);
     const handleMonth = (months) => console.log(months);
     const handleYear = (year) => setYear(year)
-    
 
     
     return(
@@ -47,10 +52,11 @@ export default function CreateCalendarPage()
                 handleYear={handleYear}
                 />
                 <label className="">Ustawienia dodatkowe</label>
-                <AdditionalSettings value={additional} onChange={setAdditional} slotCard={setSlotSettingsCard}/>
+                <AdditionalSettings value={additional} onChange={handleAdditional} slotCard={setSlotSettingsCard} timeCard={setTimeSettingsCard}/>
             </form>
             </div>
             {slotSettingsCard}
+            {timeSettingCard}
         </div>
 
     );

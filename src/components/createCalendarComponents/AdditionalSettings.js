@@ -7,11 +7,13 @@ import { useState } from 'react';
 
 
 
-export default function AdditionalSettings({value, onChange, slotCard}) 
+export default function AdditionalSettings({value, onChange, slotCard, timeCard}) 
 {
 
     const [time, setTime] = useState(false);
     const [slots, setSlots] = useState([]);
+
+    onChange({time, slots});
     const handleSlotChange = slot =>
     {
 
@@ -29,7 +31,6 @@ export default function AdditionalSettings({value, onChange, slotCard})
             const newSlot = slot[1];
 
             const oldSlotIndex = slots.indexOf(oldSlot);
-            
             //delete slot
             //slot, false
             if (!newSlot)
@@ -57,15 +58,20 @@ export default function AdditionalSettings({value, onChange, slotCard})
 
         }
 
-
     }
+
+    const handleTimeChange = timeVal =>
+    {
+        setTime(timeVal);
+    }
+
 
 
     return (
         <div className='flex  text-cyan-900 cursor-pointer text-lg ease-out'>
-            <Time/>
-            <AddSlot slots={slots} slotCard={slotCard} onChange={handleSlotChange}/>
-            <Slots slots={slots} slotCard={slotCard} onChange={handleSlotChange}/>
+            <Time value={time} onChange={handleTimeChange} timeCard={timeCard}/>
+            <AddSlot slotCard={slotCard} onChange={handleSlotChange}/>
+            <Slots value={slots} slotCard={slotCard} onChange={handleSlotChange}/>
         </div>
     )
 }
