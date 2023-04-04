@@ -1,43 +1,58 @@
 import { useState } from 'react';
 import {HiOutlineClock as AddTimeIcon} from 'react-icons/hi';
 import TimeSettingsCard from './TimeSettingsCard';
+import classNames from 'classnames';
 
 export default function Time({value, onChange, timeCard}) 
 {
 
 
     const [showDefaultWatch, setShowDefaultWatch] = useState(true);
-
-    const handeTimeChange = event =>
+    const [isWatchClicked, setIsWatchClicked] = useState(false);
+    const handleTimeChange = event =>
     {
-        onChange(event.target.value)
-        console.log(value);
+        // onChange(event.target.value)
+        console.log(event);
     }
 
-    const handleWatchClick = () =>
+
+
+
+    const handleCloseClick = close => 
     {
-        setShowDefaultWatch(false);
-        timeCard(<TimeSettingsCard/>);
+        setIsWatchClicked(false);
+        timeCard(close);
+    }
+
+
+    const handleWatchClick = event =>
+    {
+        event.preventDefault();
+        setIsWatchClicked(!isWatchClicked);
+        timeCard(<TimeSettingsCard calendarTimeFrom={value.timeFrom} calendarTimeTo={value.timeTo} calendarTimeSpace={value.timeSpace} onChange={handleTimeChange} close={handleCloseClick}/>);
 
     }
 
-    const ShowTime = <div className='w-10 h-10 '>
+    const showTime = <div className='w-10 h-10 '>
                         {value.timeFrom}
                         {value.timeFrom}
                     </div>
 
-    const DefaultTimeIcon = <button 
-                                onClick={handleWatchClick}
-                                className='h-10 w-10 flex items-center justify-center text-cyan-900 cursor-pointer text-lg ease-out'>
-                            <AddTimeIcon/>
-                            </button>
+
+
+    const defaultTimeIconClassName = classNames('h-10 w-10 flex items-center justify-center  cursor-pointer text-lg ease-out', 
+                                                isWatchClicked? 'text-cyan-600' : 'text-cyan-900' )
+    
 
 
     return (
         <div className=' flex justify-center items-center cursor-pointer'>
-            {(showDefaultWatch && 
-             <DefaultTimeIcon></DefaultTimeIcon>) || 
-                <ShowTime></ShowTime>}
+            <button 
+                onClick={handleWatchClick}
+                className={defaultTimeIconClassName}>
+                <AddTimeIcon/>
+                {/* add here something like && value.time && value.time -> it will show small time for clock  */}
+                </button>
         </div>
     )    
 }

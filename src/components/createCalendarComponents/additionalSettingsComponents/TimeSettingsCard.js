@@ -1,54 +1,42 @@
 import {useState } from "react";
-import Input from '../Input';
-import classNames from "classnames";
-
 import Close from '../../Close'
 
-let showRemoveButton;
 
-export default function TimeSettingsCard({timeFrom, timeTo, timeSpace, onChange, timeCard}) 
+export default function TimeSettingsCard({calendarTimeFrom, calendarTimeTo, calendarTimeSpace, onChange, close}) 
 {
 
-
-    const [timeFrom, setTimeFrom] = useState();
-    const [timeTo, setTimeTo] = useState(space || 1);
-    const [slotOrder, setSlotOrder] = useState(order || 1);
-
-        if (name === slotName && space === slotSpace && order === slotOrder)
-            showRemoveButton = true
-
-        else if (name === '' && space === 1 && order === 1)
-            showRemoveButton = false;
-        else 
-            showRemoveButton = false;
+    //add max value to time space calculated from timeFrom - timeTo
+    //add warnigns and 
 
 
-    const handleNameChange = event => setSlotName(event.target.value);
-    const handleSlotOrder = event => setSlotOrder(event.target.value)
-    const handleCloseClick = () => close(false);
-    const handleSpaceChange = event => 
+    
+    const [timeFrom, setTimeFrom] = useState(calendarTimeFrom || '');
+    const [timeTo, setTimeTo] = useState(calendarTimeTo || '');
+    const [timeSpace, setTimeSpace] = useState(calendarTimeSpace || '');
+
+
+    const handleTimeFromChange = event => setTimeFrom(event.target.value);
+    const handleTimeToChange = event => setTimeTo(event.target.value);
+    const handleTimeSpaceChange = event => 
     {
-        const slotNumber = event.target.value;
-        if (slotNumber > 10)
-            return
+        const chosedTimeSpace = event.target.value;
+
+        if (chosedTimeSpace !== timeTo)
+          setTimeSpace(chosedTimeSpace);
         else
-            setSlotSpace(slotNumber);
+            return 
     }
-    const handleAddClick = event => 
+    const handleCloseClick = () => close(false);
+
+    const handleChangeClick = event => 
     {
         event.preventDefault();
 
-        onChange({name: slotName, space: slotSpace, order: slotOrder});
-        handleCloseClick()
-    };
-    const handleRemoveClick = event => 
-    {
-        event.preventDefault();
-        onChange(false);
+        onChange({calendarTimeFrom: timeFrom, calendarTimeTo: timeTo, calendarTimeSpace: timeSpace});
         handleCloseClick();
-    }
-
-
+    };
+ 
+    const timeInputClassName = 'w-20 h-10 font-semibold'
     return (
             <div className="bg-white w-72 h-fit mx-auto mt-24 border-2 border-black relative rounded-md flex flex-col">
                 <h3
@@ -57,41 +45,44 @@ export default function TimeSettingsCard({timeFrom, timeTo, timeSpace, onChange,
                 <Close onClick={handleCloseClick}/>
                     
                 </h3>
-                <label className="mx-2">Godziny od</label>
-                <input 
-                    type='time' 
-                    // min={6} 
-                    // max={18} 
-                    value={value} 
-                    onChange={handeTimeChange}
-                    className='w-20 h-10 border-grey-500 border-2'
-                 />
+                <div className="flex-row">
+                    <label className="mx-2">Godziny od:</label>
+                    <input 
+                        className={timeInputClassName}
+                        type='time' 
+                        // min={6} 
+                        // max={18} 
+                        value={timeFrom} 
+                        onChange={handleTimeFromChange}
+                    />
+                    </div>
+                <div className="flex-row">
+                    <label className="mx-2">Godziny do:</label>
+                    <input 
+                        type='time' 
+                        // min={6} 
+                        // max={18} 
+                        value={timeTo} 
+                        onChange={handleTimeToChange}
+                        className={timeInputClassName}
+                    />
+                 </div>
 
-
-
-                <label className="mx-2">Ilość miejsc</label>
-                <input 
-                type='number' 
-                value={slotSpace} 
-                onChange={handleSpaceChange}
-                className='mx-2 my-2 rounded-md box-border h-10 border-2 border-opacity-100 hover:border-gray-400 duration-300 ease-in-out'
-                ></input>
-                <label className="mx-2">Kolejność</label>
-                <input 
-                type='number' 
-                value={slotOrder} 
-                onChange={handleSlotOrder}
-                className='mx-2 my-2 rounded-md box-border h-10 border-2 border-opacity-100 hover:border-gray-400 duration-300 ease-in-out'
-                ></input>
+                 <div className="flex-row">
+                    <label className="mx-2">Czas slotów:</label>
+                    <input 
+                        type='time' 
+                        value={timeSpace} 
+                        // max={(timeTo-timeFrom) || ''}
+                        onChange={handleTimeSpaceChange}
+                        className={timeInputClassName}
+                    />
+                </div>
                 <div className="flex justify-center [&>button]:mx-1 my-2">
                 <button 
                 className="w-20 rounded-md border-sky-500  border-2 
                             hover:text-white hover:bg-sky-500 transition ease-linear duration-150 hover:font-semibold" 
-                            onClick={handleAddClick}>Dodaj</button>
-                {showRemoveButton && <button 
-                className="w-20 rounded-md border-red-400  border-2 
-                            hover:text-white hover:bg-red-500 transition ease-linear duration-150 hover:font-semibold" 
-                            onClick={handleRemoveClick}>Usuń</button>}
+                            onClick={handleChangeClick}>Ustaw</button>
                 </div>
             </div>
     )
