@@ -2,7 +2,7 @@ import Time from './additionalSettingsComponents/Time';
 import Slots from './additionalSettingsComponents/Slots';
 import AddSlot from './additionalSettingsComponents/AddSlot';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 
@@ -13,7 +13,13 @@ export default function AdditionalSettings({value, onChange, slotCard, timeCard}
     const [time, setTime] = useState(false);
     const [slots, setSlots] = useState([]);
 
-    onChange({time, slots});
+
+    const sendAdditional = useEffect(()=>
+    {
+        onChange({time, slots});
+    }, [time, slots]);
+
+
     const handleSlotChange = slot =>
     {
 
@@ -57,12 +63,11 @@ export default function AdditionalSettings({value, onChange, slotCard, timeCard}
             }
 
         }
-
     }
 
-    const handleTimeChange = timeVal =>
+    const handleTimeChange = calendarTime => 
     {
-        setTime(timeVal);
+        setTime(calendarTime);
     }
 
 

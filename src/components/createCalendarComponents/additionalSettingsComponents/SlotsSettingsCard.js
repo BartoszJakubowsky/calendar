@@ -51,6 +51,7 @@ export default function SlotsSettingsCard({name, space ,order ,permission, close
 
 
     return (
+        <div className="  bg-transparent absolute w-full h-full">
             <div className="bg-white w-72 h-fit mx-auto mt-24 border-2 border-black relative rounded-md flex flex-col">
                 <h3
                 className=" bg-lime-200 py-2 uppercase font-semibold rounded-md mb-2 pl-2"
@@ -88,5 +89,6 @@ export default function SlotsSettingsCard({name, space ,order ,permission, close
                             onClick={handleRemoveClick}>Usuń</button>}
                 </div>
             </div>
+        </div>
     )
 }

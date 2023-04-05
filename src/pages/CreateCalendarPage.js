@@ -1,39 +1,57 @@
 import { useState } from "react";
-
+import classNames from "classnames";
 
 import Input from '../components/createCalendarComponents/Input';
 import SelectMonths from "../components/createCalendarComponents/SelectMonths";
 import AdditionalSettings from "../components/createCalendarComponents/AdditionalSettings";
+import useCalendars from '../hooks/useCalendars';
 
 export default function CreateCalendarPage() 
 {
 
-
+    const {calendars, setCalendars} = useCalendars();
     const [name, setName] = useState('');
     const [year, setYear] = useState(new Date().getFullYear());
     const [additional, setAdditional] = useState(false);
     const [slotSettingsCard, setSlotSettingsCard] = useState(false);
     const [timeSettingCard, setTimeSettingsCard] = useState(false);
+    const [date, setDate] = useState([]);
+    const [isHover, setIsHover] = useState(false);
 
-    const handleAdditional = settings =>
+    const handleAdditional = addSettings => setAdditional(addSettings);
+    const handleNameChange = event => setName(event.target.value);
+    const handleMonth = (months) => setDate(months);
+    const handleYear = (year) => setYear(year)
+    const handleSendClick = event => 
     {
-        console.log(settings);
+        event.preventDefault();
+        const allSettings = {name, date: date, ...additional};
+        setCalendars(allSettings);
     }
 
 
-    const handleNameChange = event => setName(event.target.value);
-    const handleMonth = (months) => console.log(months);
-    const handleYear = (year) => setYear(year)
+        const handleMouseEnter = () => setIsHover(true);
+        const handleMouseLeave = () => 
+        {
+            if (slotSettingsCard !== false || timeSettingCard !== false)
+                return
+            else
+                setIsHover(false);   
+        }
 
-    
+        const mainDivClassName = classNames(`absolute left-1/4 w-1/2 h-fit 
+                                            flex flex-col justify-start items-center 
+                                            border-black border-2 mt-10 
+                                            duration-300 ease-in-out`, 
+                                            isHover ? 'shadow-[10px_10px_0px_0px_rgb(7_89_133)]' : '')
+
     return(
         <div className="relative w-screen h-screen bg-pink-400 overflow-hidden">
-            <div className="absolute left-1/4 w-1/2 h-fit 
-                            flex flex-col justify-start items-center
-                             border-black border-2 
-                             mt-10 
-                             hover:shadow-[10px_10px_0px_0px_rgb(7_89_133)]
-                             duration-300 ease-in-out" >
+            <div 
+                className={mainDivClassName}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                    >
             <h3 className="text-white uppercase text-xl bold bg-sky-500 text-center 400 w-full p-3 select-none font-bold">
                 Stwórz nowy wózek
             </h3>
@@ -53,6 +71,12 @@ export default function CreateCalendarPage()
                 />
                 <label className="">Ustawienia dodatkowe</label>
                 <AdditionalSettings value={additional} onChange={handleAdditional} slotCard={setSlotSettingsCard} timeCard={setTimeSettingsCard}/>
+                <button 
+                className="self-center my-2 w-20 rounded-md border-sky-500  border-2 
+                            hover:text-white hover:bg-sky-500 transition ease-linear duration-150 hover:font-semibold" 
+                onClick={handleSendClick}>
+                Ustaw
+                </button>
             </form>
             </div>
             {slotSettingsCard}

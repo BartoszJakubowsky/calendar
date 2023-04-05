@@ -33,7 +33,7 @@ useEffect(()=>
     
 }, []);
 
-
+console.log(calendars);
 // async function getCalendars() 
 // {
 //     return await axios.get('http://localhost:3001/calendars');
@@ -58,7 +58,7 @@ const calendarNames =
 
 const toProvide = 
 {
-    navigate, currentPath, login, setLogin, calendarNames, convirm, setConvirm
+    navigate, currentPath, login, setLogin, calendarNames, convirm, setConvirm, calendars, setCalendars
 }
 
 

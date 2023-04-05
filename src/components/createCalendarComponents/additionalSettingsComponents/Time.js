@@ -9,10 +9,12 @@ export default function Time({value, onChange, timeCard})
 
     const [showDefaultWatch, setShowDefaultWatch] = useState(true);
     const [isWatchClicked, setIsWatchClicked] = useState(false);
-    const handleTimeChange = event =>
+    
+
+    const handleTimeChange = calendarTime =>
     {
-        // onChange(event.target.value)
-        console.log(event);
+        onChange(calendarTime)
+        //meaby here some animations with watch
     }
 
 
@@ -32,11 +34,6 @@ export default function Time({value, onChange, timeCard})
         timeCard(<TimeSettingsCard calendarTimeFrom={value.timeFrom} calendarTimeTo={value.timeTo} calendarTimeSpace={value.timeSpace} onChange={handleTimeChange} close={handleCloseClick}/>);
 
     }
-
-    const showTime = <div className='w-10 h-10 '>
-                        {value.timeFrom}
-                        {value.timeFrom}
-                    </div>
 
 
 
