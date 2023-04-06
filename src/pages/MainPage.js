@@ -22,13 +22,9 @@ function MainPage({className})
     const {calendarNames, convirm, navigate} = useCalendars();
     const {isAdmin} = useAuthenctication();
 
-    const handleCartClick = calendarName => navigate(calendarName);
+    const handleCartClick = calendarName => navigate(calendarName.replaceAll(' ', '_'));
 
-    const handleCreateCartClick = event =>
-    {
-
-    }
-
+  
     //to add -> link to each cart
     const createCalendarCard = calendarNames.map(calendar => 
         {

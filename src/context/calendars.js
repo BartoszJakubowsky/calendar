@@ -8,10 +8,10 @@ const CalendarsContext = createContext();
 function CalendarsProvider({children})
 {
 
-
+    const tempCalendar = {name: 'Środa Wielkopolska', date: ['KWIECIEŃ.2023', 'MAJ.2023'], time: {timeFrom: '08:00', timeTo: '16:00', timeSpace: '01:00'}, slots: [{name: 'Oficjalne', space: '2', order: 1},{name: 'Nieoficjalne', space: '2', order: '2'}]}
     const [login, setLogin] = useState(useAuthenctication());
     const [currentPath, setCurrentPath] = useState((login && '/') || 'login' );
-    const [calendars, setCalendars] = useState(false);
+    const [calendars, setCalendars] = useState([tempCalendar]);
     const [convirm, setConvirm] = useState(false);
 
 useEffect(()=>
@@ -50,7 +50,7 @@ const navigate = to =>
 //To change -> given with started app
 const calendarNames = 
 [
-    {name: 'Wózek Miłostowo', order: 1},
+    {name: 'Środa Wielkopolska', order: 1},
     {name: 'Wózek Fontanna', order: 2},
     {name: 'Wózek Inny', order: 3}
 ]
