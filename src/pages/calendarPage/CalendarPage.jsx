@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import classNames from "classnames";
-
+import Menu from './calendar/Menu'
 export default function CalendarPage({calendar})
 {
 
@@ -10,14 +10,14 @@ const thisYear = new Date().getFullYear();
 
 const mobileClassNames = classNames('');
 const desktopClassNames = classNames('');
-
-
+const {name} = calendar;
 
     console.log(calendar.name);
     return(
-    <div>
-        {/* menu */}
-        <h1>{calendar.name}</h1>
+    <div className="w-full h-full flex  ">
+        <Menu calendarName={name}/>
+        {/* calendarDiv */}
+
         
     </div>);
 }
