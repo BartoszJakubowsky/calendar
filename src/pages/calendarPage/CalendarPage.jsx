@@ -24,6 +24,16 @@ const months = date.map(month=>
         <Menu calendarName={name}/>
         {/* month holder */}
         <div className={`${isMobile? 'mt-5 w-full' : ' mt-14 w-3/4'} bg-red-300 h-fit m-auto flex overflow-hidden`}>
+        <div className="flex flex-row justify-center items-center">
+            <p>Poniedziałek</p>
+            <p>Wtorek</p>
+            <p>Środa</p>
+            <p>Czwartek</p>
+            <p>Piątek</p>
+            <p>Sobota</p>
+            <p>Niedziela</p>
+        </div>
+
             {months}
         </div>
 
