@@ -13,73 +13,72 @@ export default function Month({name, date, slots, time})
     const MONTHS = ['STYCZEŃ', 'LUTY', 'MARZEC', 'KWIECIEŃ', 'MAJ', 'CZERWIEC', 'LIPIEC', 'SIERPIEŃ', 'WRZESIEŃ', 'PAŹDZIERNIK', 'LISTOPAD', 'GRUDZIEŃ'];
     const DAYS_OF_WEEK = ['NIEDZIELA', 'PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA'];
 
-function getDaysInMonth(dateStr) 
-{
-  const [monthStr, yearStr] = dateStr.split('.');
-  const month = MONTHS.indexOf(monthStr.toUpperCase());
-  const year = parseInt(yearStr, 10);
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth();
-  const currentDay = currentDate.getDate();
-  const firstDayOfMonth = new Date(year, month, 1).getDay();
-  const allDaysInMonth = [];
-  const allDaysLeftInMonth = [];
-  const allWeeksInMonth = [];
-  const allWeeksLeftInMonth = [];
-
-  for (let i = 1; i <= daysInMonth; i++) {
-    const date = new Date(year, month, i);
-    const dayOfWeek = DAYS_OF_WEEK[date.getDay()];
-    const day = {
-      day: dayOfWeek,
-      date: date
-    };
-    allDaysInMonth.push(day);
-    if (date >= currentDate) {
-      allDaysLeftInMonth.push(day);
+    function getDaysInMonth(dateStr) {
+      const [monthStr, yearStr] = dateStr.split('.');
+      const month = MONTHS.indexOf(monthStr.toUpperCase());
+      const year = parseInt(yearStr, 10);
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth();
+      const currentDay = currentDate.getDate();
+      const firstDayOfMonth = new Date(year, month, 1).getDay();
+      const allDaysInMonth = [];
+      const allDaysLeftInMonth = [];
+      const allWeeksInMonth = [];
+      const allWeeksLeftInMonth = [];
+    
+      for (let i = 1; i <= daysInMonth; i++) {
+        const date = new Date(year, month, i);
+        const dayOfWeek = DAYS_OF_WEEK[date.getDay()];
+        const day = {
+          day: dayOfWeek,
+          date: date
+        };
+        allDaysInMonth.push(day);
+        if (date >= currentDate) {
+          allDaysLeftInMonth.push(day);
+        }
+      }
+    
+      let currentWeek = [];
+      let currentWeekLeft = [];
+      for (let i = 1; i <= daysInMonth; i++) {
+        const date = new Date(year, month, i);
+        const dayOfWeek = date.getDay();
+        if (dayOfWeek === 1) {
+          allWeeksInMonth.push(currentWeek);
+          allWeeksLeftInMonth.push(currentWeekLeft);
+          currentWeek = [];
+          currentWeekLeft = [];
+        }
+        const day = {
+          day: DAYS_OF_WEEK[dayOfWeek],
+          date: date
+        };
+        currentWeek.push(day);
+        if (date >= currentDate) {
+          currentWeekLeft.push(day);
+        }
+      }
+      if (currentWeek.length > 0) {
+        allWeeksInMonth.push(currentWeek);
+        allWeeksLeftInMonth.push(currentWeekLeft);
+      }
+    
+      return {
+        allDaysInMonth: allDaysInMonth,
+        allDaysLeftInMonth: allDaysLeftInMonth,
+        allWeeksInMonth: allWeeksInMonth,
+        allWeeksLeftInMonth: allWeeksLeftInMonth
+      };
     }
-  }
-
-  let currentWeek = [];
-  let currentWeekLeft = [];
-  for (let i = 1; i <= daysInMonth; i++) 
-  {
-    const date = new Date(year, month, i);
-    const dayOfWeek = date.getDay();
-    if (dayOfWeek === 1) {
-      allWeeksInMonth.push(currentWeek);
-      allWeeksLeftInMonth.push(currentWeekLeft);
-      currentWeek = [];
-      currentWeekLeft = [];
-    }
-    const day = {
-      day: DAYS_OF_WEEK[dayOfWeek],
-      date: date
-    };
-    currentWeek.push(day);
-    if (date >= currentDate) {
-      currentWeekLeft.push(day);
-    }
-  }
-  if (currentWeek.length > 0) {
-    allWeeksInMonth.push(currentWeek);
-    allWeeksLeftInMonth.push(currentWeekLeft);
-  }
-
-  console.log('allDaysInMonth', allDaysInMonth);
-  console.log('allDaysLeftInMonth', allDaysLeftInMonth);
-  console.log('allWeeksInMonth', allWeeksInMonth);
-  console.log('allWeeksLeftInMonth', allWeeksLeftInMonth);
-}
-getDaysInMonth(date);
-
+const {allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth} = getDaysInMonth(date);
+console.log(date, allDaysLeftInMonth);
     return (
         <div className={`bg-red-300 h-full w-full`}>
-
           {date}
-          <Week/>
+          <Week allDaysInMonth={allDaysInMonth} allDaysLeftInMonth={allDaysLeftInMonth} allWeeksInMonth={allWeeksInMonth} allWeeksLeftInMonth={allWeeksLeftInMonth}/>
         </div>
     )
 

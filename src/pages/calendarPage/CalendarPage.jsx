@@ -12,10 +12,6 @@ const {name, date, slots, time} = calendar;
 const isMobile = useMobileDevice();
 const [displayedMonth, setDisplayedMonth] = useState(0); 
 
-const months = date.map((month, index) => 
-{
-    <Month key={month} name={name} date={month} slots={slots} time={time} />;
-});
 
 const monthCount = date.length;
 
@@ -41,7 +37,7 @@ const monthCount = date.length;
   };
 
 
-    console.log(calendar.name);
+
     return(
     <div className="w-full h-screen overflow-hidden">
         <Menu calendarName={name}/>
@@ -70,19 +66,14 @@ const monthCount = date.length;
             </button>
             </div>
             {/* caruzel */}
-                
             <div className="relative w-full h-full">
-      {springs.map((props, index) => (
-        <animated.div key={index} className="absolute w-full h-full" style={{ ...props }}>
-          <Month name={name} date={date[index]} slots={slots} time={time} />
-        </animated.div>
-      ))}
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center space-x-2 mb-4">
-        
-      </div>
+            {springs.map((props, index) => (
+              <animated.div key={index} className="absolute w-full h-full" style={{ ...props }}>
+                <Month name={name} date={date[index]} slots={slots} time={time} />
+              </animated.div>
+            ))}
+ 
     </div>
-            {/*caruzel  */}
-
         </div>
 
         

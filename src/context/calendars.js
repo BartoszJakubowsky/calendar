@@ -8,7 +8,7 @@ const CalendarsContext = createContext();
 function CalendarsProvider({children})
 {
 
-    const tempCalendar = {name: 'Środa Wielkopolska', date: ['KWIECIEŃ.2023', 'MAJ.2023'], time: {timeFrom: '08:00', timeTo: '16:00', timeSpace: '01:00'}, slots: [{name: 'Oficjalne', space: '2', order: 1},{name: 'Nieoficjalne', space: '2', order: '2'}]}
+    const tempCalendar = {name: 'Środa Wielkopolska', date: ['KWIECIEŃ.2023', 'MAJ.2023', 'CZERWIEC.2023', 'LIPIEC.2023'], time: {timeFrom: '08:00', timeTo: '16:00', timeSpace: '01:00'}, slots: [{name: 'Oficjalne', space: '2', order: 1},{name: 'Nieoficjalne', space: '2', order: '2'}]}
     const [login, setLogin] = useState(useAuthenctication());
     const [currentPath, setCurrentPath] = useState((login && '/') || 'login' );
     const [calendars, setCalendars] = useState([tempCalendar]);
