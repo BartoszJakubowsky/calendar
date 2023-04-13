@@ -1,42 +1,74 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import useMobileDevice from '../../../hooks/useMobileDevice';
-import { useSprings, animated } from 'react-spring';
-import { useGesture } from 'react-use-gesture';
+import Day from './Day';
+import Time from './Time';
 
-
-export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth }) 
+export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth, time }) 
 {
-    const [displayedWeek, setDisplayedWeek] = useState(0);
-    const weekCount = allWeeksInMonth.length;
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+  const isMobile = useMobileDevice();
+
+
+  //useEffect for triggering isMobileDevice
   
-    const springs = useSprings(
-      weekCount,
-      allWeeksInMonth.map((week, index) => ({
-        transform: `translateY(${(index - displayedWeek) * 100}%)`,
-        position: "absolute",
-        width: "full",
-        height: "full",
-        top: 0,
-        left: 0,
-        zIndex: index === displayedWeek ? 1 : 0,
-      }))
-    );
-  
-    const bind = useGesture({
-      onWheel: ({ delta: [, dy] }) => {
-        setDisplayedWeek((prev) => Math.min(Math.max(prev + (dy > 0 ? 1 : -1), 0), weekCount - 1));
-      },
-    });
-  
-    return (
-      <div className="relative w-full h-full" {...bind()}>
-        {springs.map((props, index) => (
-          <animated.div key={index} className="absolute w-full h-full" style={{ ...props }}>
-            <div>To jest tydzień</div>
-          </animated.div>
-        ))}
-      </div>
-    );
-  }
+  useEffect(() => {
+    function handleResize() 
+    {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const weekClassName = classNames('w-full h-screen overflow-y-scroll overflow-x-hidden snap snap-y snap-mandatory', 
+                                  isMobile? `` : `grid-rows-${allWeeksInMonth}`)
+  if (isMobile)
+  return (
+    <div className={weekClassName}>
+      {allDaysInMonth.map((day, index)=>
+        {
+          return (
+            <section key={index} className='"w-full h-screen flex snap-start'>
+            <Time time={time}/>
+            {/* check if array from object is empty (if object is === {})   */}
+            <Day className='' day={day} isActive={(Object.keys(allDaysLeftInMonth[index]).length === 0 ? false :true)}/>
+            </section>
+          )
+        })}
+    </div>
+  )
+  else
+  return(
+    <div className={weekClassName}>
+     {allWeeksInMonth.map((week, index)=>
+        {
+          return (
+          <section key={index} className='"w-full h-screen flex snap-start'>
+            <Time time={time}/>
+            {/* only days for this week */}
+            <div>
+            {week.map((day, dayIndex) => 
+            {
+              return (
+              <Day key={day.date} className='' day={day} isActive={!!(allWeeksLeftInMonth[index]?.[dayIndex])}/>
+              )
+            })}
+            </div>
+          </section>
+          )
+        })}
+    </div>
+  )
+
+}
     

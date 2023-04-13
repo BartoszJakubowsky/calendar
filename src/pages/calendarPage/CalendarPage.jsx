@@ -39,10 +39,10 @@ const monthCount = date.length;
 
 
     return(
-    <div className="w-full h-screen overflow-hidden">
+    <div className="w-screen h-screen overflow-hidden">
         <Menu calendarName={name}/>
         {/* month holder */}
-        <div className={`${isMobile? 'mt-5 w-full' : ' mt-14 w-3/4'} bg-red-300 h-full m-auto overflow-hidden rounded-sm`}>
+        <div className={`${isMobile? 'mt-5 w-full h-full' : ' mt-14 w-3/4 h-5/6'} bg-red-300 mx-auto overflow-hidden rounded-sm`}>
             <div className="bg-blue-400 w-full h-10 flex justify-start">
             <button
             className={classNames(
@@ -66,7 +66,7 @@ const monthCount = date.length;
             </button>
             </div>
             {/* caruzel */}
-            <div className="relative w-full h-full">
+            <div className="relative w-full">
             {springs.map((props, index) => (
               <animated.div key={index} className="absolute w-full h-full" style={{ ...props }}>
                 <Month name={name} date={date[index]} slots={slots} time={time} />
