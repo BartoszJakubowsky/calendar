@@ -1,4 +1,15 @@
-export default function Time({time, ...rest}) 
+export default function Time({timeArr, ...rest}) 
 {
-    return <div className={`${rest.className}`}>Tu będzie czas</div>    
+
+    const showTime = timeArr.map((time, index) => 
+        {
+              return <div key={index} className={`bg-yellow-200`} time={time}>{time}</div>
+        })
+
+    return (
+        <div 
+            className={`${rest.className} bg-yellow-200`}>
+                <div className="">Czas</div>
+                {showTime}
+        </div>)
 }

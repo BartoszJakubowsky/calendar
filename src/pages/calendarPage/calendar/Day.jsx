@@ -1,9 +1,9 @@
-export default function Day({day, isActive, ...rest}) 
+export default function Day({day, isActive, key, ...rest}) 
 {
 
     return (
-        <div className={` ${rest.className}`}>
-            Jeden z dni
+        <div className={` ${rest.className} bg-orange-300`} key={key}>
+            {day.day}
         </div>
     )
 }
