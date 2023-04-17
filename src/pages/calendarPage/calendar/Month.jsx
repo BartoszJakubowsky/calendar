@@ -28,14 +28,18 @@ export default function Month({name, date, slots, time})
       const allWeeksInMonth = [];
       const allWeeksLeftInMonth = [];
     
-      for (let i = 1; i <= daysInMonth; i++) {
+      for (let i = 1; i <= daysInMonth; i++) 
+      {
         const date = new Date(year, month, i);
         const dayOfWeek = DAYS_OF_WEEK[date.getDay()];
-        const day = {
+        const day = 
+        {
           day: dayOfWeek,
           date: date
         };
+
         allDaysInMonth.push(day);
+
         if (date >= currentDate) 
           allDaysLeftInMonth.push(day);
         else
@@ -82,9 +86,9 @@ export default function Month({name, date, slots, time})
     }
     const {allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth} = getDaysInMonth(date);
     return (
-        <div className={`bg-red-300 h-full w-full`}>
+        <div className={`w-full h-full`}>
           {date}
-          <Week allDaysInMonth={allDaysInMonth} allDaysLeftInMonth={allDaysLeftInMonth} allWeeksInMonth={allWeeksInMonth} allWeeksLeftInMonth={allWeeksLeftInMonth} time={time}/>
+          <Week allDaysInMonth={allDaysInMonth} allDaysLeftInMonth={allDaysLeftInMonth} allWeeksInMonth={allWeeksInMonth} allWeeksLeftInMonth={allWeeksLeftInMonth} time={time} slots={slots}/>
         </div>
     )
 
