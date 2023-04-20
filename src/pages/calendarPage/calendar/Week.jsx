@@ -2,10 +2,10 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useMobileDevice from '../../../hooks/useMobileDevice';
-import Day from './Day';
+import DayColumn from './DayColumn';
 import Time from './Time';
 
-export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth, time, slots}) 
+export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth, time, name, slots, date}) 
 {
 
   const DAYS_OF_WEEK = ['PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA', 'NIEDZIELA'];
@@ -49,11 +49,8 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
   }, []);
 
 
-  console.log(allWeeksInMonth);
-  
 
-
-  const weekClassName = classNames('w-full h-full overflow-y-scroll overflow-x-hidden snap snap-y snap-mandatory');
+  const weekClassName = classNames('w-full h-full overflow-y-scroll overflow-x-scroll snap snap-y snap-mandatory');
   // const dayTimeColumnClass = classNames('h-full w-full flex flex-auto')
   if (isMobile)
   return (
@@ -64,7 +61,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
             <section key={index} className='"w-full h-screen flex snap-start'>
             <Time time={time}/>
             {/* check if array from object is empty (if object is === {})   */}
-            <Day className='' day={day} isActive={(Object.keys(allDaysLeftInMonth[index]).length === 0 ? false :true)}/>
+            <DayColumn className='' day={day} isActive={(Object.keys(allDaysLeftInMonth[index]).length === 0 ? false :true)}/>
             </section>
           )
         })}
@@ -97,24 +94,24 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                   break;
                 }
               }
-
               if (doesDayExist)
-              return <Day 
-                key={day.date} 
+              return <DayColumn 
                 // className={dayTimeColumnClass} 
                 day={day} 
                 isActive={!!(allWeeksLeftInMonth[index]?.[dayIndex])} 
                 isBlank={false}
                 timeArr={timeArr}
-                slots={slots}/>
+                slots={slots}
+                name={name}
+                date={date}
+                />
               else
-              return <Day
-                key={index}
+              return <DayColumn
                 // className={dayTimeColumnClass}
                 day={day.date}
                 isActive={!!(allWeeksLeftInMonth[index]?.[dayIndex])}
                 isBlank={true}
-              />
+                slots={slots}/>
             })}
             
           </section>

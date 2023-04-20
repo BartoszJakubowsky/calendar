@@ -42,7 +42,7 @@ const monthCount = date.length;
     <div className="w-screen h-screen overflow-hidden">
         <Menu calendarName={name}/>
         {/* month holder */}
-        <div className={`${isMobile? 'mt-5 w-full h-full' : ' mt-14 w-4/5 h-5/6'} bg-red-300 mx-auto overflow-hidden rounded-sm`}>
+        <div className={`${isMobile? 'mt-5 w-full h-full' : ' mt-14 w-11/12 h-5/6'} bg-red-300 mx-auto overflow-hidden rounded-sm text-sm`}>
             <div className="bg-blue-400 w-full h-10 flex justify-start">
             <button
             className={classNames(

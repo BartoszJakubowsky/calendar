@@ -88,7 +88,15 @@ export default function Month({name, date, slots, time})
     return (
         <div className={`w-full h-full`}>
           {date}
-          <Week allDaysInMonth={allDaysInMonth} allDaysLeftInMonth={allDaysLeftInMonth} allWeeksInMonth={allWeeksInMonth} allWeeksLeftInMonth={allWeeksLeftInMonth} time={time} slots={slots}/>
+          <Week 
+            allDaysInMonth={allDaysInMonth} 
+            allDaysLeftInMonth={allDaysLeftInMonth} 
+            allWeeksInMonth={allWeeksInMonth} 
+            allWeeksLeftInMonth={allWeeksLeftInMonth} 
+            time={time} 
+            slots={slots} 
+            name={name} 
+            date={date}/>
         </div>
     )
 
