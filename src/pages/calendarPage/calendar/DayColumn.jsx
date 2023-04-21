@@ -1,6 +1,6 @@
 import DaySlot from './DaySlot';
 
-export default function DayColumn({day, isActive, isBlank, timeArr, slots, name, date, ...rest}) 
+export default function DayColumn({day, isActive, isBlank, timeArr, slots, name, date, weekIndex, ...rest}) 
 {
     
     if (isBlank)
@@ -41,7 +41,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                 return (
                 <div
                     key={index} 
-                    className="flex flex-1 flex-row  border-b-2 border-black">
+                    className="flex flex-row w-full h-full  border-b-2 border-black">
                         {/* slots in cells / slots holder */}
                         {slots.map(slot =>
                         {   
@@ -57,11 +57,12 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                                     slotName={slot.name} 
                                     slotIndex={i}
                                     slotOrder={slot.order}
+                                    weekIndex={weekIndex}
                                     />
                                 )
                             }
                         //slot holder
-                        return <div className={`flex flex-auto flex-wrap order-${slot.order} overflow-hidden`}>
+                        return <div className={`flex flex-col w-full h-full order-${slot.order} overflow-hidden`}>
                                 {spaces}
                                 </div>
                            

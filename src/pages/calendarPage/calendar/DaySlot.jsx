@@ -1,51 +1,52 @@
 import { useEffect, useState } from "react";
 import useWebSockets from "../../../hooks/useWebSockets";
 
-export default function Day({calendarName, dayName, date, time, slotName, slotIndex, slotOrder, index}) 
+export default function Day({calendarName, dayName, date, time, slotName, slotIndex, slotOrder, weekIndex}) 
 {
 
-        
-    const {addNewSlot, updateSlot} = useWebSockets();
-    const [thisSlot, setThisSlot] = useState({
+
+    const [sign, setSign] = useState('');
+    const handleSign = newName => setSign(newName);
+    const thisSlot = 
+    {
         calendar : calendarName,
         date,
+        weekIndex,
         day : dayName,
         time,
         slotName,
         slotIndex,
-        sign: ''
-        });
+        sign: handleSign
+    };
 
-    useEffect(()=>
+    const {addNewSlot, updateSlot, removeOldSlot} = useWebSockets();
+
+    useEffect(() => 
     {
-        addNewSlot({
-            calendar : calendarName,
-            date,
-            day : dayName,
-            time,
-            slotName,
-            slotIndex,
-            sign: ''
-            });
-    }, [])
+       addNewSlot(thisSlot)
 
-const handleSign = name => updateSlot({...thisSlot, })
+       //remove this listener from listeners
+       return () => removeOldSlot(thisSlot)
+    }, []);
+
+
+// const handleSign = name => updateSlot({...thisSlot, })
 const handleClick = event =>
 {
     event.preventDefault();
-    const updatedSlot = updateSlot(thisSlot, 'Bartosz Jakubowski');
-    return
-    setThisSlot(updateSlot);
+    console.log(weekIndex);
+    updateSlot({...thisSlot, sign: 'Bartosz Jakubowski'});
 }
+
 
 return (
     <button 
-    className={`flex flex-1 overflow-hidden
-                ${slotIndex === 0? 'border-b-2 border-red-400' : ''} 
-                ${slotOrder === 1? 'border-r-2 border-red-400' : ''}
-                ${thisSlot.sign === ''? 'opacity-0' : ''}`}
+    className={`overflow-hidden w-full h-full
+                ${slotIndex === 0? 'border-b-2 border-red-400 bg-red-200' : ''} 
+                ${slotOrder === 1? 'border-r-2 border-red-400 bg-red-400' : ''}
+                ${sign === ''? '' : ''}`}
     onClick={handleClick}
-                >{thisSlot.sign}
+                >{sign}
                 
     </button>
 )

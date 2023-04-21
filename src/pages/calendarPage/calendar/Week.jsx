@@ -73,7 +73,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
      {allWeeksInMonth.map((week, index)=>
         {
           return (
-            <section key={index} className={`snap-start h-full w-full bg-gray-100 flex flex-row flex-1 `}>
+            <section key={index} className={`snap-start h-full w-full bg-gray-100 flex flex-row`}>
             {/* time */}
             <Time timeArr={timeArr} 
             // className={dayTimeColumnClass}
@@ -104,6 +104,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 slots={slots}
                 name={name}
                 date={date}
+                weekIndex={index}
                 />
               else
               return <DayColumn
