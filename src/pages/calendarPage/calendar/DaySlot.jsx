@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import useWebSockets from "../../../hooks/useWebSockets";
-
-export default function Day({calendarName, dayName, date, time, slotName, slotIndex, slotOrder, weekIndex}) 
+import Convirm from '../../../components/Convirm';
+import useCalendars from "../../../hooks/useCalendars";
+export default function Day({calendarName, dayName, date, time, slotName, slotIndex, dayDate, slotOrder, weekIndex}) 
 {
 
-
+    const user = {name: 'Bartosz Jakubowski', rights: 'user'};
     const [sign, setSign] = useState('');
     const handleSign = newName => setSign(newName);
     const thisSlot = 
@@ -20,7 +21,7 @@ export default function Day({calendarName, dayName, date, time, slotName, slotIn
     };
 
     const {addNewSlot, updateSlot, removeOldSlot} = useWebSockets();
-
+    const {convirm, setConvirm} = useCalendars();
     useEffect(() => 
     {
        addNewSlot(thisSlot)
@@ -34,17 +35,46 @@ export default function Day({calendarName, dayName, date, time, slotName, slotIn
 const handleClick = event =>
 {
     event.preventDefault();
-    console.log(weekIndex);
-    updateSlot({...thisSlot, sign: 'Bartosz Jakubowski'});
+    const signedName = event.target.innerHTML;
+
+    if (signedName === user.name)
+    {
+        const message = `Czy na pewno chcesz się wypisać z dnia ${dayName.toLowerCase()} ${dayDate}, godzina ${time}?`
+        const submit = "Wypisz mnie"    
+        setConvirm(<Convirm message={message} submit={submit} handleSubmit={handleUnsignClick}/>)
+
+    }
+    else
+    {
+        const message = `Czy na pewno chcesz zapisać się na ${time} w ${dayName.toLowerCase()} ${dayDate}?`
+        const submit = "Zapisz mnie"
+        setConvirm(<Convirm message={message} submit={submit} handleSubmit={handleSignClick}/>)
+    }
 }
+
+const handleSignClick = (confirmed) =>
+{
+    if (!confirmed)
+        return
+
+    updateSlot({...thisSlot, sign: user.name});
+}
+
+const handleUnsignClick = (confirmed) =>
+{
+    if (!confirmed)
+        return
+
+    updateSlot({...thisSlot, sign: ''});
+}
+
 
 
 return (
     <button 
-    className={`overflow-hidden w-full h-full
-                ${slotIndex === 0? 'border-b-2 border-red-400 bg-red-200' : ''} 
-                ${slotOrder === 1? 'border-r-2 border-red-400 bg-red-400' : ''}
-                ${sign === ''? '' : ''}`}
+    className={`overflow-hidden w-full h-full border-2 border-red-200 
+                ${sign === ''? '' : ''}
+                ${sign !== user.name && sign !== ''? 'cursor-not-allowed pointer-events-none' : ''}`}
     onClick={handleClick}
                 >{sign}
                 

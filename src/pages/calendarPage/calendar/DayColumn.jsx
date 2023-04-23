@@ -1,12 +1,22 @@
 import DaySlot from './DaySlot';
 
-export default function DayColumn({day, isActive, isBlank, timeArr, slots, name, date, weekIndex, ...rest}) 
+export default function DayColumn({day, isActive, isBlank, timeArr, slots, name, date, weekIndex, dayDate, ...rest}) 
 {
-    
+
+    let _dayDate;
+    if (dayDate)
+    {
+        
+        const data = dayDate
+        const _day = data.getDate().toString().padStart(2, "0");
+        const _month = (data.getMonth() + 1).toString().padStart(2, "0");
+        const _year = data.getFullYear().toString();
+        _dayDate = `${_day}.${_month}.${_year}`;
+    }
     if (isBlank)
         return (
             <div className={` bg-gray-400 flex flex-col w-full border-l-2 border-black`} key={day}>
-                <div className={`h-10 borde r-b-2 border-black w-full opacity-0`}>
+                <div className={`h-10 border-black w-full opacity-0`}>
                 {day}
                 {/* slots name holder */}
                 <div className="overflow-hidden flex flex-none opacity-0"> 
@@ -23,8 +33,11 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
         //column
         <div className={`flex flex-col w-full bg-amber-100 border-l-2 border-black `}  key={day}>
             {/* //first cell in day column for day name*/}
-            <div className={`h-10 border-b-2 border-black w-full`}>
-                {day}
+            <div className={`h-20 border-b-2 border-black w-full`}>
+                <div className='flex flex-col justify-center items-center'>
+                    <span className=' font-semibold'>{day}</span>
+                    <span>{_dayDate}</span>
+                </div>
                 {/* slots name holder */}
                 <div className="overflow-hidden flex flex-none "> 
                 {slots.map(slot => {
@@ -45,6 +58,10 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                         {/* slots in cells / slots holder */}
                         {slots.map(slot =>
                         {   
+                                          
+
+
+
                             let spaces = [];
                             for (let i = 0; i < slot.space; i++) 
                             {
@@ -52,6 +69,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                                    <DaySlot 
                                     calendarName={name} 
                                     dayName={day} 
+                                    dayDate={_dayDate}
                                     date={date} 
                                     time={time} 
                                     slotName={slot.name} 

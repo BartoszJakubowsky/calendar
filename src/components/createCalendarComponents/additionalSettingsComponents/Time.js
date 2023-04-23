@@ -37,7 +37,7 @@ export default function Time({value, onChange, timeCard})
 
 
 
-    const defaultTimeIconClassName = classNames('h-10 w-10 flex items-center justify-center  cursor-pointer text-lg ease-out', 
+    const defaultTimeIconClassName = classNames('h-20 w-10 flex items-center justify-center  cursor-pointer text-lg ease-out', 
                                                 isWatchClicked? 'text-cyan-600' : 'text-cyan-900' )
     
 

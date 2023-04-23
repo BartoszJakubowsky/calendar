@@ -4,10 +4,11 @@ import classNames from "classnames";
 import Menu from './calendar/Menu'
 import Month from "./calendar/Month";
 import useMobileDevice from "../../hooks/useMobileDevice";
+import useCalendars from '../../hooks/useCalendars';
 
 export default function CalendarPage({calendar})
 {
-
+const {convirm} = useCalendars();
 const {name, date, slots, time} = calendar;
 const isMobile = useMobileDevice();
 const [displayedMonth, setDisplayedMonth] = useState(0); 
@@ -39,7 +40,8 @@ const monthCount = date.length;
 
 
     return(
-    <div className="w-screen h-screen overflow-hidden">
+    <div className="relative w-screen h-screen overflow-hidden">
+    {convirm}
         <Menu calendarName={name}/>
         {/* month holder */}
         <div className={`${isMobile? 'mt-5 w-full h-full' : ' mt-14 w-11/12 h-5/6'} bg-red-300 mx-auto overflow-hidden rounded-sm text-sm`}>
@@ -72,12 +74,10 @@ const monthCount = date.length;
                 <Month name={name} date={date[index]} slots={slots} time={time} />
               </animated.div>
             ))}
- 
     </div>
         </div>
-
-        
-    </div>);
+    </div>
+    );
 }
 
 

@@ -84,13 +84,14 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
             {
 
               let doesDayExist = false;
-
+              let dayDate;
               for (let i = 0; i < week.length; i++) 
               {
                 const dayInWeek = week[i];
                 if (dayInWeek.day.toUpperCase() === day)
                 {
                   doesDayExist = true;
+                  dayDate = dayInWeek.date;
                   break;
                 }
               }
@@ -98,6 +99,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
               return <DayColumn 
                 // className={dayTimeColumnClass} 
                 day={day} 
+                dayDate = {dayDate}
                 isActive={!!(allWeeksLeftInMonth[index]?.[dayIndex])} 
                 isBlank={false}
                 timeArr={timeArr}
