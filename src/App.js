@@ -1,12 +1,17 @@
-//import MainPage
-//import LoginPage
 
-//check admin -> dynamic require
+//to do: db
+//repair back and forward 
+//create create user 
+//post/delete calendars
+//websockets connections per calendar
 
 
-//check in cookies if user is cerivied -> 
-//set login
-//set MainPage
+
+
+
+
+
+
 
 import Route from './components/Route'
 import LoginPage from './pages/LoginPage'
@@ -20,6 +25,7 @@ import useCalendars from './hooks/useCalendars';
 import useAuthenctication from './hooks/useAuthentication';
 import CalendarCard from './components/CalendarCard'
 import CalendarPage from './pages/calendarPage/CalendarPage'
+import { useEffect } from 'react'
 
 function App()
 {

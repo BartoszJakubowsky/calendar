@@ -33,7 +33,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
         //column
         <div className={`flex flex-col w-full bg-amber-100 border-l-2 border-black `}  key={day}>
             {/* //first cell in day column for day name*/}
-            <div className={`h-20 border-b-2 border-black w-full`}>
+            <div className={`h-20 flex-none border-b-2 border-black w-full`}>
                 <div className='flex flex-col justify-center items-center'>
                     <span className=' font-semibold'>{day}</span>
                     <span>{_dayDate}</span>

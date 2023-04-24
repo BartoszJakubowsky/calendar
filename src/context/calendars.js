@@ -5,23 +5,34 @@ import axios from "axios";
 
 const CalendarsContext = createContext();
 
-function CalendarsProvider({children})
+function CalendarsProvider({children, url})
 {
 
     const tempCalendar = {name: 'Środa Wielkopolska', date: ['KWIECIEŃ.2023', 'MAJ.2023', 'CZERWIEC.2023', 'LIPIEC.2023'], time: {timeFrom: '08:00', timeTo: '16:00', timeSpace: '01:00'}, slots: [{name: 'Oficjalne', space: 2, order: 1},{name: 'Nieoficjalne', space: 2, order: 2}]}
     const [login, setLogin] = useState(useAuthenctication());
-    const [currentPath, setCurrentPath] = useState((login && '/') || 'login' );
+    const [currentPath, setCurrentPath] = useState('/');
     const [calendars, setCalendars] = useState([tempCalendar]);
     const [convirm, setConvirm] = useState(false);
 
 useEffect(()=>
 {
+
+    // async function fetchCalendars() 
+    // {
+    //   const response = await fetch("http://localhost:3001/calendars");
+    //   const json = await response.json();
+    //   const calendars = JSON.parse(json.calendars);
+    //   setCalendars(calendars);
+    // }
+    // fetchCalendars();
+
     //set same pathname as 
     window.history.replaceState(null, null, currentPath);
 
     //handler == navigation forward and back withot refresh when pushState was used
     const handler = () => setCurrentPath(window.location.pathname);
     window.addEventListener('popstate', handler);
+
 
 
     // getCalendars().then(calendars => setCalendars());

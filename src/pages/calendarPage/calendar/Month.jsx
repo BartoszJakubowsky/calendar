@@ -37,11 +37,14 @@ export default function Month({name, date, slots, time})
           day: dayOfWeek,
           date: date
         };
+
+        allDaysInMonth.push(day)
         if (date >= currentDate) 
           allDaysLeftInMonth.push(day);
         else
           allDaysLeftInMonth.push({})
 
+          
       }
     
       let currentWeek = [];

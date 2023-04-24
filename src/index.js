@@ -7,9 +7,10 @@ import App from './App'
 
 const el = document.getElementById('root');
 const root = ReactDOM.createRoot(el);
+const appUrl = window.appUrl || 'domyślny-adres-url';
 
 root.render(
             <CalendarsProvider>
-                <App/>
+                <App url={appUrl} />
             </CalendarsProvider>
             );
