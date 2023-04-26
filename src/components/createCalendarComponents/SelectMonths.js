@@ -5,12 +5,12 @@ import { HiArrowSmLeft as ArrowLeft} from "react-icons/hi";
 import { HiArrowSmRight as ArrowRight } from "react-icons/hi";
 import classNames from "classnames";
 
-export default function SelectMonths({year, handleYear, handleMonth}) 
+export default function SelectMonths({year, handleYear, handleMonth, selectedMonths}) 
 {
     const monthsNames = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj',  'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', ' Grudzień' ];
     const thisYear = new Date().getFullYear();
     const chosedYear = year === thisYear;
-    const [months, setMonths] = useState([]);
+    const [months, setMonths] = useState(selectedMonths || []);
 
     let avaibleMonths;
 

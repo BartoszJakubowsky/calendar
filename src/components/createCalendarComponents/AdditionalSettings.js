@@ -7,12 +7,11 @@ import { useState, useEffect } from 'react';
 
 
 
-export default function AdditionalSettings({value, onChange, slotCard, timeCard}) 
+export default function AdditionalSettings({calendarTime, calendarSlots, onChange, slotCard, timeCard}) 
 {
 
-    const [time, setTime] = useState(false);
-    const [slots, setSlots] = useState([]);
-
+    const [time, setTime] = useState(calendarTime || false);
+    const [slots, setSlots] = useState(calendarSlots || []);
 
     const sendAdditional = useEffect(()=>
     {

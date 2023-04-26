@@ -9,7 +9,6 @@ import DaySlot from './DaySlot';
 
 export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth, time, name, slots, date}) 
 {
-
   const DAYS_OF_WEEK = ['PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA', 'NIEDZIELA'];
   const generateTimes = (timeStart, timeEnd, timeBetween) =>
   {

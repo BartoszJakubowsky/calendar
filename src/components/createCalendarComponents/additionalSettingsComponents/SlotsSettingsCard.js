@@ -82,7 +82,7 @@ export default function SlotsSettingsCard({name, space ,order ,permission, close
                 <button 
                 className="w-20 rounded-md border-sky-500  border-2 
                             hover:text-white hover:bg-sky-500 transition ease-linear duration-150 hover:font-semibold" 
-                            onClick={handleAddClick}>Dodaj</button>
+                            onClick={handleAddClick}>{name && space && order !== false? "Zmień" : "Dodaj"}</button>
                 {showRemoveButton && <button 
                 className="w-20 rounded-md border-red-400  border-2 
                             hover:text-white hover:bg-red-500 transition ease-linear duration-150 hover:font-semibold" 

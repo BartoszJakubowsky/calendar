@@ -19,7 +19,6 @@ export default function Time({value, onChange, timeCard})
 
 
 
-
     const handleCloseClick = close => 
     {
         setIsWatchClicked(false);

@@ -6,35 +6,53 @@
 //need to import menu 
 //need to import carts -> 
 
-
+import { useState } from "react";
 import CalendarCard from "../components/CalendarCard";
 import AdminCalendarCard from "../components/AdminCalendarCart";
 import Route from "../components/Route";
-
 import useCalendars from '../hooks/useCalendars';
 import useAuthenctication from "../hooks/useAuthentication";
 import Convirm from "../components/Convirm";
-import { calculateNewValue } from "@testing-library/user-event/dist/utils";
-
 
 function MainPage({className}) 
 {
-    const {calendarNames, convirm, navigate} = useCalendars();
+    const {calendars, convirm, navigate, setCalendarToEdit} = useCalendars();
     const {isAdmin} = useAuthenctication();
+    const navigation = (calendarName) => 
+    {
+            navigate(calendarName.replaceAll(' ', '_'));
+    }
 
-    const handleCartClick = calendarName => navigate(calendarName.replaceAll(' ', '_'));
+    const handleCalendarCreate = calendarName => 
+    {
+        setCalendarToEdit(false);
+        navigation(calendarName);
+    }
 
   
     //to add -> link to each cart
-    const createCalendarCard = calendarNames.map(calendar => 
+    const createCalendarCard = calendars.map((calendar, index) => 
         {
+            if (calendar.name === '')
+            {
+                return <CalendarCard
+                key={index}
+                calendar={calendar}
+                className='pointer-events-none animate-pulse'
+                >
+                    {<div className="w-3/4 h-4 empty:bg-slate-300 animate-pulse rounded"></div>}
+                </CalendarCard>
+            }
+            
+
             return  <CalendarCard 
-                    key = {calendar.order}
+                    key = {index}
                     calendar={calendar} 
-                    onClick={()=>handleCartClick(calendar.name)}>
+                    onClick={()=>navigation(calendar.name)}
+                    >
                     {/* here's link */}
                     <div>{calendar.name}</div>
-                    {isAdmin && <AdminCalendarCard toggleIndex={calendar.order} calendarName={calendar.name}/>}
+                    {isAdmin && <AdminCalendarCard toggleIndex={index} calendar={calendar} navigation={navigation} />}
                     </CalendarCard>
                
                 
@@ -46,7 +64,7 @@ function MainPage({className})
                     {isAdmin && <CalendarCard
                         key={'add-cart'}
                         calendar = {{order: 'last'}}
-                        onClick = {()=>handleCartClick('stwórz_wózek')}
+                        onClick = {()=>handleCalendarCreate('ustawienia')}
                         >{"Dodaj nowy wózek"}
                     </CalendarCard>}
                     {convirm}

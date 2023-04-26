@@ -1,63 +1,37 @@
 import { useState, useEffect } from "react";
+import { update } from "react-spring";
 // import io from 'socket.io-client';
+import { v4 as uuidv4 } from 'uuid';
+//slot example
+/*
+{
+    "calendar": "Środa Wielkopolska",
+    "date": "KWIECIEŃ.2023",
+    "weekIndex": 4,
+    "day": "ŚRODA",
+    "time": "08:00",
+    "slotName": "Oficjalne",
+    "slotIndex": 0,
+    "sign": "Bartosz Jakubowski"
+}
+*/
 
+//  const socket = io.connect();
+    
+//  socket.on('connect', (data) => 
+//  {
+//  });
+//  socket.on('messages', (data) => 
+//  {
 
+//  });
 
-let isFirstMount = true;
 let isInitialized = false;
 let slots = [];
 export default function useWebSockets(message)
 {
 
-    // const [socket, setSocket] = useState(true);
-    // const [listeners, setListeners] = useState([]);
-  
-    // useEffect(() => {
-    //   const newSocket = io('http://localhost:3000');
-  
-    //   newSocket.on('connect', () => {
-    //     console.log('Connected to WebSocket');
-    //   });
-  
-    //   newSocket.on('disconnect', () => {
-    //     console.log('Disconnected from WebSocket');
-    //   });
-  
-    //   newSocket.on('message', (data) => {
-    //     listeners.forEach((listener) => {
-    //       listener(data);
-    //     });
-    //   });
-  
-    //   setSocket(newSocket);
-  
-    //   return () => {
-    //     newSocket.disconnect();
-    //   };
-    // }, []);
-
-    //webSockets sim
-    useEffect(()=>
-    {
-        if (isFirstMount) 
-        {
-            // Do something on the first mount
-            console.log('First mount');
-            isFirstMount = false;
-        }
-        //  else if (!isInitialized) 
-        // {
-        //     // Do something once when initialized
-        //     //recive messages, send messages
-
-        //     console.log('Initialized');
-        //     isInitialized = true;
-        // } else 
-        // {
-        //     // Do something on every subsequent mount
-        //     console.log('Subsequent mount');
-        // }
-    })
+    
     const addNewSlot = newSlot => slots.push(newSlot);
     
     const removeOldSlot = oldSlot => 
@@ -91,8 +65,9 @@ export default function useWebSockets(message)
             if(newSlot.slotName === oldSlot.slotName) 
             if(newSlot.slotIndex === oldSlot.slotIndex) 
             {
+
+                // if (oldSlot.id? 'send obj with new id as post through web sockets' : 'send obj as actualization')
                 oldSlot.sign(newSlot.sign);
-                //send socket message
             }
         }
     }

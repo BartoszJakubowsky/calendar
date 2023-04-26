@@ -6,18 +6,16 @@ import SelectMonths from "../components/createCalendarComponents/SelectMonths";
 import AdditionalSettings from "../components/createCalendarComponents/AdditionalSettings";
 import useCalendars from '../hooks/useCalendars';
 
-export default function CreateCalendarPage() 
+export default function CreateCalendarPage({calendarName, calendarDate, calendarTime, calendarSlots}) 
 {
-
-    const {calendars, setCalendars} = useCalendars();
-    const [name, setName] = useState('');
-    const [year, setYear] = useState(new Date().getFullYear());
+    const {createCalendar, updateCalendar} = useCalendars();
+    const [name, setName] = useState(calendarName);
+    const [year, setYear] = useState(calendarDate? parseInt(calendarDate[0].split('.')[1], 10) : new Date().getFullYear());
     const [additional, setAdditional] = useState(false);
     const [slotSettingsCard, setSlotSettingsCard] = useState(false);
     const [timeSettingCard, setTimeSettingsCard] = useState(false);
-    const [date, setDate] = useState([]);
+    const [date, setDate] = useState(calendarDate);
     const [isHover, setIsHover] = useState(false);
-
     const handleAdditional = addSettings => setAdditional(addSettings);
     const handleNameChange = event => setName(event.target.value);
     const handleMonth = (months) => setDate(months);
@@ -26,7 +24,7 @@ export default function CreateCalendarPage()
     {
         event.preventDefault();
         const allSettings = {name, date: date, ...additional};
-        setCalendars(allSettings);
+        updateCalendar(allSettings);
     }
 
 
@@ -68,9 +66,10 @@ export default function CreateCalendarPage()
                 year={year}
                 handleMonth={handleMonth}                
                 handleYear={handleYear}
+                selectedMonths={date}
                 />
                 <label className="">Ustawienia dodatkowe</label>
-                <AdditionalSettings value={additional} onChange={handleAdditional} slotCard={setSlotSettingsCard} timeCard={setTimeSettingsCard}/>
+                <AdditionalSettings calendarTime={calendarTime} calendarSlots={calendarSlots} onChange={handleAdditional} slotCard={setSlotSettingsCard} timeCard={setTimeSettingsCard}/>
                 <button 
                 className="self-center my-2 w-20 rounded-md border-sky-500  border-2 
                             hover:text-white hover:bg-sky-500 transition ease-linear duration-150 hover:font-semibold" 

@@ -22,7 +22,7 @@ export default function Slots({value, slotCard, onChange})
                     slotspace={slot.space}
                     slotorder={slot.order}
                     onClick={handleClick}
-                    className='w-10 h-10 bg-slate-500 overflow-hidden'>
+                    className='w-24 rounded-ms h-10 bg-slate-500 text-white overflow-hidden mx-2'>
                     {slot.name}
                     </button>
             )

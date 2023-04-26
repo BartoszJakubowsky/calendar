@@ -1,8 +1,25 @@
 {
-  "calendars" : 
+  "calendars": 
   [
-    {"name": "Wózek Miłostowo", "order" : 1},
-    {"name": "Wózek Fontanna", "order" : 2},
-    {"name": "Wózek Jakiś Tam", "order" : 3}
+    {
+      "name": "Środa Wielkopolska", 
+      "date": [
+        "KWIECIEŃ.2023", 
+        "MAJ.2023"
+      ],
+      "time": 
+      {
+        "timeFrom": "08:00", "timeTo": "16:00", "timeSpace": "01:00"
+      }, 
+      "slots": 
+      [
+        {
+          "name": "Oficjalne", "space": "2", "order": "1"
+        },
+        {
+          "name": "Nieoficjalne", "space": "2", "order": "2"
+        }
+      ]
+    }
   ]
 }

@@ -30,10 +30,15 @@ import { useEffect } from 'react'
 function App()
 {
       const {isAdmin} = useAuthenctication();
-      const {login, calendars} = useCalendars();
+      const {login, calendars, calendarToEdit} = useCalendars();
 
+
+        
       const calendarsRoutes = calendars.map(calendar=>
             {
+                  if (calendar.name === undefined)
+                  return false;
+                  
                   const name = (calendar.name).replaceAll(' ', '_');
 
                   return(<Route path={name}
@@ -56,9 +61,13 @@ function App()
                          key='admin'>
                         <AdminUserPage/>
                   </Route>}
-                  {isAdmin && <Route path='stwórz_wózek'
-                                     key='stwórz_wózek'>
-                                    <CreateCalendarPage/>
+                  {isAdmin && <Route path='ustawienia'
+                                     key='ustawienia'>
+                                    <CreateCalendarPage 
+                                    calendarName={calendarToEdit?.name} 
+                                    calendarDate={calendarToEdit?.date} 
+                                    calendarTime={calendarToEdit?.time} 
+                                    calendarSlots={calendarToEdit?.slots}/>
                               </Route>}
             </div>
 }
