@@ -6,28 +6,24 @@ export default function Delete({calendar, children, message, submit, ...rest})
 {
 
 
-    const {convirm, setConvirm} = useCalendars();
+    const {convirm, setConvirm, deleteCalendar} = useCalendars();
 
 
 
-    const deleteCaledar = response =>
+    const handleDeleteCalendar = response =>
     {
-
+        //stop
         if (!response)
-        {
-            console.log("anulowano usunięcie");
             return;
-        }
-        
-        
-        console.log('Remember to add delete func -> id, axios, node response ...')
+        else
+        deleteCalendar(calendar);
     }
     
     
     const handleClick = event =>
     {
         event.stopPropagation();
-        setConvirm(<Convirm message={message} additional={rest.additional} submit={submit} handleSubmit={deleteCaledar}/>)
+        setConvirm(<Convirm message={message} additional={rest.additional} submit={submit} handleSubmit={handleDeleteCalendar}/>)
     }
 
 

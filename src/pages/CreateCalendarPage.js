@@ -6,28 +6,29 @@ import SelectMonths from "../components/createCalendarComponents/SelectMonths";
 import AdditionalSettings from "../components/createCalendarComponents/AdditionalSettings";
 import useCalendars from '../hooks/useCalendars';
 
-export default function CreateCalendarPage({calendarName, calendarDate, calendarTime, calendarSlots}) 
+export default function CreateCalendarPage({calendarName, calendarDate, calendarTime, calendarSlots, calendarId}) 
 {
-    const {createCalendar, updateCalendar} = useCalendars();
-    const [name, setName] = useState(calendarName);
+    
+    const entryCalendar = {name: calendarName, date: calendarDate, time: calendarTime, slots: calendarSlots, id:calendarId};
+    const {createCalendar, handleCalendarCreate, navigate} = useCalendars();
+    const [name, setName] = useState(calendarName || '');
     const [year, setYear] = useState(calendarDate? parseInt(calendarDate[0].split('.')[1], 10) : new Date().getFullYear());
     const [additional, setAdditional] = useState(false);
     const [slotSettingsCard, setSlotSettingsCard] = useState(false);
     const [timeSettingCard, setTimeSettingsCard] = useState(false);
-    const [date, setDate] = useState(calendarDate);
+    const [date, setDate] = useState(calendarDate || []);
     const [isHover, setIsHover] = useState(false);
     const handleAdditional = addSettings => setAdditional(addSettings);
     const handleNameChange = event => setName(event.target.value);
-    const handleMonth = (months) => setDate(months);
     const handleYear = (year) => setYear(year)
     const handleSendClick = event => 
     {
         event.preventDefault();
         const allSettings = {name, date: date, ...additional};
-        updateCalendar(allSettings);
+        //oldCalendar, newCalendar
+        handleCalendarCreate(entryCalendar, allSettings);
+        navigate('/');
     }
-
-
         const handleMouseEnter = () => setIsHover(true);
         const handleMouseLeave = () => 
         {
@@ -36,7 +37,7 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
             else
                 setIsHover(false);   
         }
-
+        console.log(date);
         const mainDivClassName = classNames(`absolute left-1/4 w-1/2 h-fit 
                                             flex flex-col justify-start items-center 
                                             border-black border-2 mt-10 
@@ -64,9 +65,9 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
                 <label className="">Wybierz miesiąc lub miesiące</label>    
                 <SelectMonths
                 year={year}
-                handleMonth={handleMonth}                
+                setDate={setDate}                
                 handleYear={handleYear}
-                selectedMonths={date}
+                date={date}
                 />
                 <label className="">Ustawienia dodatkowe</label>
                 <AdditionalSettings calendarTime={calendarTime} calendarSlots={calendarSlots} onChange={handleAdditional} slotCard={setSlotSettingsCard} timeCard={setTimeSettingsCard}/>

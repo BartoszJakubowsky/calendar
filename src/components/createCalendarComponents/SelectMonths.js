@@ -5,12 +5,11 @@ import { HiArrowSmLeft as ArrowLeft} from "react-icons/hi";
 import { HiArrowSmRight as ArrowRight } from "react-icons/hi";
 import classNames from "classnames";
 
-export default function SelectMonths({year, handleYear, handleMonth, selectedMonths}) 
+export default function SelectMonths({year, handleYear, setDate, date}) 
 {
     const monthsNames = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj',  'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', ' Grudzień' ];
     const thisYear = new Date().getFullYear();
     const chosedYear = year === thisYear;
-    const [months, setMonths] = useState(selectedMonths || []);
 
     let avaibleMonths;
 
@@ -27,21 +26,17 @@ export default function SelectMonths({year, handleYear, handleMonth, selectedMon
     {
         const chosedMonth = event.target.innerText + '.' + year.toString();
 
-
-        if (months.includes(chosedMonth))
-            setMonths(months.filter(month => {return month !== chosedMonth}))
+        if (date.includes(chosedMonth))
+        setDate(date.filter(month => {return month !== chosedMonth}))
         else
-            setMonths([...months, chosedMonth])
-
-        handleMonth(months);
-
+        setDate([...date, chosedMonth])
     }
 
     const renderMonths = avaibleMonths.map(month=>
         {
 
             const classes = classNames("text-sm uppercase text-center px-1 py-2 m-1 cursor-pointer duration-150 active:bg-lime-400 active:scale-110 ",
-                months.includes(month.toUpperCase() + '.' +year.toString())? 'bg-yellow-200 hover:bg-yellow-300' : 'bg-lime-200 hover:bg-lime-300'
+            date.includes(month.toUpperCase() + '.' +year.toString())? 'bg-yellow-200 hover:bg-yellow-300' : 'bg-lime-200 hover:bg-lime-300'
             )
             
             return (

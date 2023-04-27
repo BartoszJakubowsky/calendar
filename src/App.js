@@ -67,7 +67,8 @@ function App()
                                     calendarName={calendarToEdit?.name} 
                                     calendarDate={calendarToEdit?.date} 
                                     calendarTime={calendarToEdit?.time} 
-                                    calendarSlots={calendarToEdit?.slots}/>
+                                    calendarSlots={calendarToEdit?.slots}
+                                    calendarId={calendarToEdit?.id}/>
                               </Route>}
             </div>
 }

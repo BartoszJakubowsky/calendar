@@ -10,14 +10,12 @@ export default function AdminCalendarCard({toggleIndex, calendar, navigation})
     const [isToggled, setToggled] = useState(false);
     const handleMouseEnter = () => {setToggled(true)}
     const handleMouseLeave = () => {setToggled(false); };
-    const handleSettings = (event) =>
+const handleSettings = (event) =>
     {
         event.stopPropagation();
         setCalendarToEdit(calendar);
         navigation('ustawienia');
         handleMouseLeave();
-
-
     }
     // const handleAdminCardClick = (event) => event.stopPropagation();
 
@@ -31,6 +29,7 @@ export default function AdminCalendarCard({toggleIndex, calendar, navigation})
             message={`Czy na pewno chcesz usunąć ${calendar.name}?`}
             additional={'Operacji nie da się cofnąć'}
             submit={'Usuń kalendarz'}
+            calendar={calendar}
             >Usuń</Delete>
     </div>
 

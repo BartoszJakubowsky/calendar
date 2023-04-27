@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect} from "react";
 import useAuthenctication from '../hooks/useAuthentication';
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
 
 
 const CalendarsContext = createContext();
@@ -38,7 +39,6 @@ useEffect(()=>
     
 }, []);
 
-console.log(calendars);
 // async function getCalendars() 
 // {
 //     return await axios.get('http://localhost:3001/calendars');
@@ -59,24 +59,65 @@ const calendarNames = calendars.map((calendar, index) =>
     })
 
 const  createCalendar = async (newCalendar) =>
-{
+{   
+    newCalendar.id = uuidv4();
+    console.log(newCalendar);
         fetch('http://localhost:3001/calendars', {
         method: 'POST',
         headers: 
         {
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify(calendars)
+    body: JSON.stringify(newCalendar)
     })
     .then(response => response.json())
-    .then(data => setCalendars([...calendars, data]))
+    .then(receivedCalendar => setCalendars([...calendars, receivedCalendar]))
+    .catch(error => console.error(error));
+}
+const updateCalendar = async (oldCalendar, newCalendar) =>
+{
+    fetch(`http://localhost:3001/calendars/${oldCalendar.id}`, {
+        method: 'PUT',
+        headers: 
+        {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newCalendar)
+    })
+    .then(response => response.json())
+    .then(receivedCalendar => setCalendars(calendars.map((calendar, index)=>
+    {
+        if(calendar.id === oldCalendar.id)
+            return receivedCalendar
+        return calendar
+    })))
     .catch(error => console.error(error));
 }
 
-const updateCalendar = async (oldCalendar, updatedCalendar) =>
+const deleteCalendar = async (calendarToDelete) =>
 {
-    console.log(oldCalendar);
+
+    fetch(`http://localhost:3001/calendars/${calendarToDelete.id}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if(response.ok) {
+            setCalendars(calendars.filter(calendar => calendar.id !== calendarToDelete.id));
+        } else {
+            throw new Error('Network response was not ok');
+        }
+    })
+    .catch(error => console.error(error));
 }
+const handleCalendarCreate = async (oldCalendar, newCalendar) =>
+{
+    if (oldCalendar.name === undefined || oldCalendar.name === '')
+        createCalendar(newCalendar);
+    else
+        updateCalendar(oldCalendar, newCalendar)
+}
+
+
 
 const toProvide = 
 {
@@ -89,9 +130,10 @@ const toProvide =
     setConvirm, 
     calendars, 
     createCalendar,
-    updateCalendar, 
+    handleCalendarCreate, 
     calendarToEdit, 
-    setCalendarToEdit
+    setCalendarToEdit,
+    deleteCalendar
 }
 
 

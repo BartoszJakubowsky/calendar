@@ -130,7 +130,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
   else
   return(
     <div className={weekClassName}>
-     {allWeeksLeftInMonth.map((week, index)=>
+     {allWeeksInMonth.map((week, index)=>
         {
           return (
             <section key={index} className={`snap-start h-full w-full bg-gray-100 flex flex-row`}>
