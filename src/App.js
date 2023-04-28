@@ -51,8 +51,8 @@ function App()
                          key='/'>
                         <MainPage/>
                   </Route>
-                  <Route path='login'
-                         key='login'>
+                  <Route path='logowanie'
+                         key='logowanie'>
                         <LoginPage/>      
                   </Route>
                   {calendarsRoutes}

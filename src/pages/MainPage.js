@@ -61,6 +61,15 @@ function MainPage({className})
     return <div className="flex flex-col justify-center items-center h-screen overflow-hidden" >
                     {createCalendarCard}
                     {/* Always show additional cart */}
+
+                    <CalendarCard
+                        key={'logowanie'}
+                        calendar = {''}
+                        onClick = {()=>handleCalendarCreate('logowanie')}
+                        >{"Logowanie"}
+                    </CalendarCard>
+
+
                     {isAdmin && <CalendarCard
                         key={'add-cart'}
                         calendar = {{order: 'last'}}

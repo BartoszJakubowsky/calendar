@@ -10,6 +10,13 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
 {
     
     const entryCalendar = {name: calendarName, date: calendarDate, time: calendarTime, slots: calendarSlots, id:calendarId};
+    
+    let canEdit;
+    if (entryCalendar.name && entryCalendar.time && entryCalendar.slots && entryCalendar.id)
+        canEdit = false;
+    else
+        canEdit = true;
+
     const {createCalendar, handleCalendarCreate, navigate} = useCalendars();
     const [name, setName] = useState(calendarName || '');
     const [year, setYear] = useState(calendarDate? parseInt(calendarDate[0].split('.')[1], 10) : new Date().getFullYear());
@@ -60,7 +67,8 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
                 <Input 
                 className="box-border h-10 border-2 border-opacity-100 rounded-sm hover:border-gray-400 duration-300 ease-in-out "
                 calendarName={name} 
-                handleNameChange={handleNameChange}/>
+                handleNameChange={handleNameChange}
+                />
 
                 <label className="">Wybierz miesiąc lub miesiące</label>    
                 <SelectMonths

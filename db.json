@@ -1,3 +1,15 @@
 {
-  "calendars": []
+  "calendars": [
+    {
+      "name": "123",
+      "date": [
+        "KWIECIEŃ.2023",
+        "MAJ.2023",
+        "CZERWIEC.2023"
+      ],
+      "time": false,
+      "slots": [],
+      "id": "182aa41d-e354-4bcf-aab5-2eb7657c7b4e"
+    }
+  ]
 }

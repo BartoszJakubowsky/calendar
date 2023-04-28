@@ -1,14 +1,11 @@
-//remember about logging out when enter this page
-//think about using useAunthentication also as setting new cookies + sending data to server
-import { useEffect } from 'react';
-import useCalendars from '../hooks/useCalendars';
-
-
-export default function LoginPage() 
-{
-    const {login, setLogin} = useCalendars();
-
-    useEffect(()=> setLogin(false), [])
-    
-
+import React from 'react';
+import Login from './loginPage/Login';
+import Password from './loginPage/Password';
+import Register from './loginPage/Register'
+export default function LoginPage() {
+    return (
+        <div className="flex flex-col bg-indigo-100 justify-center h-screen w-screen overflow-hidden">
+           <Login/>
+        </div>
+    );
 }
