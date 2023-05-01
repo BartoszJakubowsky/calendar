@@ -11,6 +11,6 @@ const appUrl = window.appUrl || 'domyślny-adres-url';
 
 root.render(
             <CalendarsProvider>
-                <App url={appUrl} />
+                <App/>
             </CalendarsProvider>
             );

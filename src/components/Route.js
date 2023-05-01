@@ -4,6 +4,10 @@ function Route({path, children})
 {
     const {currentPath} = useCalendars();
 
+    if (Array.isArray(path) && path.includes(currentPath))
+    {
+        return children
+    }
     if (path === currentPath)
         return children
     else

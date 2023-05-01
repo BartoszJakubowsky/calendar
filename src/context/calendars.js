@@ -39,15 +39,11 @@ useEffect(()=>
     
 }, []);
 
-// async function getCalendars() 
-// {
-//     return await axios.get('http://localhost:3001/calendars');
-// }
-
 
 const navigate = to => 
 {
     window.history.pushState({}, '', to);
+
     setCurrentPath(to);
 }
 
@@ -123,6 +119,7 @@ const toProvide =
 {
     navigate, 
     currentPath, 
+    setCurrentPath,
     login, 
     setLogin, 
     calendarNames, 

@@ -2,12 +2,9 @@ import { useState } from "react";
 import { useSpring, animated } from 'react-spring';
 import Password from "./Password";
 
-export default function Login(params) 
+export default function Login({mail, setMail, move}) 
 {
 
-
-
-    const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
 
 
@@ -31,7 +28,16 @@ export default function Login(params)
     }
 
 
-
+    const handleRegisterClick = () => 
+    {
+        window.history.pushState({}, '', '/register');  
+        move(2);
+    }
+    const handlePasswordClick = () => 
+    {
+        window.history.pushState({}, '', '/password');  
+        move(0);
+    }
 
     const handlePasswordChange = (event) => 
     {
@@ -61,6 +67,8 @@ export default function Login(params)
         else
             setSent(true);  
     }
+
+
 
     const buttonAnimation = useSpring({
         opacity: sent ? 0 : 1,
@@ -114,6 +122,7 @@ export default function Login(params)
               <div className="overflow-hidden">
               <a
                         className="text-xs text-purple-600 hover:underline"
+                        onClick={handlePasswordClick}
                     >
                         Zapomniałeś hasła?
                     </a>
@@ -139,10 +148,11 @@ export default function Login(params)
                 </div>
             </form>
             <p className="mt-8 text-xs font-light text-center text-gray-700 flex flex-col">
-                    {" "}
-                    Nie masz jeszcze konta?{" "}
+                    
+                    Nie masz jeszcze konta?
                     <a
                         className="font-medium text-purple-600 hover:underline"
+                        onClick={handleRegisterClick}
                     >
                         Wyślij prośbę o rejestrację
                     </a>

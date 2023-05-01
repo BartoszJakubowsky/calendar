@@ -19,8 +19,8 @@ function MainPage({className})
     const {calendars, convirm, navigate, setCalendarToEdit} = useCalendars();
     const {isAdmin} = useAuthenctication();
     const navigation = (calendarName) => 
-    {
-            navigate(calendarName.replaceAll(' ', '_'));
+    {   
+            navigate('/' + calendarName.replaceAll(' ', '_'));
     }
 
     const handleCalendarCreate = calendarName => 

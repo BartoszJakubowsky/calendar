@@ -18,8 +18,6 @@ import LoginPage from './pages/LoginPage'
 import MainPage from './pages/MainPage'
 import AdminUserPage from './pages/AdminUserPage'
 import CreateCalendarPage from './pages/CreateCalendarPage'
-
-
 //only for test purpusses -> at the end it's goint to be admin
 import useCalendars from './hooks/useCalendars';
 import useAuthenctication from './hooks/useAuthentication';
@@ -30,16 +28,15 @@ import { useEffect } from 'react'
 function App()
 {
       const {isAdmin} = useAuthenctication();
-      const {login, calendars, calendarToEdit} = useCalendars();
-
+      const {login, calendars, calendarToEdit, currentPath} = useCalendars();
 
         
       const calendarsRoutes = calendars.map(calendar=>
             {
-                  if (calendar.name === undefined)
+                  if (calendar.name === undefined || calendar.name === '')
                   return false;
+                  const name = '/' + (calendar.name).replaceAll(' ', '_');
                   
-                  const name = (calendar.name).replaceAll(' ', '_');
 
                   return(<Route path={name}
                                key={name}> 
@@ -51,17 +48,20 @@ function App()
                          key='/'>
                         <MainPage/>
                   </Route>
-                  <Route path='logowanie'
-                         key='logowanie'>
-                        <LoginPage/>      
+                  <Route path={['/logowanie', '/register', '/password']} key='logowanie'>
+                  {['/password', '/logowanie', '/register'].map((path, index) =>
+                        {
+                              if (path === currentPath)
+                              return <LoginPage page={index} />;
+                        })}
                   </Route>
                   {calendarsRoutes}
                   {login &&
-                  <Route path='admin'
+                  <Route path='/admin'
                          key='admin'>
                         <AdminUserPage/>
                   </Route>}
-                  {isAdmin && <Route path='ustawienia'
+                  {isAdmin && <Route path='/ustawienia'
                                      key='ustawienia'>
                                     <CreateCalendarPage 
                                     calendarName={calendarToEdit?.name} 

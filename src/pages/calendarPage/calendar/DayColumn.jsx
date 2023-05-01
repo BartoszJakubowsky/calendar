@@ -2,7 +2,6 @@ import DaySlot from './DaySlot';
 
 export default function DayColumn({day, isActive, isBlank, timeArr, slots, name, date, weekIndex, dayDate, ...rest}) 
 {
-
     let _dayDate;
     if (dayDate)
     {
@@ -13,6 +12,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
         const _year = data.getFullYear().toString();
         _dayDate = `${_day}.${_month}.${_year}`;
     }
+
     if (isBlank)
         return (
             <div className={` bg-gray-400 flex flex-col w-full border-l-2 border-black`} key={day}>
@@ -59,7 +59,6 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                         {slots.map(slot =>
                         {   
                                           
-
 
 
                             let spaces = [];

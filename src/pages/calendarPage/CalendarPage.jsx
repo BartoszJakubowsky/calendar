@@ -40,13 +40,13 @@ const monthCount = date.length;
 
 
     return(
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className=" w-screen h-screen bg-red-100">
     {convirm}
         <Menu calendarName={name}/>
         {/* month holder */}
-        <div className={`${isMobile? 'mt-5 mx-5 w-full h-full' : ' mt-14 max-w-[90%] h-5/6'} bg-red-300 mx-auto overflow-hidden rounded-sm text-sm`}>
+        <div className={`${isMobile? 'mt-5 mx-5 w-full h-full' : ' mt-14 max-w-[90%] h-5/6'} bg-red-300 mx-auto overflow-x-hidden rounded-sm text-sm overflow-hidden`}>
             <div className="bg-blue-400 w-full h-10 flex justify-start">
-            <button
+          <button
             className={classNames(
                 "py-2 px-4 rounded-md text-white",
                 displayedMonth === 0 ? "bg-gray-500 cursor-default" : "bg-blue-500 hover:bg-blue-600 cursor-pointer"
@@ -70,7 +70,7 @@ const monthCount = date.length;
             {/* caruzel */}
             <div className="relative w-full h-full">
             {springs.map((props, index) => (
-              <animated.div key={index} className="absolute w-full h-full" style={{ ...props }}>
+              <animated.div key={index} className="absolute w-full h-full pb-14" style={{ ...props }}>
                 <Month name={name} date={date[index]} slots={slots} time={time} />
               </animated.div>
             ))}

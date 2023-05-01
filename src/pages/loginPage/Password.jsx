@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useSpring, animated } from 'react-spring';
-export default function Password() 
+import useCalendars from "../../hooks/useCalendars";
+export default function Password({mail, setMail, moveBack}) 
 {
 
-    const [mail, setMail] = useState('');
+
     const [sent, setSent] = useState(false);
     const [mailError, setMailError] = useState(false);
     const mailCheck = mail === '';
+
 
     const handleMailChange = (event) => 
     {

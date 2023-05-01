@@ -48,86 +48,84 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-
   const weekClassName = classNames('w-full h-full overflow-y-scroll overflow-x-scroll snap snap-y snap-mandatory');
   // const dayTimeColumnClass = classNames('h-full w-full flex flex-auto')
-  if (isMobile || window.innerWidth < 1366)
-  return (
-    <div className={weekClassName}>
-      {allDaysInMonth.map((day, index)=>
-        {
-              let _dayDate;
-              const data = day.date;
-              const _day = data.getDate().toString().padStart(2, "0");
-              const _month = (data.getMonth() + 1).toString().padStart(2, "0");
-              const _year = data.getFullYear().toString();
-              _dayDate = `${_day}.${_month}.${_year}`;
+  // if (isMobile || window.innerWidth < 1366)
+  // return (
+  //   <div className={weekClassName}>
+  //     {allDaysInMonth.map((day, index)=>
+  //       {
+  //             let _dayDate;
+  //             const data = day.date;
+  //             const _day = data.getDate().toString().padStart(2, "0");
+  //             const _month = (data.getMonth() + 1).toString().padStart(2, "0");
+  //             const _year = data.getFullYear().toString();
+  //             _dayDate = `${_day}.${_month}.${_year}`;
 
-          return (
-            <section key={index} className='"w-full h-screen flex snap-start'>
-            <Time timeArr={timeArr}/>
-            {/* dayNameSlot + slots name */}
-            <div className={`h-20 flex-none border-b-2 border-black w-full`}>
-                <div className='flex flex-col justify-center items-center'>
-                    <span className=' font-semibold'>{day.day}</span>
-                    <span>{_dayDate}</span>
-                </div>
-                {/* slots name holder */}
-                <div className="overflow-hidden flex flex-none "> 
-                {slots.map(slot => {
-                return (
-                    <span className="inline-block overflow-hidden w-full">{slot.name}</span>
-                );
-            })}
-                </div>
-            </div>  
-            {/* check if array from object is empty (if object is === {})   */}
+  //         return (
+  //           <section key={index} className='"w-full h-screen flex snap-start'>
+  //           <Time timeArr={timeArr}/>
+  //           {/* dayNameSlot + slots name */}
+  //           <div className={`h-20 flex-none border-b-2 border-black w-full`}>
+  //               <div className='flex flex-col justify-center items-center'>
+  //                   <span className=' font-semibold'>{day.day}</span>
+  //                   <span>{_dayDate}</span>
+  //               </div>
+  //               {/* slots name holder */}
+  //               <div className="overflow-hidden flex flex-none "> 
+  //               {slots.map(slot => {
+  //               return (
+  //                   <span className="inline-block overflow-hidden w-full">{slot.name}</span>
+  //               );
+  //           })}
+  //               </div>
+  //           </div>  
+  //           {/* check if array from object is empty (if object is === {})   */}
 
 
-            {timeArr.map((time, index) =>
-            {   
-                //cell day
-                return (
-                <div
-                    key={index} 
-                    className="flex flex-row w-full h-full  border-b-2 border-black">
-                        {/* slots in cells / slots holder */}
-                        {slots.map(slot =>
-                        {   
+  //           {timeArr.map((time, index) =>
+  //           {   
+  //               //cell day
+  //               return (
+  //               <div
+  //                   key={index} 
+  //                   className="flex flex-row w-full h-full  border-b-2 border-black">
+  //                       {/* slots in cells / slots holder */}
+  //                       {slots.map(slot =>
+  //                       {   
                                           
-                            let spaces = [];
-                            for (let i = 0; i < slot.space; i++) 
-                            {
-                                spaces.push(
-                                   <DaySlot 
-                                    calendarName={name} 
-                                    dayName={day.day} 
-                                    dayDate={_dayDate}
-                                    date={date} 
-                                    time={time} 
-                                    slotName={slot.name} 
-                                    slotIndex={i}
-                                    slotOrder={slot.order}
-                                    weekIndex={index}
-                                    />
-                                )
-                            }
-                        //slot holder
-                        return <div className={`flex flex-col w-full h-full order-${slot.order} overflow-hidden`}>
-                                {spaces}
-                                </div>
+  //                           let spaces = [];
+  //                           for (let i = 0; i < slot.space; i++) 
+  //                           {
+  //                               spaces.push(
+  //                                  <DaySlot 
+  //                                   calendarName={name} 
+  //                                   dayName={day.day} 
+  //                                   dayDate={_dayDate}
+  //                                   date={date} 
+  //                                   time={time} 
+  //                                   slotName={slot.name} 
+  //                                   slotIndex={i}
+  //                                   slotOrder={slot.order}
+  //                                   weekIndex={index}
+  //                                   />
+  //                               )
+  //                           }
+  //                       //slot holder
+  //                       return <div className={`flex flex-col w-full h-full order-${slot.order} overflow-hidden`}>
+  //                               {spaces}
+  //                               </div>
                            
-                        })}
-                </div>)
-            })}
+  //                       })}
+  //               </div>)
+  //           })}
 
-            </section>
-          )
-        })}
-    </div>
-  )
-  else
+  //           </section>
+  //         )
+  //       })}
+  //   </div>
+  // )
+  // else
   return(
     <div className={weekClassName}>
      {allWeeksInMonth.map((week, index)=>

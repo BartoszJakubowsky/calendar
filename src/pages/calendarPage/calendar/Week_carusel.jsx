@@ -109,23 +109,23 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
 
 
   const weekClassName = classNames('w-full h-screen relative')
-  if (isMobile)
-  return (
-    <div className={weekClassName} onScroll={handleScroll}>
-     {scrollDays.map((props, index) =>
-     {
-      <animated.section key={index} className=' absolute w-full h-screen flex' style={{...props}}>
-      <Time time={time}/>
-            {/* check if array from object is empty (if object is === {})   */}
-      <Day 
-        className=''
-        day={allDaysLeftInMonth[index]} 
-        isActive={(Object.keys(allDaysLeftInMonth[index]).length === 0 ? false :true)}/>
-      </animated.section>
-     })}
-    </div>
-  )
-  else
+  // if (isMobile)
+  // return (
+  //   <div className={weekClassName} onScroll={handleScroll}>
+  //    {scrollDays.map((props, index) =>
+  //    {
+  //     <animated.section key={index} className=' absolute w-full h-screen flex' style={{...props}}>
+  //     <Time time={time}/>
+  //           {/* check if array from object is empty (if object is === {})   */}
+  //     <Day 
+  //       className=''
+  //       day={allDaysLeftInMonth[index]} 
+  //       isActive={(Object.keys(allDaysLeftInMonth[index]).length === 0 ? false :true)}/>
+  //     </animated.section>
+  //    })}
+  //   </div>
+  // )
+  // else
   return(
     <div className={weekClassName} onScroll={handleScroll}>
     {scrollWeeks.map((props, index) =>

@@ -1,15 +1,29 @@
 {
   "calendars": [
     {
-      "name": "123",
+      "name": "Środa Wielkopolska",
       "date": [
-        "KWIECIEŃ.2023",
         "MAJ.2023",
         "CZERWIEC.2023"
       ],
-      "time": false,
-      "slots": [],
-      "id": "182aa41d-e354-4bcf-aab5-2eb7657c7b4e"
+      "time": {
+        "timeFrom": "08:00",
+        "timeTo": "16:00",
+        "timeSpace": "01:00"
+      },
+      "slots": [
+        {
+          "name": "Oficjalne",
+          "space": "2",
+          "order": 1
+        },
+        {
+          "name": "Nieoficjalne",
+          "space": "2",
+          "order": "2"
+        }
+      ],
+      "id": "32184a00-cce1-4f46-97d0-f70e72a37588"
     }
   ]
 }

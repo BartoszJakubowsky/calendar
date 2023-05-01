@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSpring, animated } from 'react-spring';
 import Password from "./Password";
-
-export default function Register(params) 
+import axios from "axios";
+export default function Register({mail, setMail, moveBack}) 
 {
 
+  
 
-
-    const [mail, setMail] = useState('');
+   
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
-
+    const [loginStatus, setLoginStatus] = useState(false);
 
     const [mailError, setMailError] = useState(false);
     const [nameError, setNameError] = useState(false);
@@ -87,9 +87,22 @@ export default function Register(params)
 
 
         if (mailCheck || nameCheck || surnameCheck || passwordCheck)
+        {
             setSent(false);
-        else
+            return;
+        }
+
             setSent(true);  
+            // axios.post('http://localhost3001/register', {name: name+ ' ' + surname , mail, password}).then(response => 
+            // {
+
+            //     // if(response.data.message)
+            //     //     setLoginStatus(response.data.message);
+            //     // else
+            //     //     setLoginStatus(false);
+            // })
+
+
     }
 
     const buttonAnimation = useSpring({

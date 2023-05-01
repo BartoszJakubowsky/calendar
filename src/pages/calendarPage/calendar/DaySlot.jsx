@@ -6,7 +6,6 @@ import { Transition } from "react-transition-group";
 
 export default function Day({calendarName, dayName, date, time, slotName, slotIndex, dayDate, slotOrder, weekIndex}) 
 {
-
     const user = {name: 'Bartosz Jakubowski', rights: 'user'};
     const [sign, setSign] = useState('');
     const handleSign = newName => setSign(newName);
