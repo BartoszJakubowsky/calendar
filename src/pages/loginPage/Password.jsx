@@ -7,8 +7,28 @@ export default function Password({mail, setMail, moveBack})
 
     const [sent, setSent] = useState(false);
     const [mailError, setMailError] = useState(false);
+    const [password, setPassword] = useState('');
+    const [secondPassword, setSecondPassword] = useState('');
     const mailCheck = mail === '';
 
+    const [passwordError, setPasswordError] = useState(false);
+    const passwordCheck = password.length <= 3 || password === '' || password !== secondPassword;
+
+      const handlePasswordChange = (event) => 
+    {
+
+        if (passwordError && !passwordCheck)
+            setPasswordError(false)
+        
+        setPassword(event.target.value);
+    }
+    const handleSecondPasswordChange = (event) => 
+    {
+            if (passwordError && !passwordCheck)
+                setPasswordError(false)
+            
+        setSecondPassword(event.target.value);
+    }
 
     const handleMailChange = (event) => 
     {
@@ -24,7 +44,10 @@ export default function Password({mail, setMail, moveBack})
         event.preventDefault();
         if (mailCheck)
             setMailError(true)
-        else
+        if (passwordCheck)
+            setPasswordError(true);
+        
+        if(!mailCheck && !passwordCheck)
             setSent(true)
     }
 
@@ -66,7 +89,35 @@ export default function Password({mail, setMail, moveBack})
                     Please enter a valid email address
                     </p> : false} */}
                 </div>
-       
+                    <label
+                        for="password"
+                        className={`block text-sm font-semibold ${passwordError? ' valid text-red-300' : 'text-gray-800'}`}
+                    >
+                        Wpisz nowe hasło
+                    </label>
+                    <input
+                        type="password"
+                        className="peer block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                        onChange={handlePasswordChange}
+                        onBlur={handlePasswordChange}
+                        value={password}
+                        required 
+                    />
+
+                    <label
+                        for="password"
+                        className={`block text-sm font-semibold ${passwordError? ' valid text-red-300' : 'text-gray-800'}`}
+                    >
+                        Powtórz nowe hasło
+                    </label>
+                    <input
+                        type="password"
+                        className="peer block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                        onChange={handleSecondPasswordChange}
+                        onBlur={handleSecondPasswordChange}
+                        value={secondPassword}
+                        required 
+                    />
               <div className="overflow-hidden">
                 <animated.button
                     style={buttonAnimation}

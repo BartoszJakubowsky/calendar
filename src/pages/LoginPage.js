@@ -34,7 +34,7 @@ export default function LoginPage({page})
  
 
     return (
-        <div className="flex flex-col bg-indigo-100 justify-center h-screen w-screen overflow-hidden">
+        <div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden">
             {springs.map((props, index) => (
               <animated.div key={index} className="absolute flex w-full h-full pb-14" style={{ ...props }}>
                 {formToShow[displayedFrom]}
