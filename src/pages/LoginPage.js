@@ -3,7 +3,6 @@ import Login from './loginPage/Login';
 import Password from './loginPage/Password';
 import Register from './loginPage/Register';
 import { useSprings, animated } from "react-spring";
-
 export default function LoginPage({page}) 
 {
 
@@ -36,7 +35,7 @@ export default function LoginPage({page})
     return (
         <div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden">
             {springs.map((props, index) => (
-              <animated.div key={index} className="absolute flex w-full h-full pb-14" style={{ ...props }}>
+              <animated.div key={index} className="absolute flex w-full h-full overflow-hidden pb-14" style={{ ...props }}>
                 {formToShow[displayedFrom]}
               </animated.div>
             ))}

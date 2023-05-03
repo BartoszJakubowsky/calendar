@@ -1,3 +1,4 @@
+import useCalendars from '../../../hooks/useCalendars';
 import SlotSettingsCard from './SlotsSettingsCard';
 
 
@@ -5,6 +6,9 @@ import SlotSettingsCard from './SlotsSettingsCard';
 export default function Slots({value, slotCard, onChange}) 
 {
     //in the future addidiotn settings with permisision
+
+    const {convirm} = useCalendars();
+
 
     const showSlots = value.map(slot=>
     {

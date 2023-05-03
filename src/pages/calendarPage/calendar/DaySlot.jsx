@@ -26,7 +26,6 @@ export default function Day({calendarName, dayName, date, time, slotName, slotIn
     useEffect(() => 
     {
        addNewSlot(thisSlot)
-
        //remove this listener from listeners
        return () => removeOldSlot(thisSlot)
     }, []);
@@ -36,20 +35,19 @@ export default function Day({calendarName, dayName, date, time, slotName, slotIn
 const handleClick = event =>
 {
     event.preventDefault();
-    const signedName = event.target.innerHTML;
 
-    if (signedName === user.name)
+    if (sign === user.name)
     {
         const message = `Czy na pewno chcesz wypisać się z dnia ${dayName.toLowerCase()} ${dayDate}, godzina ${time}?`
         const submit = "Wypisz mnie"    
-        setConvirm(<Convirm message={message} submit={submit} handleSubmit={handleUnsignClick}/>)
+        setConvirm({message : message, submit : submit, handleSubmit : handleUnsignClick})
 
     }
     else
     {
         const message = `Czy na pewno chcesz zapisać się na ${time} w ${dayName.toLowerCase()} ${dayDate}?`
         const submit = "Zapisz mnie"
-        setConvirm(<Convirm message={message} submit={submit} handleSubmit={handleSignClick}/>)
+        setConvirm({message : message, submit : submit, handleSubmit : handleSignClick})
     }
 }
 

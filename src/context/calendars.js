@@ -28,7 +28,11 @@ useEffect(()=>
     window.history.replaceState(null, null, currentPath);
 
     //handler == navigation forward and back withot refresh when pushState was used
-    const handler = () => setCurrentPath(window.location.pathname);
+    const handler = () => 
+    {
+        setConvirm(false);
+        setCurrentPath(window.location.pathname);
+    }
     window.addEventListener('popstate', handler);
     // getCalendars().then(calendars => setCalendars());
 
