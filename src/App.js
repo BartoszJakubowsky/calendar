@@ -21,16 +21,14 @@ import CreateCalendarPage from './pages/CreateCalendarPage'
 //only for test purpusses -> at the end it's goint to be admin
 import useCalendars from './hooks/useCalendars';
 import useAuthenctication from './hooks/useAuthentication';
-import CalendarCard from './components/CalendarCard'
 import CalendarPage from './pages/calendarPage/CalendarPage'
-import { useEffect } from 'react'
-
+import { AnimatePresence } from 'framer-motion';
 function App()
 {
       const {isAdmin} = useAuthenctication();
       const {login, calendars, calendarToEdit, currentPath} = useCalendars();
 
-        
+   
       const calendarsRoutes = calendars.map(calendar=>
             {
                   if (calendar.name === undefined || calendar.name === '')
@@ -43,10 +41,12 @@ function App()
                               <CalendarPage calendar={calendar}/>
                         </Route>) 
             });
-      return <div className='flex justify-center items-center'>
+      return <div className='flex flex-col justify-center items-center'>
+                  <AnimatePresence>
                   <Route path='/'
                          key='/'>
                         <MainPage/>
+               
                   </Route>
                   <Route path={['/logowanie', '/register', '/password']} key='logowanie'>
                   {['/password', '/logowanie', '/register'].map((path, index) =>
@@ -70,6 +70,7 @@ function App()
                                     calendarSlots={calendarToEdit?.slots}
                                     calendarId={calendarToEdit?.id}/>
                               </Route>}
+                  </AnimatePresence>
             </div>
 }
 

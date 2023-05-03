@@ -16,7 +16,7 @@ function CalendarsProvider({children, url})
     const [calendars, setCalendars] = useState(tempCalendar);
     const [convirm, setConvirm] = useState(false);
     const [calendarToEdit, setCalendarToEdit] = useState(false)
-
+    console.log(currentPath);
 useEffect(()=>
 {
     fetch('http://localhost:3001/calendars')

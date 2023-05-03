@@ -3,6 +3,8 @@ import Login from './loginPage/Login';
 import Password from './loginPage/Password';
 import Register from './loginPage/Register';
 import { useSprings, animated } from "react-spring";
+import {motion as m} from 'framer-motion';
+
 export default function LoginPage({page}) 
 {
 
@@ -26,19 +28,19 @@ export default function LoginPage({page})
         height: "full",
         top: 0,
         left: 0,
-        zIndex: index === displayedFrom ? 1 : 0,
+        zIndex: index === displayedFrom ? 1 : 0
         }))
     );
 
  
 
     return (
-        <div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden">
+        <m.div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:1}}>
             {springs.map((props, index) => (
               <animated.div key={index} className="absolute flex w-full h-full overflow-hidden pb-14" style={{ ...props }}>
-                {formToShow[displayedFrom]}
+                {formToShow[index]}
               </animated.div>
             ))}
-        </div>
+        </m.div>
     );
 }

@@ -13,6 +13,7 @@ import Route from "../components/Route";
 import useCalendars from '../hooks/useCalendars';
 import useAuthenctication from "../hooks/useAuthentication";
 import Convirm from "../components/Convirm";
+import {motion as m} from 'framer-motion';
 
 function MainPage({className}) 
 {
@@ -58,7 +59,7 @@ function MainPage({className})
                 
         })
 
-    return <div className="flex flex-col justify-center items-center h-screen overflow-hidden" >
+    return <m.div className="flex flex-col justify-center items-center h-screen overflow-hidden" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:1}}>
                     {createCalendarCard}
                     {/* Always show additional cart */}
 
@@ -77,7 +78,7 @@ function MainPage({className})
                         >{"Dodaj nowy wózek"}
                     </CalendarCard>}
                     {convirm}
-            </div>
+            </m.div>
 }
 
 export default MainPage;
