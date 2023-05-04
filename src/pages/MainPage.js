@@ -14,10 +14,11 @@ import useCalendars from '../hooks/useCalendars';
 import useAuthenctication from "../hooks/useAuthentication";
 import Convirm from "../components/Convirm";
 import {motion as m} from 'framer-motion';
+import Menu from "../components/Menu";
 
 function MainPage({className}) 
 {
-    const {calendars,navigate, convirm, setCalendarToEdit} = useCalendars();
+    const {calendars,navigate, convirm, setCalendarToEdit, currentPath} = useCalendars();
     const {isAdmin} = useAuthenctication();
 
 
@@ -61,7 +62,8 @@ function MainPage({className})
                 
         })
 
-    return <m.div className=" flex flex-col justify-center items-center h-screen overflow-hidden" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:1}} layoutId="1">
+    // return <m.div className=" flex flex-col justify-center items-center h-screen overflow-hidden"layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut', type: 'spring', stiffness: 700, damping: 30}} exit={{opacity:1}} layoutId="1">
+    return <m.div className=" flex flex-col justify-center items-center h-screen overflow-hidden"layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{type: 'spring', stiffness: 110, damping: 12}} exit={currentPath === '/logowanie'?{ opacity: 0, transition: 0.2} : {y: "100%"}} layoutId="1">
                     {createCalendarCard}
                     {/* Always show additional cart */}
 

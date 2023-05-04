@@ -18,6 +18,7 @@ import MainPage from './pages/MainPage'
 import AdminUserPage from './pages/AdminUserPage'
 import CreateCalendarPage from './pages/CreateCalendarPage'
 import NotFoundPage from './pages/NotFoundPage'
+import Menu from './components/Menu'
 //only for test purpusses -> at the end it's goint to be admin
 import useCalendars from './hooks/useCalendars';
 import useAuthenctication from './hooks/useAuthentication';
@@ -29,6 +30,9 @@ function App()
       const {isAdmin} = useAuthenctication();
       const {login, calendars, calendarToEdit, currentPath} = useCalendars();
       const location = useLocation();
+
+      const formsPaths = ['/logowanie', '/haslo', '/rejestracja'];
+
       const calendarsRoutes = calendars.map(calendar=>
             {
                   if (calendar.name === undefined || calendar.name === '')
@@ -37,10 +41,13 @@ function App()
                   return <Route path={name} element={<CalendarPage calendar={calendar}/>}/>;
                               
             });
-      return <AnimatePresence initial={false} mode='wait'>
+        
+        return (<>
+                  <AnimatePresence initial={false} mode='wait'>
+                  {formsPaths.includes(currentPath)? false : <Menu className='flex'/>}
                   <Routes key={location.pathname} location={location}>
                         <Route path='/' element={<MainPage/>} replace/>
-                        <Route path='/logowanie' element={<LoginPage/>}/>
+                        {formsPaths.map(form => {return <Route path={form} element={<LoginPage/>}/>})}
                               
                   {calendarsRoutes}
                   {/* {login &&
@@ -59,6 +66,7 @@ function App()
                         <Route path='*'element={<NotFoundPage/>}/>
                   </Routes>
                   </AnimatePresence>
+                  </>)
 }
 
 export default App; 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSprings, animated } from "react-spring";
 import classNames from "classnames";
-import Menu from './calendar/Menu'
+import Menu from '../../components/Menu'
 import Month from "./calendar/Month";
 import useMobileDevice from "../../hooks/useMobileDevice";
 import useCalendars from '../../hooks/useCalendars';
