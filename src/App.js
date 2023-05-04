@@ -13,65 +13,52 @@
 
 
 
-import Route from './components/Route'
 import LoginPage from './pages/LoginPage'
 import MainPage from './pages/MainPage'
 import AdminUserPage from './pages/AdminUserPage'
 import CreateCalendarPage from './pages/CreateCalendarPage'
+import NotFoundPage from './pages/NotFoundPage'
 //only for test purpusses -> at the end it's goint to be admin
 import useCalendars from './hooks/useCalendars';
 import useAuthenctication from './hooks/useAuthentication';
 import CalendarPage from './pages/calendarPage/CalendarPage'
 import { AnimatePresence } from 'framer-motion';
+import { Route, Routes, useLocation} from 'react-router-dom'
 function App()
 {
       const {isAdmin} = useAuthenctication();
       const {login, calendars, calendarToEdit, currentPath} = useCalendars();
-
-   
+      const location = useLocation();
       const calendarsRoutes = calendars.map(calendar=>
             {
                   if (calendar.name === undefined || calendar.name === '')
                   return false;
-                  const name = '/' + (calendar.name).replaceAll(' ', '_');
-                  
-
-                  return(<Route path={name}
-                               key={name}> 
-                              <CalendarPage calendar={calendar}/>
-                        </Route>) 
+                  const name = '/' + (calendar.name).replaceAll(' ', '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                  return <Route path={name} element={<CalendarPage calendar={calendar}/>}/>;
+                              
             });
-      return <div className='flex flex-col justify-center items-center'>
-                  <AnimatePresence>
-                  <Route path='/'
-                         key='/'>
-                        <MainPage/>
-               
-                  </Route>
-                  <Route path={['/logowanie', '/register', '/password']} key='logowanie'>
-                  {['/password', '/logowanie', '/register'].map((path, index) =>
-                        {
-                              if (path === currentPath)
-                              return <LoginPage page={index} />;
-                        })}
-                  </Route>
+      return <AnimatePresence initial={false} mode='wait'>
+                  <Routes key={location.pathname} location={location}>
+                        <Route path='/' element={<MainPage/>} replace/>
+                        <Route path='/logowanie' element={<LoginPage/>}/>
+                              
                   {calendarsRoutes}
-                  {login &&
+                  {/* {login &&
                   <Route path='/admin'
                          key='admin'>
                         <AdminUserPage/>
-                  </Route>}
+                  </Route>} */}
                   {isAdmin && <Route path='/ustawienia'
-                                     key='ustawienia'>
+                                     element={
                                     <CreateCalendarPage 
                                     calendarName={calendarToEdit?.name} 
                                     calendarDate={calendarToEdit?.date} 
                                     calendarTime={calendarToEdit?.time} 
                                     calendarSlots={calendarToEdit?.slots}
-                                    calendarId={calendarToEdit?.id}/>
-                              </Route>}
+                                    calendarId={calendarToEdit?.id}/>}/>}
+                        <Route path='*'element={<NotFoundPage/>}/>
+                  </Routes>
                   </AnimatePresence>
-            </div>
 }
 
 export default App; 

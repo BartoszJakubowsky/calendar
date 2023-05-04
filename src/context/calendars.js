@@ -2,7 +2,8 @@ import { createContext, useState, useEffect} from "react";
 import useAuthenctication from '../hooks/useAuthentication';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CalendarsContext = createContext();
 
@@ -12,10 +13,12 @@ function CalendarsProvider({children, url})
     // const tempCalendar = {name: 'Środa Wielkopolska', date: ['KWIECIEŃ.2023', 'MAJ.2023', 'CZERWIEC.2023', 'LIPIEC.2023'], time: {timeFrom: '08:00', timeTo: '16:00', timeSpace: '01:00'}, slots: [{name: 'Oficjalne', space: 2, order: 1},{name: 'Nieoficjalne', space: 2, order: 2}]}
     const tempCalendar = [{name: ''}, {name: ''}, {name: ''}]
     const [login, setLogin] = useState(useAuthenctication());
-    const [currentPath, setCurrentPath] = useState('/');
+    // const [currentPath, setCurrentPath] = ('/');
+    const currentPath = useLocation().pathname;
     const [calendars, setCalendars] = useState(tempCalendar);
     const [convirm, setConvirm] = useState(false);
     const [calendarToEdit, setCalendarToEdit] = useState(false)
+    const navigate = useNavigate();
     console.log(currentPath);
 useEffect(()=>
 {
@@ -24,32 +27,27 @@ useEffect(()=>
               .then(data => setCalendars(data))
               .catch(error => console.error(error));
 
-    //set same pathname as 
-    window.history.replaceState(null, null, currentPath);
 
     //handler == navigation forward and back withot refresh when pushState was used
     const handler = () => 
     {
         setConvirm(false);
-        setCurrentPath(window.location.pathname);
-    }
-    window.addEventListener('popstate', handler);
-    // getCalendars().then(calendars => setCalendars());
+        // setCurrentPath(window.location.pathname);
 
-    return ()=>
-    {
-        window.removeEventListener('popstate', handler);
     }
-    
+
+    //  //set same pathname as 
+    //  window.history.replaceState(null, null, currentPath);
+
+    //  window.addEventListener('popstate', handler);
+    //  // getCalendars().then(calendars => setCalendars());
+ 
+    //  return ()=>
+    //  {
+    //      window.removeEventListener('popstate', handler);
+    //  }
+
 }, []);
-
-
-const navigate = to => 
-{
-    window.history.pushState({}, '', to);
-
-    setCurrentPath(to);
-}
 
 
 //To change -> given with started app
@@ -121,9 +119,7 @@ const handleCalendarCreate = async (oldCalendar, newCalendar) =>
 
 const toProvide = 
 {
-    navigate, 
     currentPath, 
-    setCurrentPath,
     login, 
     setLogin, 
     calendarNames, 
@@ -134,7 +130,8 @@ const toProvide =
     handleCalendarCreate, 
     calendarToEdit, 
     setCalendarToEdit,
-    deleteCalendar
+    deleteCalendar,
+    navigate
 }
 
 

@@ -17,11 +17,13 @@ import {motion as m} from 'framer-motion';
 
 function MainPage({className}) 
 {
-    const {calendars, convirm, navigate, setCalendarToEdit} = useCalendars();
+    const {calendars,navigate, convirm, setCalendarToEdit} = useCalendars();
     const {isAdmin} = useAuthenctication();
+
+
     const navigation = (calendarName) => 
     {   
-            navigate('/' + calendarName.replaceAll(' ', '_'));
+        navigate('/' + calendarName.replaceAll(' ', '_').normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
     }
 
     const handleCalendarCreate = calendarName => 
@@ -59,7 +61,7 @@ function MainPage({className})
                 
         })
 
-    return <m.div className="flex flex-col justify-center items-center h-screen overflow-hidden" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:1}}>
+    return <m.div className=" flex flex-col justify-center items-center h-screen overflow-hidden" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:1}} layoutId="1">
                     {createCalendarCard}
                     {/* Always show additional cart */}
 

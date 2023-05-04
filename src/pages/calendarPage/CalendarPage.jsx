@@ -6,7 +6,7 @@ import Month from "./calendar/Month";
 import useMobileDevice from "../../hooks/useMobileDevice";
 import useCalendars from '../../hooks/useCalendars';
 import Convirm from '../../components/Convirm';
-
+import {motion as m} from 'framer-motion';
 export default function CalendarPage({calendar})
 {
 const {convirm} = useCalendars();
@@ -41,7 +41,7 @@ const monthCount = date.length;
 
 
     return(
-    <div className=" w-screen h-screen bg-red-100">
+    <m.div className=" w-screen h-screen bg-red-100" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:1}}>
     <Convirm message={convirm.message} submit={convirm.submit} handleSubmit={convirm.handleSubmit}/>
         <Menu calendarName={name}/>
         {/* month holder */}
@@ -77,7 +77,7 @@ const monthCount = date.length;
             ))}
     </div>
         </div>
-    </div>
+    </m.div>
     );
 }
 

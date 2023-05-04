@@ -31,12 +31,12 @@ export default function Login({mail, setMail, move})
 
     const handleRegisterClick = () => 
     {
-        window.history.pushState({}, '', '/register');  
+        // window.history.pushState({}, '', '/register');  
         move(2);
     }
     const handlePasswordClick = () => 
     {
-        window.history.pushState({}, '', '/password');  
+        // window.history.pushState({}, '', '/password');  
         move(0);
     }
 

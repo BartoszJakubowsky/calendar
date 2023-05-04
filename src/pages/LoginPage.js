@@ -11,7 +11,7 @@ export default function LoginPage({page})
 
     const [mail, setMail] = useState('');
 
-    const [displayedFrom, setDisplayedFrom] = useState(page); 
+    const [displayedFrom, setDisplayedFrom] = useState(page||1); 
     const formToShow = [<Password mail={mail} setMail={setMail} moveBack={setDisplayedFrom}/>, <Login mail={mail} setMail={setMail} move={setDisplayedFrom}/>, <Register mail={mail} setMail={setMail} moveBack={setDisplayedFrom}/>]
     const formCount = formToShow.length;
     
@@ -35,7 +35,7 @@ export default function LoginPage({page})
  
 
     return (
-        <m.div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:1}}>
+        <m.div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:0}} layoutId='1'>
             {springs.map((props, index) => (
               <animated.div key={index} className="absolute flex w-full h-full overflow-hidden pb-14" style={{ ...props }}>
                 {formToShow[index]}
