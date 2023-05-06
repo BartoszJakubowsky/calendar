@@ -5,6 +5,7 @@ import Input from '../components/createCalendarComponents/Input';
 import SelectMonths from "../components/createCalendarComponents/SelectMonths";
 import AdditionalSettings from "../components/createCalendarComponents/AdditionalSettings";
 import useCalendars from '../hooks/useCalendars';
+import {motion as m} from 'framer-motion';
 
 export default function CreateCalendarPage({calendarName, calendarDate, calendarTime, calendarSlots, calendarId}) 
 {
@@ -33,6 +34,10 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
         event.preventDefault();
         const allSettings = {name, date: date, ...additional};
         //oldCalendar, newCalendar
+
+        if (allSettings.name === '')
+            return ;
+            
         handleCalendarCreate(entryCalendar, allSettings);
         navigate('/');
     }
@@ -51,9 +56,17 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
                                             duration-300 ease-in-out`, 
                                             isHover ? 'shadow-[10px_10px_0px_0px_rgb(7_89_133)]' : '')
 
+
+
+const variantsForCreateCalendarPage = 
+  {
+        hidden: { opacity: 0, x: -200, y: 0 },
+        enter: { opacity: 1, x: 0, y: 0 },
+        exit: { opacity: 0, x: 0, y: -100 },
+  }
     return(
-        <div className="relative w-screen h-screen bg-pink-400 overflow-hidden">
-            <div 
+        <div className="relative w-screen h-screen bg-pink-400 overflow-hidden" >
+            <m.div variants={variantsForCreateCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'
                 className={mainDivClassName}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -86,7 +99,7 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
                 Ustaw
                 </button>
             </form>
-            </div>
+            </m.div>
             {slotSettingsCard}
             {timeSettingCard}
         </div>

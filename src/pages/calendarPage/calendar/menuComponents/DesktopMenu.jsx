@@ -14,7 +14,7 @@ export default function DesktopMenu({isOpen, close})
         <h3 className="mt-20 text-4xl font-semibold text-white">Do dokończenia</h3>
         <ul>
             <li onClick={handleClick} ><NavLink to='/' style={({isActive}) => {return {color: 'red'}}}>Strona główna</NavLink></li>
-            {calendars.map(calendar => {return <li><NavLink to={`/${calendar.name.replaceAll(' ', '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>{calendar.name}</NavLink></li>})}
+            {calendars.map((calendar, index)=> {return <li key={index}><NavLink to={`/${calendar.name.replaceAll(' ', '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>{calendar.name}</NavLink></li>})}
         </ul>
         <h3 className="mt-20 text-4xl font-semibold text-white">Pozostałe</h3>
         <ul>

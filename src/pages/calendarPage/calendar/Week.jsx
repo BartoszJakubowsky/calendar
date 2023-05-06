@@ -165,6 +165,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 name={name}
                 date={date}
                 weekIndex={index}
+                key={dayIndex}
                 />
               else
               return <DayColumn
@@ -172,7 +173,9 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 day={day.date}
                 isActive={!!(allWeeksLeftInMonth[index]?.[dayIndex])}
                 isBlank={true}
-                slots={slots}/>
+                slots={slots}
+                key={dayIndex}
+                />
             })}
             
           </section>

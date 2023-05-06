@@ -20,9 +20,9 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                 {day}
                 {/* slots name holder */}
                 <div className="overflow-hidden flex flex-none opacity-0"> 
-                {slots.map(slot => {
+                {slots.map((slot, index) => {
                 return (
-                    <span className="inline-block overflow-hidden w-full">{slot.name}</span>
+                    <span key={index} className="inline-block overflow-hidden w-full">{slot.name}</span>
                 );
             })}
                 </div>
@@ -40,9 +40,9 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                 </div>
                 {/* slots name holder */}
                 <div className="overflow-hidden flex flex-none "> 
-                {slots.map(slot => {
+                {slots.map((slot, index) => {
                 return (
-                    <span className="inline-block overflow-hidden w-full">{slot.name}</span>
+                    <span key={index} className="inline-block overflow-hidden w-full">{slot.name}</span>
                 );
             })}
                 </div>
@@ -64,8 +64,10 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                             let spaces = [];
                             for (let i = 0; i < slot.space; i++) 
                             {
+                                const key = name + day+ slot.name + time + i;
                                 spaces.push(
                                    <DaySlot 
+                                    key={key}
                                     calendarName={name} 
                                     dayName={day} 
                                     dayDate={_dayDate}
@@ -79,7 +81,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                                 )
                             }
                         //slot holder
-                        return <div className={`flex flex-col w-full h-full order-${slot.order} overflow-hidden`}>
+                        return <div key={slot.name} className={`flex flex-col w-full h-full order-${slot.order} overflow-hidden`}>
                                 {spaces}
                                 </div>
                            

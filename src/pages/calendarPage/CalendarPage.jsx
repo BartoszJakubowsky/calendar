@@ -10,6 +10,7 @@ import {motion as m} from 'framer-motion';
 export default function CalendarPage({calendar})
 {
 const {convirm} = useCalendars();
+
 const {name, date, slots, time} = calendar;
 const isMobile = useMobileDevice();
 const [displayedMonth, setDisplayedMonth] = useState(0); 
@@ -39,9 +40,15 @@ const monthCount = date.length;
   };
 
 
-
+  const variantsForCalendarPage = 
+  {
+        hidden: { opacity: 0, x: -200, y: 0 },
+        enter: { opacity: 1, x: 0, y: 0 },
+        exit: { opacity: 0, x: 0, y: -100 },
+  }
     return(
-    <m.div className=" w-screen h-screen bg-red-100" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:1}}>
+    <m.div className=" w-screen h-screen bg-red-100" variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
+    {/* <div className=" w-screen h-screen bg-red-100"> */}
     <Convirm message={convirm.message} submit={convirm.submit} handleSubmit={convirm.handleSubmit}/>
         <Menu calendarName={name}/>
         {/* month holder */}
