@@ -7,6 +7,7 @@ import useMobileDevice from "../../hooks/useMobileDevice";
 import useCalendars from '../../hooks/useCalendars';
 import Convirm from '../../components/Convirm';
 import {motion as m} from 'framer-motion';
+
 export default function CalendarPage({calendar})
 {
 const {convirm} = useCalendars();
@@ -44,7 +45,8 @@ const monthCount = date.length;
   {
         hidden: { opacity: 0, x: -200, y: 0 },
         enter: { opacity: 1, x: 0, y: 0 },
-        exit: { opacity: 0, x: 0, y: -100 },
+        // exit: { opacity: 0, x: -200, y: 0 },
+        exit: { opacity: 0 },
   }
     return(
     <m.div className=" w-screen h-screen bg-red-100" variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
@@ -52,7 +54,8 @@ const monthCount = date.length;
     <Convirm message={convirm.message} submit={convirm.submit} handleSubmit={convirm.handleSubmit}/>
         <Menu calendarName={name}/>
         {/* month holder */}
-        <div className={`${isMobile? 'mt-5 mx-5 w-full h-full' : ' mt-14 max-w-[90%] h-5/6'} bg-red-300 mx-auto overflow-x-hidden rounded-sm text-sm overflow-hidden`}>
+        {/* <div className={`${isMobile? 'mt-5 mx-5 w-full h-full' : ' mt-14 max-w-[90%] h-5/6'} bg-red-300 mx-auto overflow-x-hidden rounded-sm text-sm overflow-hidden`}> */}
+        <div className={`mt-5 scale-90 w-full h-full md:mt-14 md:max-w-[90%] md:h-5/6 bg-red-300 md:mx-auto overflow-x-hidden rounded-sm text-sm overflow-hidden`}>
             <div className="bg-blue-400 w-full h-10 flex justify-start">
           <button
             className={classNames(

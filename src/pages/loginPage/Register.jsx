@@ -93,6 +93,10 @@ export default function Register({mail, setMail, moveBack})
         }
 
             setSent(true);  
+
+            setTimeout(() => {
+                setSent(false)
+            }, 3000);
             // axios.post('http://localhost3001/register', {name: name+ ' ' + surname , mail, password}).then(response => 
             // {
 
@@ -118,14 +122,14 @@ export default function Register({mail, setMail, moveBack})
 
       
     return (
-        <div className=" w-11/12 lg:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
+        <div className=" w-11/12 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zarejestruj się
             </h1>
             <form className="mt-6">
                 <div className="mb-2">
                     <label
-                        for="email"
+                        // for="email"
                         className={`block text-sm font-semibold  ${mailError? 'valid text-red-300 duration-75' : 'text-gray-800 duration-300'}`}
                     >
                         Wporawdź swój email
@@ -137,10 +141,11 @@ export default function Register({mail, setMail, moveBack})
                         onBlur={handleMailChange}
                         value={mail}
                         required 
+                        autoComplete="on"
                     />
         
                     <label
-                        for="text"
+                        // for="text"
                         className={`block text-sm font-semibold ${nameError? ' valid text-red-300' : 'text-gray-800'}`}
                     >
                         Podaj swoje imię
@@ -152,11 +157,12 @@ export default function Register({mail, setMail, moveBack})
                         onBlur={handleNameChange}
                         value={name}
                         required 
+                        autoComplete="on"
                     />
 
 
                     <label
-                        for="text"
+                        // for="text"
                         className={`block text-sm font-semibold ${surnameError? ' valid text-red-300' : 'text-gray-800'}`}
                     >
                         Podaj swoje nazwisko
@@ -168,10 +174,11 @@ export default function Register({mail, setMail, moveBack})
                         onBlur={handleSurnameChange}
                         value={surname}
                         required 
+                        autoComplete="on"
                     />
 
                     <label
-                        for="password"
+                        // for="password"
                         className={`block text-sm font-semibold ${passwordError? ' valid text-red-300' : 'text-gray-800'}`}
                     >
                         Stwórz hasło
@@ -183,10 +190,11 @@ export default function Register({mail, setMail, moveBack})
                         onBlur={handlePasswordChange}
                         value={password}
                         required 
+                        autoComplete="on"
                     />
 
                     <label
-                        for="password"
+                        // for="password"
                         className={`block text-sm font-semibold ${passwordError? ' valid text-red-300' : 'text-gray-800'}`}
                     >
                         Powtórz hasło
@@ -198,6 +206,7 @@ export default function Register({mail, setMail, moveBack})
                         onBlur={handleSecondPasswordChange}
                         value={secondPassword}
                         required 
+                        autoComplete="on"
                     />
                     
                 </div>

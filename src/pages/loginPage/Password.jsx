@@ -64,14 +64,14 @@ export default function Password({mail, setMail, moveBack})
 
       
     return (
-        <div className=" w-3/4 lg:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
+        <div className=" w-3/4 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zresetuj hasło
             </h1>
             <form className="mt-6">
                 <div className="mb-2">
                     <label
-                        for="email"
+                        // for="email"
                         className={`block text-sm font-semibold ${mailError? ' valid text-red-300' : 'text-gray-800'}`}
                     >
                         Wporawdź swój email lub imię i nazwisko
@@ -83,13 +83,14 @@ export default function Password({mail, setMail, moveBack})
                         onBlur={handleMailChange}
                         value={mail}
                         required 
+                        autoComplete="on"
                     />
                     {/* {mail !== '' ? <p class="invisible peer-invalid:visible text-red-700 font-light">
                     Please enter a valid email address
                     </p> : false} */}
                 </div>
                     <label
-                        for="password"
+                        // for="password"
                         className={`block text-sm font-semibold ${passwordError? ' valid text-red-300' : 'text-gray-800'}`}
                     >
                         Wpisz nowe hasło
@@ -101,10 +102,11 @@ export default function Password({mail, setMail, moveBack})
                         onBlur={handlePasswordChange}
                         value={password}
                         required 
+                        autoComplete="on"
                     />
 
                     <label
-                        for="password"
+                        // for="password"
                         className={`block text-sm font-semibold ${passwordError? ' valid text-red-300' : 'text-gray-800'}`}
                     >
                         Powtórz nowe hasło
@@ -116,6 +118,7 @@ export default function Password({mail, setMail, moveBack})
                         onBlur={handleSecondPasswordChange}
                         value={secondPassword}
                         required 
+                        autoComplete="on"
                     />
               <div className="overflow-hidden">
                 <animated.button

@@ -6,7 +6,7 @@ import SelectMonths from "../components/createCalendarComponents/SelectMonths";
 import AdditionalSettings from "../components/createCalendarComponents/AdditionalSettings";
 import useCalendars from '../hooks/useCalendars';
 import {motion as m} from 'framer-motion';
-
+import Menu from "../components/Menu";
 export default function CreateCalendarPage({calendarName, calendarDate, calendarTime, calendarSlots, calendarId}) 
 {
     
@@ -50,23 +50,24 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
                 setIsHover(false);   
         }
         console.log(date);
-        const mainDivClassName = classNames(`absolute left-1/4 w-1/2 h-fit 
+        const mainDivClassName = classNames(`md:w-3/4 w-3/4 h-fit 
                                             flex flex-col justify-start items-center 
                                             border-black border-2 mt-10 
-                                            duration-300 ease-in-out`, 
+                                            duration-300 ease-in-out  `, 
                                             isHover ? 'shadow-[10px_10px_0px_0px_rgb(7_89_133)]' : '')
 
 
 
 const variantsForCreateCalendarPage = 
   {
-        hidden: { opacity: 0, x: -200, y: 0 },
+        hidden: { opacity: 0, x: 0, y: 200 },
         enter: { opacity: 1, x: 0, y: 0 },
         exit: { opacity: 0, x: 0, y: -100 },
   }
     return(
-        <div className="relative w-screen h-screen bg-pink-400 overflow-hidden" >
-            <m.div variants={variantsForCreateCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'
+        <div className="flex w-screen h-screen bg-pink-400 overflow-hidden duration-75 justify-center items-start">
+            <Menu className='flex'/>
+            <m.div variants={variantsForCreateCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit' 
                 className={mainDivClassName}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}

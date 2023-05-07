@@ -19,7 +19,6 @@ function CalendarsProvider({children, url})
     const [convirm, setConvirm] = useState(false);
     const [calendarToEdit, setCalendarToEdit] = useState(false)
     const navigate = useNavigate();
-    console.log(currentPath);
 useEffect(()=>
 {
     fetch('http://localhost:3001/calendars')
@@ -28,26 +27,10 @@ useEffect(()=>
               .catch(error => console.error(error));
 
 
-    //handler == navigation forward and back withot refresh when pushState was used
-    const handler = () => 
-    {
-        setConvirm(false);
-        // setCurrentPath(window.location.pathname);
+        //to prevent app collapse
+        // setConvirm(false);
 
-    }
-
-    //  //set same pathname as 
-    //  window.history.replaceState(null, null, currentPath);
-
-    //  window.addEventListener('popstate', handler);
-    //  // getCalendars().then(calendars => setCalendars());
- 
-    //  return ()=>
-    //  {
-    //      window.removeEventListener('popstate', handler);
-    //  }
-
-}, []);
+}, [currentPath]);
 
 
 //To change -> given with started app

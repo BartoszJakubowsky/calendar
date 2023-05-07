@@ -15,7 +15,7 @@
 
 import LoginPage from './pages/LoginPage'
 import MainPage from './pages/MainPage'
-import AdminUserPage from './pages/AdminUserPage'
+import AdminPage from './pages/AdminPage'
 import CreateCalendarPage from './pages/CreateCalendarPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Menu from './components/Menu'
@@ -69,7 +69,7 @@ function App()
         
         return (<>
                   <AnimatePresence initial={false} mode='wait'>
-                  {formsPaths.includes(currentPath)? false : <Menu className='flex'/>}
+                  {/* {formsPaths.includes(currentPath)? false : <Menu className='flex'/>} */}
                   <Routes key={location.pathname} location={location}>
                         <Route path='/' element={<MainPage/>}/>
                         {formsPaths.map(form => {return <Route path={form} key={form} element={<LoginPage replace/>}/>})}
@@ -78,18 +78,23 @@ function App()
                   {/* {login &&
                   <Route path='/admin'
                          key='admin'>
-                        <AdminUserPage/>
+                        <AdminPage/>
                   </Route>} */}
-                  {isAdmin && <Route path='/ustawienia'
-                                     element={
-                                    <CreateCalendarPage 
-                                    calendarName={calendarToEdit?.name} 
-                                    calendarDate={calendarToEdit?.date} 
-                                    calendarTime={calendarToEdit?.time} 
-                                    calendarSlots={calendarToEdit?.slots}
-                                    calendarId={calendarToEdit?.id}/>}/>}
-                        {/* <Route path='*'element={<NotFoundPage/>}/> */}
+                  {isAdmin && 
+                  <>
+                  <Route path='/ustawienia' element={
+                        <CreateCalendarPage 
+                        calendarName={calendarToEdit?.name} 
+                        calendarDate={calendarToEdit?.date} 
+                        calendarTime={calendarToEdit?.time} 
+                        calendarSlots={calendarToEdit?.slots}
+                        calendarId={calendarToEdit?.id}/>}/>
+                  <Route path='/admin' element={<AdminPage/>}/>   
+                  </>}
+                  <Route path='*'element={<NotFoundPage/>}/>
+
                   </Routes>
+
                   </AnimatePresence>
                   </>)
 }

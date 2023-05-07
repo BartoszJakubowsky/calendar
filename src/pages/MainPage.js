@@ -15,12 +15,13 @@ import useAuthenctication from "../hooks/useAuthentication";
 import Convirm from "../components/Convirm";
 import {motion as m} from 'framer-motion';
 import Menu from "../components/Menu";
+import useMobileDevice from "../hooks/useMobileDevice";
 
 function MainPage({className}) 
 {
     const {calendars,navigate, convirm, setCalendarToEdit, currentPath} = useCalendars();
     const {isAdmin} = useAuthenctication();
-
+    const isMobile = useMobileDevice();
 
     const navigation = (calendarName) => 
     {   
@@ -63,10 +64,11 @@ function MainPage({className})
         })
 
     // return <m.div className=" flex flex-col justify-center items-center h-screen overflow-hidden"layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut', type: 'spring', stiffness: 700, damping: 30}} exit={{opacity:1}} layoutId="1">
-    return <m.div className=" flex flex-col justify-center items-center h-screen overflow-hidden"layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{type: 'spring', stiffness: 110, damping: 12}} exit={currentPath === '/logowanie'?{ opacity: 0, transition: 0.2} : {opacity: 0, x: 0, y: -100, transition: 0.2}}>
+    return <div className=" h-screen flex flex-col justify-center items-center ">
+            <Menu className='flex'/>
+            <m.div className={`${isMobile? '' : ''}`} layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{type: 'spring', stiffness: 110, damping: 12}} exit={currentPath === '/logowanie'?{ opacity: 0, transition: 0.2} : {opacity: 0, x: 0, y: -100, transition: 0.2}}>
                     {createCalendarCard}
                     {/* Always show additional cart */}
-
                     <CalendarCard
                         key={'logowanie'}
                         calendar = {''}
@@ -83,6 +85,7 @@ function MainPage({className})
                     </CalendarCard>}
                     {convirm}
             </m.div>
+            </div>
 }
 
 export default MainPage;

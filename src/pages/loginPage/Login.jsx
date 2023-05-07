@@ -84,14 +84,14 @@ export default function Login({mail, setMail, move})
 
       
     return (
-        <div className=" w-11/12 lg:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
+        <div className=" w-11/12 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zaloguj się
             </h1>
             <form className="mt-6">
                 <div className="mb-2">
                     <label
-                        for="email"
+                        // for="email"
                         className={`block text-sm font-semibold  ${mailError? 'valid text-red-300 duration-75' : 'text-gray-800 duration-300'}`}
                     >
                         Twój email
@@ -103,9 +103,10 @@ export default function Login({mail, setMail, move})
                         onBlur={handleMailChange}
                         value={mail}
                         required 
+                        autoComplete="on"
                     />
                     <label
-                        for="password"
+                        // for="password"
                         className={`block text-sm font-semibold ${passwordError? ' valid text-red-300' : 'text-gray-800'}`}
                     >
                         Twoje hasło
@@ -117,12 +118,13 @@ export default function Login({mail, setMail, move})
                         onBlur={handlePasswordChange}
                         value={password}
                         required 
+                        autoComplete="on"
                     />
                 </div>
        
               <div className="overflow-hidden">
               <a
-                        className="text-xs text-purple-600 hover:underline"
+                        className="text-xs text-purple-600 hover:underline cursor-pointer"
                         onClick={handlePasswordClick}
                     >
                         Zapomniałeś hasła?
@@ -142,11 +144,11 @@ export default function Login({mail, setMail, move})
                
                 </div>
             </form>
-            <p className="mt-8 text-xs font-light text-center text-gray-700 flex flex-col">
+            <p className="mt-8 text-xs font-light text-center text-gray-700 flex flex-col ">
                     
                     Nie masz jeszcze konta?
                     <a
-                        className="font-medium text-purple-600 hover:underline"
+                        className="font-medium text-purple-600 hover:underline cursor-pointer"
                         onClick={handleRegisterClick}
                     >
                         Wyślij prośbę o rejestrację

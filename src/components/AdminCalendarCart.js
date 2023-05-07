@@ -22,8 +22,8 @@ const handleSettings = (event) =>
     const stopPropagation = event => event.stopPropagation();
     const settings = 
     <div onMouseLeave={handleMouseLeave} onClick={stopPropagation}
-    className={`flex flex-col justify-center items-center absolute h-full w-full top-0 right-0 text-lg z-10 bg-yellow-200`}>
-        <button onClick={handleSettings} className=' bg-transparent '>Ustawienia</button>
+    className={`flex flex-col justify-center items-center absolute h-full w-full top-0 right-0 text-lg z-10 bg-yellow-200 overflow-hidden`}>
+        <button onClick={handleSettings} className=' bg-transparent overflow-hidden '>Ustawienia</button>
         <Delete 
             className='bg-transparent ' 
             message={`Czy na pewno chcesz usunąć ${calendar.name}?`}

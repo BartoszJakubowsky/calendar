@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { motion as m } from "framer-motion";
 
-export default function HamburgerIcon({calendarName, ...rest}) 
+export default function HamburgerIcon({calendarName, isOpen, setIsOpen,...rest}) 
 {
-const [isOpen, setIsOpen] = useState(false);
 const appStyles = "app flex items-center justify-center pt-10";
 const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-black transition ease transform duration-300`;
-
   return (
     <m.div className={appStyles + rest.className} onClick={rest.onClick} transition={{duration:0.25, ease: 'easeOut'}} exit={{opacity: 0}} initial={{x: '-100%'}} animate={{x: "0%"}}>
       <button
