@@ -54,7 +54,7 @@ export default function AdminPage()
     }
 
     return (<>
-    <Menu className='flex'/>
+    <Menu className='flex' theme='bg-yellow-400'/>
     <m.div className="flex w-screen h-screen justify-center items-start overflow-hidden" variants={variantsForAdminPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
         <div className="mt-10 h-full w-3/4 md:1/2">
                 <AdminPageNav display={display} setDisplay={setDisplay}/>

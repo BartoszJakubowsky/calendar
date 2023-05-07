@@ -35,10 +35,10 @@ export default function LoginPage({page})
  
 
     return (
-        <m.div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden" initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration:0.5, ease: 'easeOut'}} exit={{ opacity:0}} layoutId='1'>
+        <m.div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden" initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration:0.5, ease: 'easeOut'}} exit={{ opacity:0}}>
         {/* <m.div className="flex bg-indigo-100 justify-center h-screen w-screen overflow-hidden" initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut'}} exit={{opacity:0}} layoutId='1'> */}
             {springs.map((props, index) => (
-              <animated.div key={index} className="absolute w-full h-full bg-orange-500" style={{ ...props }}>
+              <animated.div key={index} className="absolute w-full h-full flex justify-center items-center" style={{ ...props }}>
                 {formToShow[index]}
               </animated.div>
             ))}
