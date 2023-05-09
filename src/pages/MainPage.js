@@ -64,9 +64,9 @@ function MainPage({className})
         })
 
     // return <m.div className=" flex flex-col justify-center items-center h-screen overflow-hidden"layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{duration:0.5, ease: 'easeOut', type: 'spring', stiffness: 700, damping: 30}} exit={{opacity:1}} layoutId="1">
-    return <div className=" h-screen flex flex-col justify-center items-center ">
+    return <div className=" h-screen flex flex-col  ">
             <Menu className='flex'/>
-            <m.div className={`${isMobile? '' : ''}`} layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{type: 'spring', stiffness: 110, damping: 12}} exit={currentPath === '/logowanie'?{ opacity: 0, transition: 0.2} : {opacity: 0, x: 0, y: -100, transition: 0.2}}>
+            <m.div className={`${isMobile? '' : 'flex flex-wrap justify-center mt-72'}`} layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{type: 'spring', stiffness: 110, damping: 12}} exit={currentPath === '/logowanie'?{ opacity: 0, transition: 0.2} : {opacity: 0, x: 0, y: -100, transition: 0.2}}>
                     {createCalendarCard}
                     {/* Always show additional cart */}
                     <CalendarCard

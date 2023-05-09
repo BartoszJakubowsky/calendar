@@ -58,12 +58,10 @@ export default function AdminPage()
     <m.div className="flex w-screen h-screen justify-center items-start overflow-hidden" variants={variantsForAdminPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
         <div className="mt-10 h-full w-3/4 md:1/2">
                 <AdminPageNav display={display} setDisplay={setDisplay}/>
-            <div className=" relative h-5/6 w-full overflow-hidden">
-            {springs.map((props, index) => (
-              <animated.div key={index} className="bg-blue-300 w-full h-full flex flex-col items-center " style={{ ...props }}>
-                {pagesToShow[index]}
-              </animated.div>
-            ))}
+            <div className="relative w-full overflow-hidden z-10">
+            
+            {pagesToShow[display]}
+
             </div>
         </div>
     </m.div>

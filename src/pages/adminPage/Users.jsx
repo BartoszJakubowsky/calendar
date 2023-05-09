@@ -1,5 +1,7 @@
 import Accordion from "./adminComponents/Accordion";
 import { useState } from "react";
+import {motion as m} from 'framer-motion';
+
 export default function Users() {
   const [search, setSearch] = useState('');
 
@@ -23,7 +25,12 @@ export default function Users() {
 
 
 
-
+  const variantsForUsers = 
+  {
+        hidden: { opacity: 0, y: -200},
+        enter: { opacity: 1, x: 0, y: 0, transition: { duration: 0.8, delay:  0.7}},
+        exit: { opacity: 0, x: 0, y: -100},
+  }
   
 
 
@@ -33,8 +40,8 @@ export default function Users() {
 
 
   return (
-    <div className="w-full h-full">
-      <div className="w-full h-20 bg-white border-x border-blue-300 flex flex-col">
+    <m.div className="w-full h-full bg-blue-300" variants={variantsForUsers} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
+      <div className="w-full h-20 bg-white border-x border-blue-300 flex flex-col ">
         <label className="text-slate-600 ml-2 mt-2">
           Wyszukaj użytkownika
         </label>
@@ -69,6 +76,6 @@ export default function Users() {
         )
       }
     )}
-    </div>
+    </m.div>
   );
 }
