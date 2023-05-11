@@ -3,7 +3,6 @@ import { useSprings, animated } from "react-spring";
 import classNames from "classnames";
 import Menu from '../../components/Menu'
 import Month from "./calendar/Month";
-import useMobileDevice from "../../hooks/useMobileDevice";
 import useCalendars from '../../hooks/useCalendars';
 import Convirm from '../../components/Convirm';
 import {motion as m} from 'framer-motion';
@@ -11,12 +10,8 @@ import {motion as m} from 'framer-motion';
 export default function CalendarPage({calendar})
 {
 const {convirm} = useCalendars();
-
 const {name, date, slots, time} = calendar;
-const isMobile = useMobileDevice();
 const [displayedMonth, setDisplayedMonth] = useState(0); 
-
-
 const monthCount = date.length;
 
   const springs = useSprings(
@@ -49,13 +44,13 @@ const monthCount = date.length;
         exit: { opacity: 0 },
   }
     return(
-    <m.div className=" w-screen h-screen bg-red-100" variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
+    <m.div className=" w-screen h-screen flex items-center flex-col bg-red-100" variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
     {/* <div className=" w-screen h-screen bg-red-100"> */}
     <Convirm message={convirm.message} submit={convirm.submit} handleSubmit={convirm.handleSubmit}/>
         <Menu calendarName={name} theme='bg-red-300'/>
         {/* month holder */}
         {/* <div className={`${isMobile? 'mt-5 mx-5 w-full h-full' : ' mt-14 max-w-[90%] h-5/6'} bg-red-300 mx-auto overflow-x-hidden rounded-sm text-sm overflow-hidden`}> */}
-        <div className={`mt-5 scale-90 w-full h-full md:mt-14 md:max-w-[90%] md:h-5/6 bg-red-300 md:mx-auto overflow-x-hidden rounded-sm text-sm overflow-hidden`}>
+        <div className={`mt-4 w-11/12 h-[90%] md:mt-14 md:max-w-[90%] md:h-5/6 bg-red-300 md:mx-auto overflow-x-hidden rounded-sm text-xs overflow-hidden`}>
             <div className="bg-blue-400 w-full h-10 flex justify-start">
           <button
             className={classNames(

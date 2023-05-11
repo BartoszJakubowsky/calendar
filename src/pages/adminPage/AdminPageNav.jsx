@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import {motion as m} from 'framer-motion';
 import { useSprings, animated } from 'react-spring';
 
-export default function AdminPageNav({display, setDisplay}) 
+export default function AdminPageNav({display, setDisplay, users, usersPassword, usersRegister}) 
 {
 
     const handleButtonClick = (index) => setDisplay(index);
@@ -65,14 +65,25 @@ export default function AdminPageNav({display, setDisplay})
         justifyContent: "center",
         }))
     );
+    const buttonsClassNames = classNames( 'text-black hover:text-white duration-200 hover:duration-200 focus:font-semibold active:scale-105 w-full h-full transition-font-weight font-normal flex justify-center items-center');
 
- 
-    const buttonsClassNames = classNames( 'text-black hover:text-white duration-200 hover:duration-200 focus:font-semibold active:scale-105 w-full h-full transition-font-weight font-normal', );
+    const pingElement = (
+        <span className="absolute top-0 -right-3 flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+        </span>
+    );
+    // const pingElement = (
+    //     <span className="absolute top-0 left-0 flex h-full w-full">
+    //         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+    //     </span>
+    // );
+
     return (<>
-        <nav className="relative w-full h-10 bg-blue-200 flex flex-row rounded-sm bg-blue-200">
+        <nav className="relative w-full h-10 bg-blue-200 flex flex-row rounded-sm ">
             <m.button className={buttonsClassNames} onClick={()=>handleButtonClick(0)} variants={variants[0]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>Użytkownicy</m.button>
-            <m.button className={buttonsClassNames} onClick={()=>handleButtonClick(1)} variants={variants[1]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>Prośby o reset hasła</m.button>
-            <m.button className={buttonsClassNames} onClick={()=>handleButtonClick(2)} variants={variants[2]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>Prośby o rejestrację</m.button>
+            <m.button className={buttonsClassNames} onClick={()=>handleButtonClick(1)} variants={variants[1]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'><p className='relative w-fit'>Nowe hasła{usersPassword.length === 0? false :pingElement}</p></m.button>
+            <m.button className={buttonsClassNames} onClick={()=>handleButtonClick(2)} variants={variants[2]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'><p className='relative w-fit'>Nowe konta{usersRegister.length === 0 ? false  :pingElement}</p></m.button>
             <m.button className={buttonsClassNames} onClick={()=>handleButtonClick(3)} variants={variants[3]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>Kalendarze</m.button>
             {springs.map((props, index) => (
                 <animated.div key={index} className={''} style={{...props}} >

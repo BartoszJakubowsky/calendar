@@ -33,7 +33,7 @@ export default function Slots({value, slotCard, onChange})
         })
 
     return (
-        <div className="flex flex-row [&>*]:h-10 items-center justify-center">
+        <div className="flex flex-row [&>*]:h-10 items-center justify-center overflow-hidden">
             {showSlots}
         </div>
     )    

@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react";
 import classNames from "classnames";
+
 import HamburgerIcon from "../pages/calendarPage/calendar/menuComponents/HamburgerIcon";
 import useMobileDevice from '../hooks/useMobileDevice'
 import DesktopMenu from "../pages/calendarPage/calendar/menuComponents/DesktopMenu";
 import MobileMenu from "../pages/calendarPage/calendar/menuComponents/MobileMenu";
-import { useState } from "react";
 export default function Menu({calendarName, theme, ...rest}) 
 {
     //remeber to fix calenbdarName to center
@@ -11,6 +12,20 @@ export default function Menu({calendarName, theme, ...rest})
     const isMobile = useMobileDevice();
     const [isOpen, setIsOpen] = useState(false);
     const handleMenuClick = () => setIsOpen(!isOpen); 
+
+    useEffect(() => {
+      const handlePopstate = () => {
+        setIsOpen(false); // Ustaw isOpen na false przy zmianie URL
+      };
+  
+      window.addEventListener("popstate", handlePopstate);
+  
+      return () => {
+        window.removeEventListener("popstate", handlePopstate);
+      };
+    }, []);
+
+
 
   return (
     <div className={rest.className? rest.className : `bg-red-400 flex items-center justify-center w-full h-12`}>

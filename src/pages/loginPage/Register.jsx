@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSpring, animated } from 'react-spring';
-import Password from "./Password";
 import axios from "axios";
+import CryptoJS from "crypto-js";
+import LoadingIcon from "../../components/LoadingIcon";
 export default function Register({mail, setMail, moveBack}) 
 {
 
@@ -12,8 +13,8 @@ export default function Register({mail, setMail, moveBack})
     const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
-    const [loginStatus, setLoginStatus] = useState(false);
-
+    const [message, setMessage] = useState(false);
+    
     const [mailError, setMailError] = useState(false);
     const [nameError, setNameError] = useState(false);
     const [surnameError, setSurnameError] = useState(false);
@@ -94,17 +95,26 @@ export default function Register({mail, setMail, moveBack})
 
             setSent(true);  
 
-            setTimeout(() => {
-                setSent(false)
-            }, 3000);
-            // axios.post('http://localhost3001/register', {name: name+ ' ' + surname , mail, password}).then(response => 
-            // {
+          
 
-            //     // if(response.data.message)
-            //     //     setLoginStatus(response.data.message);
-            //     // else
-            //     //     setLoginStatus(false);
-            // })
+            const handleHashPassword = () => {
+                const hashed = CryptoJS.SHA256(password).toString();
+                return hashed;
+              };
+            const hashedPassword = handleHashPassword();
+            axios.post('http://localhost:3002/register', {name: name.trim() + ' ' + surname.trim() , mail: mail.trim(), password: hashedPassword, permissions: ['User'], records: []}).then(response => 
+            {
+                // if(response.data.message)
+                //     setLoginStatus(response.data.message);
+                // else
+                //     setLoginStatus(false);
+                setTimeout(() => 
+                {
+                setSent(false)
+                setMessage(response.data)
+                }, 1000);
+                
+            }).catch(err => console.log('Błąd podczas wysyłania', err))
 
 
     }
@@ -212,18 +222,23 @@ export default function Register({mail, setMail, moveBack})
                 </div>
        
               <div className="overflow-hidden">
-                <animated.button
+               { message? 
+                <animated.div style={buttonAnimation} className="w-full px-4 py-2 tracking-wide text-center rounded-md">
+                    {message}
+                </animated.div>
+               :<animated.button
                     style={buttonAnimation}
                     className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
                     onClick={handleSendClick}
                 >
                     Poproś o rejestrację konta
-                </animated.button>
+                </animated.button>}
 
-                <animated.div style={messageAnimation} className="w-full px-4 py-2 tracking-wide text-center rounded-md">
-                    Twoja prośba o rejestrację została wysłana do Rysia Pysia
+             
+                <animated.div style={messageAnimation} className="w-full px-4 py-2 tracking-wide text-center flex justify-center flex-col">
+                    Poczekaj, sprawdzamy twoje dane
+                  <LoadingIcon classname='fill-purple-700'/>
                 </animated.div>
-
                 </div>
             </form>
          

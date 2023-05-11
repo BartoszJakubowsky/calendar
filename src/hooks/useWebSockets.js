@@ -53,6 +53,7 @@ export default function useWebSockets(message)
     
     const updateSlot = newSlot =>
     {
+            console.log(newSlot);
             for (let i = 0; i < slots.length; i++) 
             {
             const oldSlot = slots[i];

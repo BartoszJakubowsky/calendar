@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import { motion as m } from "framer-motion";
 import {useSprings, animated} from 'react-spring';
+import axios from "axios";
+
 
 import Menu from '../components/Menu';
 import Users from "./adminPage/Users";
@@ -8,6 +10,7 @@ import UsersPassword from "./adminPage/UsersPassword";
 import UsersRegister from "./adminPage/UsersRegister";
 import Calendars from "./adminPage/Calendars";
 import AdminPageNav from "./adminPage/AdminPageNav";
+import LoadingIcon from "../components/LoadingIcon";
 
 import { useState } from 'react';
 
@@ -15,17 +18,36 @@ import { useState } from 'react';
 export default function AdminPage() 
 {
     const [display, setDisplay] = useState(0);
-
+    const [getData, setGetData] = useState(false);
+    const [users, setUsers] = useState(false);
+    const [usersPassword, setUsersPassword] = useState(false);
+    const [usersRegister, setUsersRegister] = useState(false);
+    
     useEffect(()=>
     {
-        //fetch data each page reloads
-    })
+      axios.get('http://localhost:3002/get_all', ).then(response => 
+      {
+        
+          setTimeout(() => 
+          {
+            const {user, userRegister, userPassword} = response.data;      
+            setUsers(user);
+            setUsersPassword(userPassword);
+            setUsersRegister(userRegister);
+            setGetData(true)
+          }, 1000);
+          
+
+
+      }).catch(err => console.log('Błąd podczas wysyłania', err))
+
+    }, [])
 
     const pagesToShow = 
     [    
-        <Users/>,
-        <UsersPassword/>,
-        <UsersRegister/>,
+        <Users items={users}/>,
+        <UsersPassword items={usersPassword}/>,
+        <UsersRegister items={usersRegister} setUsersRegister={setUsersRegister}/>,
         <Calendars/>
     ]
     const pagesCount = pagesToShow.length;
@@ -45,7 +67,6 @@ export default function AdminPage()
         left: 0,
         }))
     );
-
     const variantsForAdminPage = 
     {
           hidden: { opacity: 0, x: -200, y: 0 },
@@ -53,11 +74,24 @@ export default function AdminPage()
           exit: { opacity: 0, x: 0, y: -100, transition:{delay: 1} },
     }
 
+    const variantsForSuspense = 
+                  {
+                        hidden: { opacity: 0, x: -200, y: 0 },
+                        enter: { opacity: 1, x: 0, y: 0 },
+                        exit: { opacity: 0, x: 0, y: -100 },
+                  }
+
+    if (!getData)
+    return (
+      <m.div className='w-screen h-screen justify-center items-center flex' variants={variantsForSuspense} initial='hidden' animate='enter' transition={{type: 'linear'}} exit={{x: 200, transition: 0.2 }}>
+        <LoadingIcon classname={' fill-blue-500'}></LoadingIcon>
+      </m.div>
+    )
     return (<>
-    <Menu className='flex' theme='bg-yellow-400'/>
+    <Menu className='flex' theme='bg-amber-300'/>
     <m.div className="flex w-screen h-screen justify-center items-start overflow-hidden" variants={variantsForAdminPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
-        <div className="mt-10 h-full w-3/4 md:1/2">
-                <AdminPageNav display={display} setDisplay={setDisplay}/>
+        <div className="mt-12 h-full text-xs w-11/12 md:text-base md:w-3/4 md:1/2">
+                <AdminPageNav display={display} setDisplay={setDisplay} users={users} usersPassword={usersPassword} usersRegister={usersRegister}/>
             <div className="relative w-full overflow-hidden z-10">
             
             {pagesToShow[display]}

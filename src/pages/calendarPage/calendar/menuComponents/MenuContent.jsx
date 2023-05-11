@@ -17,7 +17,7 @@ export default function MenuContent({handleClick})
         <h3 className={hClassName}>Menu</h3>
         <ul>
             <li onClick={handleClick} ><NavLink to='/' className={(navData) => (navData.isActive ? activeClassName : normalClassName)}>Strona główna</NavLink></li>
-            {calendars.map((calendar, index)=> {return <li key={index}><NavLink className={(navData) => (navData.isActive ? activeClassName : normalClassName)} to={`/${calendar.name.replaceAll(' ', '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>{calendar.name}</NavLink></li>})}
+            {calendars.map((calendar, index)=> { if(calendar.name === '') return;  return <li key={index}><NavLink className={(navData) => (navData.isActive ? activeClassName : normalClassName)} to={`/${calendar.name.replaceAll(' ', '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>{calendar.name}</NavLink></li>})}
         </ul>
         <h3 className={hClassName}>Pozostałe</h3>
         <ul>
@@ -29,6 +29,7 @@ export default function MenuContent({handleClick})
             </>
              : false}
         </ul>
+        
         <div className=""></div>
         </div>)
 }

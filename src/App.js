@@ -68,7 +68,7 @@ function App()
             });
         
         return (<>
-                  <AnimatePresence initial={false} mode='wait'>
+                  <AnimatePresence mode='wait'>
                   {/* {formsPaths.includes(currentPath)? false : <Menu className='flex'/>} */}
                   <Routes key={location.pathname} location={location}>
                         <Route path='/' element={<MainPage/>}/>
