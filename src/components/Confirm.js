@@ -3,7 +3,7 @@ import useCalendars from "../hooks/useCalendars";
 import { useTransition, animated, config } from 'react-spring';
 
 
-export default function Convirm({message, additional, submit = 'Tak', handleSubmit, close = 'ANULUJ', ...rest})
+export default function Confirm({message, additional, submit = 'Tak', handleSubmit, close = 'ANULUJ', ...rest})
 {
 
     const divOut = useRef();
@@ -60,7 +60,7 @@ export default function Convirm({message, additional, submit = 'Tak', handleSubm
   leave: { from: { opacity: 1, transform: 'translateY(0)' }, to: { opacity: 0, transform: 'translateY(300px)' }, config: config.wobbly },
 });
     
-    return  <div ref={divOut} className={`absolute flex justify-center items-center h-screen w-screen z-10 ${convirm? `backdrop-blur-sm backdrop-brightness-50 duration-150` : 'pointer-events-none '} ${rest.className}`}>
+    return  <div ref={divOut} className={`absolute flex justify-center items-center h-screen w-screen z-50 ${convirm? `backdrop-blur-sm backdrop-brightness-50 duration-150` : 'pointer-events-none '} ${rest.className}`}>
             {transition((style, state) =>state? <animated.div  style={style} className={`bg-white shadow-sm h-80 w-80 border-2 rounded-md flex flex-col items-center text-center cursor-default ${state? '' : 'pointer-events-none'}`}>
                 <h3 className="text-3xl mt-2 mx-2 basis-1/4" >{message}</h3>
                 <p className="mt-2 basis 1/4">{additional}</p>

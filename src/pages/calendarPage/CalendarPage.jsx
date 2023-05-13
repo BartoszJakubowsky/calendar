@@ -4,7 +4,7 @@ import classNames from "classnames";
 import Menu from '../../components/Menu'
 import Month from "./calendar/Month";
 import useCalendars from '../../hooks/useCalendars';
-import Convirm from '../../components/Convirm';
+import Confirm from '../../components/Confirm';
 import {motion as m} from 'framer-motion';
 
 export default function CalendarPage({calendar})
@@ -46,7 +46,7 @@ const monthCount = date.length;
     return(
     <m.div className=" w-screen h-screen flex items-center flex-col bg-red-100" variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
     {/* <div className=" w-screen h-screen bg-red-100"> */}
-    <Convirm message={convirm.message} submit={convirm.submit} handleSubmit={convirm.handleSubmit}/>
+    <Confirm message={convirm.message} submit={convirm.submit} handleSubmit={convirm.handleSubmit}/>
         <Menu calendarName={name} theme='bg-red-300'/>
         {/* month holder */}
         {/* <div className={`${isMobile? 'mt-5 mx-5 w-full h-full' : ' mt-14 max-w-[90%] h-5/6'} bg-red-300 mx-auto overflow-x-hidden rounded-sm text-sm overflow-hidden`}> */}

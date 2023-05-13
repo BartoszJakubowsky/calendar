@@ -7,8 +7,6 @@ export default function Slots({value, slotCard, onChange})
 {
     //in the future addidiotn settings with permisision
 
-    const {convirm} = useCalendars();
-
 
     const showSlots = value.map(slot=>
     {

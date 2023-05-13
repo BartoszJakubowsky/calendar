@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useWebSockets from "../../../hooks/useWebSockets";
-import Convirm from '../../../components/Convirm';
 import useCalendars from "../../../hooks/useCalendars";
 import { Transition } from "react-transition-group";
 

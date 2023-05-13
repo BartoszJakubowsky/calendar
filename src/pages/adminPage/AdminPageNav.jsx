@@ -68,7 +68,7 @@ export default function AdminPageNav({display, setDisplay, users, usersPassword,
     const buttonsClassNames = classNames( 'text-black hover:text-white duration-200 hover:duration-200 focus:font-semibold active:scale-105 w-full h-full transition-font-weight font-normal flex justify-center items-center');
 
     const pingElement = (
-        <span className="absolute top-0 -right-3 flex h-3 w-3">
+        <span className="absolute -top-1 md:top-0 -right-3 flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
         </span>

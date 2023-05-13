@@ -1,9 +1,12 @@
 import {motion as m} from 'framer-motion';
 import axios from 'axios';
+import { useState } from 'react';
 
-export default function UserRegister({items, setUsersRegister}) 
+export default function UserRegister({items, setMessage, updateAll, setConvirm}) 
 {
 
+    const [userIndex, setUserIndex] = useState(false);
+    const [allIndex, setAllIndex] = useState(false)
     const variantsForUsersPasswords = 
     {
           hidden: { opacity: 0, y: -200},
@@ -14,38 +17,78 @@ export default function UserRegister({items, setUsersRegister})
     const handleAccpetRegister = (index) => 
     {
         const user = [items[index]];
-        axios.post('http://localhost:3002/add_user', user).then(response => 
-        {
+        setUserIndex(index);
+        axios.post('http://localhost:3002/register/add', user).then(response => 
+        {  
             
-            setTimeout(() => 
-            {
-                // setUsersRegister(response.data)
-                console.log(response.data)
-            }, 1000);
-            
-        }).catch(err => console.log('Błąd podczas wysyłania', err))
+
+                if (!response)
+                    setMessage('Coś poszło nie tak');
+                else
+                    {
+                        console.log(response);
+                        setMessage(response.data.message);
+                        updateAll(response.data.data);
+                        setUserIndex(false);
+                    }
+        }).catch(err => console.log('Błąd podczas pobierania danych', err))
     }
 
     const handleAccpetAll = () => 
     {
-
+        setAllIndex(true);
         const acceptedUsersToRegister = items;
         if (acceptedUsersToRegister.length === 0)
             return;
             
-        axios.post('http://localhost:3002/add_user', acceptedUsersToRegister).then(response => 
+        axios.post('http://localhost:3002/register/add', acceptedUsersToRegister).then(response => 
         {
             
-            setTimeout(() => 
-            {
-                // setUsersRegister(response.data)
-                console.log(response.data)
-            }, 1000);
+                if (!response)
+                    setMessage('Coś poszło nie tak');
+                else
+                    {
+                        setMessage(response.data.message);
+                        updateAll(response.data.data);
+                        setAllIndex(false);
+                    }
             
         }).catch(err => console.log('Błąd podczas wysyłania', err))
     }
 
-    const acceptRegister = items.map((user, index)=>
+    const handleDeleteRegister = (confirm) =>
+    {
+        if (!confirm)
+            return 
+
+        const deleteUserFromRegister = [items[userIndex]];
+        console.log(deleteUserFromRegister);
+        return 
+        axios.delete('http://localhost:3002/register/delete', deleteUserFromRegister).then(response => 
+        {
+                if (!response)
+                    setMessage('Coś poszło nie tak');
+                else
+                    {
+                        setMessage(response.data.message);
+                        updateAll(response.data.data);
+                    }
+            
+        }).catch(err => console.log('Błąd podczas wysyłania', err))
+    }
+    const handleDeleteClick = (index) =>
+    {
+        setConvirm(
+            {
+                message: `Czy na pewno chcesz usunąć prośbę o rejsetrację użytkownika ${items[index].name}?`,
+                additional : 'Operacji nie da się cofnąć!',
+                handleSubmit: handleDeleteRegister
+            }
+        )
+        setUserIndex(index)   
+
+    }
+    const registerComponent = items.map((user, index)=>
     {
         return (
             <div key={index} className='md:text-lg text-gray-700 border-b border-x border-gray-500 bg-slate-100 flex flex-row justify-between items-center'>
@@ -53,20 +96,29 @@ export default function UserRegister({items, setUsersRegister})
                 <p>{user.name}</p>
                 <p>{user.mail}</p>
                 </div>
-                <button onClick={() => handleAccpetRegister(index)} className="bg-blue-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Zaakceptuj</button>
+                {}
+                <div className={`flex flex-row ${(userIndex === index || allIndex)? 'pointer-events-none' : ''}`}>
+                    <button onClick={() => handleAccpetRegister(index)} className="bg-blue-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Zaakceptuj</button>
+                    <button onClick={()=>handleDeleteClick(index)} className="bg-red-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-red-100 duration-200">Usuń</button>
+                </div>
             </div>
         )
-    })
+    });
+
+
 
     return (
-      <m.div className="w-full h-full bg-blue-300 overflow-auto" variants={variantsForUsersPasswords} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
-        <div className="w-full md:h-20 bg-white border-x border-b-blue-300 border-b border-blue-300 flex flex-col ">
         
-        <button onClick={handleAccpetAll} className="bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-slate-100 duration-200">
+        
+      <m.div className=" relative w-full h-full bg-blue-300 overflow-auto" variants={variantsForUsersPasswords} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
+        {items.length === 1 ? false : <div className="w-full md:h-20 bg-white border-x border-b-blue-300 border-b border-blue-300 flex flex-col">
+        {items.length === 0? <div className='bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white cursor-default'>Brak nowych użytkowników 😁</div> : false}
+        {items.length <= 2? false : <button onClick={handleAccpetAll} className="bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-slate-100 duration-200">
             Zaakceptuj wszystkich
-        </button>
-      </div>
-            {acceptRegister}
+        </button>}
+      </div>}
+            {registerComponent}
         </m.div>
+        
     )
 }

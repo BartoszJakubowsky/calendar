@@ -1,5 +1,5 @@
 
-import Convirm from "../Convirm";
+import Confirm from "../Confirm";
 import useCalendars from "../../hooks/useCalendars";
 import { useState } from "react";
 export default function Delete({calendar, children, message, submit, ...rest}) 
@@ -23,7 +23,7 @@ export default function Delete({calendar, children, message, submit, ...rest})
     const handleClick = event =>
     {
         event.stopPropagation();
-        setConvirm(<Convirm message={message} additional={rest.additional} submit={submit} handleSubmit={handleDeleteCalendar}/>)
+        setConvirm(<Confirm message={message} additional={rest.additional} submit={submit} handleSubmit={handleDeleteCalendar}/>)
     }
 
 

@@ -24,7 +24,7 @@ export default function User({item})
     const handleSurameChange = event =>
     {
         const _surname = event.target.value;
-        setName(_surname);
+        setSurname(_surname);
     }
 
     const handleMailChange = event =>
@@ -33,6 +33,16 @@ export default function User({item})
         setMail(_mail);
     }
 
+
+    const handleSaveClick = () =>
+    {
+        console.log(item);
+    }
+
+    const handleDeleteClick = () =>
+    {
+
+    }
     
 
     return (
@@ -60,8 +70,9 @@ export default function User({item})
             <div className="flex flex-col items-end mr-2 ">
                 <button onClick={()=>setEditMode(!editMode)} className=" bg-blue-400 w-full p-2 h-fit mt-2  rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Anuluj</button>
             <div className="flex flex-row">
-                <button className="bg-green-400 w-fit p-2 h-fit mt-2 mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Zapisz</button>
-                <button className="bg-red-400 w-fit p-2 h-fit mt-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Usuń</button>
+                {(item.name === name + ' ' + surname && item.mail === mail ) === true? false : 
+                    <button onClick={handleSaveClick} className="bg-green-400 w-fit p-2 h-fit mt-2 mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Zapisz</button>}
+                <button onClick={handleDeleteClick} className="bg-red-400 w-fit p-2 h-fit mt-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Usuń</button>
             </div>
             </div>
       </div>

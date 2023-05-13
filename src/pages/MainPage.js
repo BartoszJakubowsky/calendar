@@ -6,13 +6,10 @@
 //need to import menu 
 //need to import carts -> 
 
-import { useState } from "react";
 import CalendarCard from "../components/CalendarCard";
 import AdminCalendarCard from "../components/AdminCalendarCart";
-import Route from "../components/Route";
 import useCalendars from '../hooks/useCalendars';
 import useAuthenctication from "../hooks/useAuthentication";
-import Convirm from "../components/Convirm";
 import {motion as m} from 'framer-motion';
 import Menu from "../components/Menu";
 import useMobileDevice from "../hooks/useMobileDevice";
@@ -42,7 +39,7 @@ function MainPage({className})
             {
                 return <CalendarCard
                 key={index}
-                calendar={calendar}
+            calendar={calendar}
                 className='pointer-events-none animate-pulse'
                 >
                     {<div className="w-3/4 h-4 empty:bg-slate-300 animate-pulse rounded"></div>}
