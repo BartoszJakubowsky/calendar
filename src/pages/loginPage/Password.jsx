@@ -88,10 +88,18 @@ export default function Password({mail, setMail, moveBack})
 
       
     return (
-        <div className=" w-3/4 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
+        <div className="w-11/12 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md overflow-hidden">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zresetuj hasło
             </h1>
+            <p className="mt-2 text-xs font-light text-center text-gray-700 flex flex-col ">
+                    <a
+                        className="font-medium text-purple-600 hover:underline cursor-pointer"
+                        onClick={()=>moveBack(1)}
+                    >
+                        lub wróć do logowania
+                    </a>
+                </p>
             <form className="mt-6">
                 <div className="mb-2">
                     <label
@@ -161,8 +169,9 @@ export default function Password({mail, setMail, moveBack})
                   <LoadingIcon classname={`fill-purple-700`}/>
                 </animated.div>
                 </div>
+               
             </form>
-         
+            
         </div>
 );
 }

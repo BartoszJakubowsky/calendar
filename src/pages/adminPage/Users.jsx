@@ -3,7 +3,7 @@ import {useState } from "react";
 import {motion as m} from 'framer-motion';
 import User from "./adminComponents/User";
 
-export default function Users({items}) {
+export default function Users({items, setMessage, updateAll}) {
   const [search, setSearch] = useState('');
 
   const handleSearch = (event) => setSearch(event.target.value);
@@ -57,7 +57,7 @@ export default function Users({items}) {
         return (
             <Accordion
             label={item.name}
-            content={<User item={item}/>}
+            content={<User item={item} setMessage={setMessage} updateAll={updateAll}/>}
             key={index}
             search={search}
     />

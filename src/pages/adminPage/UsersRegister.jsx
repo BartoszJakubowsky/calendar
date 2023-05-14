@@ -14,6 +14,9 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
           exit: { opacity: 0, x: 0, y: -200},
     }
 
+
+    
+
     const handleAccpetRegister = (index) => 
     {
         const user = [items[index]];
@@ -32,6 +35,7 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
                         setUserIndex(false);
                     }
         }).catch(err => console.log('Błąd podczas pobierania danych', err))
+        setUserIndex(false);
     }
 
     const handleAccpetAll = () => 
@@ -56,38 +60,26 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
         }).catch(err => console.log('Błąd podczas wysyłania', err))
     }
 
-    const handleDeleteRegister = (confirm) =>
+    const handleDeleteRegister = (index) =>
     {
-        if (!confirm)
-            return 
-
-        const deleteUserFromRegister = [items[userIndex]];
-        console.log(deleteUserFromRegister);
-        return 
-        axios.delete('http://localhost:3002/register/delete', deleteUserFromRegister).then(response => 
-        {
-                if (!response)
-                    setMessage('Coś poszło nie tak');
-                else
-                    {
-                        setMessage(response.data.message);
-                        updateAll(response.data.data);
-                    }
-            
-        }).catch(err => console.log('Błąd podczas wysyłania', err))
-    }
-    const handleDeleteClick = (index) =>
-    {
-        setConvirm(
+            setUserIndex(index)
+            const deleteUserFromRegister = items[index];
+            axios.delete(`http://localhost:3002/register/delete`, {data: {id: deleteUserFromRegister._id} }).then(response => 
             {
-                message: `Czy na pewno chcesz usunąć prośbę o rejsetrację użytkownika ${items[index].name}?`,
-                additional : 'Operacji nie da się cofnąć!',
-                handleSubmit: handleDeleteRegister
-            }
-        )
-        setUserIndex(index)   
-
+                    if (!response)
+                            setMessage('Coś poszło nie tak');   
+                    else
+                        {
+                            setMessage(response.data.message);
+                            updateAll(response.data.data);
+                        }
+                
+            }).catch(err => console.log('Błąd podczas wysyłania', err))
+        
+        setUserIndex(false);
     }
+         
+    
     const registerComponent = items.map((user, index)=>
     {
         return (
@@ -96,10 +88,10 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
                 <p>{user.name}</p>
                 <p>{user.mail}</p>
                 </div>
-                {}
+                
                 <div className={`flex flex-row ${(userIndex === index || allIndex)? 'pointer-events-none' : ''}`}>
                     <button onClick={() => handleAccpetRegister(index)} className="bg-blue-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Zaakceptuj</button>
-                    <button onClick={()=>handleDeleteClick(index)} className="bg-red-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-red-100 duration-200">Usuń</button>
+                    <button onClick={()=>handleDeleteRegister(index)} className="bg-red-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-red-100 duration-200">Usuń</button>
                 </div>
             </div>
         )

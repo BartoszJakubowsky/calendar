@@ -136,6 +136,14 @@ export default function Register({mail, setMail, moveBack})
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zarejestruj się
             </h1>
+            <p className="mt-2 text-xs font-light text-center text-gray-700 flex flex-col ">
+                    <a
+                        className="font-medium text-purple-600 hover:underline cursor-pointer"
+                        onClick={()=>moveBack(1)}
+                    >
+                        lub wróć do logowania
+                    </a>
+                </p>
             <form className="mt-6">
                 <div className="mb-2">
                     <label
@@ -240,6 +248,7 @@ export default function Register({mail, setMail, moveBack})
                   <LoadingIcon classname='fill-purple-700'/>
                 </animated.div>
                 </div>
+                
             </form>
          
         </div>

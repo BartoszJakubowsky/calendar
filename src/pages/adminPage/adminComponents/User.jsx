@@ -1,6 +1,6 @@
 import { useState } from "react";
-
-export default function User({item}) 
+import axios from "axios";
+export default function User({item, setMessage, updateAll}) 
 {
     
     const [editMode, setEditMode] = useState();
@@ -11,6 +11,8 @@ export default function User({item})
     const [mail, setMail] = useState(item.mail || '');
     const [permissions, setPermissions] = useState(item.perrmissions || ['Użytkownik'])
     const [slots, setSlots] = useState(item.records || []);
+    
+    const [activeUser, setActiveUser] = useState(false);
 
 
 
@@ -33,15 +35,45 @@ export default function User({item})
         setMail(_mail);
     }
 
-
     const handleSaveClick = () =>
     {
-        console.log(item);
+        setActiveUser(true);
+
+        const user = {...item, name: name + ' ' + surname, mail: mail, permissions: permissions }
+
+        axios.post('http://localhost:3002/user/add', user).then(response => 
+        {  
+                console.log(response);
+                if (!response)
+                    setMessage('Coś poszło nie tak');
+                else
+                    {
+                        setMessage(response.data.message);
+                        updateAll(response.data.data);
+                    }
+            
+        }).catch(err => console.log('Błąd podczas pobierania danych', err))
+
+        setActiveUser(false);
     }
 
     const handleDeleteClick = () =>
     {
-
+        setActiveUser(true)
+        const deleteUser = item;
+        axios.delete(`http://localhost:3002/user/delete`, {data: {id: deleteUser._id} }).then(response => 
+        {
+                if (!response)
+                        setMessage('Coś poszło nie tak');   
+                else
+                    {
+                        setMessage(response.data.message);
+                        updateAll(response.data.data);
+                    }
+            
+        }).catch(err => console.log('Błąd podczas wysyłania', err))
+    
+        setActiveUser(false);
     }
     
 
@@ -69,7 +101,7 @@ export default function User({item})
             </div>
             <div className="flex flex-col items-end mr-2 ">
                 <button onClick={()=>setEditMode(!editMode)} className=" bg-blue-400 w-full p-2 h-fit mt-2  rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Anuluj</button>
-            <div className="flex flex-row">
+            <div className={`flex flex-row ${(activeUser)? 'pointer-events-none' : ''}`}>
                 {(item.name === name + ' ' + surname && item.mail === mail ) === true? false : 
                     <button onClick={handleSaveClick} className="bg-green-400 w-fit p-2 h-fit mt-2 mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Zapisz</button>}
                 <button onClick={handleDeleteClick} className="bg-red-400 w-fit p-2 h-fit mt-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Usuń</button>

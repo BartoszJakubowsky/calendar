@@ -26,6 +26,31 @@
         }
       ],
       "id": "32184a00-cce1-4f46-97d0-f70e72a37588"
+    },
+    {
+      "name": "Dupa wołowa",
+      "date": [
+        "MAJ.2023",
+        "CZERWIEC.2023"
+      ],
+      "time": {
+        "timeFrom": "08:00",
+        "timeTo": "16:00",
+        "timeSpace": "02:30"
+      },
+      "slots": [
+        {
+          "name": "Elo 321",
+          "space": 1,
+          "order": 1
+        },
+        {
+          "name": "Elo 123",
+          "space": "2",
+          "order": "2"
+        }
+      ],
+      "id": "a945b6f1-1d83-4921-99e6-c8fcce3f6add"
     }
   ]
 }

@@ -67,7 +67,7 @@ export default function AdminPage()
 
     const pagesToShow = 
     [    
-        <Users items={users} setMessage={setMessage} setConvirm={setConvirm}/>,
+        <Users items={users} setMessage={setMessage} setConvirm={setConvirm} updateAll={updateAll}/>,
         <UsersPassword items={usersPassword} setMessage={setMessage} updateAll={updateAll} setConvirm={setConvirm}/>,
         <UsersRegister items={usersRegister} setMessage={setMessage} updateAll={updateAll} setConvirm={setConvirm}/>,
         <Calendars/>

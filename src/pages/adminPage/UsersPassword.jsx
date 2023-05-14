@@ -1,8 +1,13 @@
 import {motion as m} from 'framer-motion';
 import axios from 'axios';
-
+import { useState } from 'react';
 export default function UserPassword({items, setMessage, updateAll}) 
 {
+
+
+    const [userIndex, setUserIndex] = useState(false);
+    const [allIndex, setAllIndex] = useState(false)
+
 
     const variantsForUsersPasswords = 
     {
@@ -14,7 +19,7 @@ export default function UserPassword({items, setMessage, updateAll})
     const handleAccpetPassword = (index) => 
     {
         const user = [items[index]];
-
+        setUserIndex(index)
         axios.post('http://localhost:3002/password/add', user).then(response => 
         {  
             
@@ -27,12 +32,13 @@ export default function UserPassword({items, setMessage, updateAll})
                     }
             
         }).catch(err => console.log('Błąd podczas pobierania danych', err))
+        setUserIndex(false)
     }
 
     const handleAccpetAll = () => 
     {
         const user = items;
-
+        setAllIndex(true);
         axios.post('http://localhost:3002/password/add', user).then(response => 
         {  
 
@@ -44,6 +50,26 @@ export default function UserPassword({items, setMessage, updateAll})
                         updateAll(response.data.data);
                     }
         }).catch(err => console.log('Błąd podczas pobierania danych', err))
+        setAllIndex(false);
+    }
+
+    const handleDeletePassword = (index) =>
+    {
+            setUserIndex(index)
+            const deleteUserFromPassword = items[index];
+            axios.delete(`http://localhost:3002/password/delete`, {data: {id: deleteUserFromPassword._id} }).then(response => 
+            {
+                    if (!response)
+                            setMessage('Coś poszło nie tak');   
+                    else
+                        {
+                            setMessage(response.data.message);
+                            updateAll(response.data.data);
+                        }
+                
+            }).catch(err => console.log('Błąd podczas wysyłania', err))
+        
+        setUserIndex(false);
     }
 
 
@@ -55,7 +81,10 @@ export default function UserPassword({items, setMessage, updateAll})
                 <p>{user.name}</p>
                 <p>{user.mail}</p>
                 </div>
-                <button onClick={() => handleAccpetPassword(index)} className="bg-blue-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Zaakceptuj</button>
+                <div className={`flex flex-row ${(userIndex === index || allIndex)? 'pointer-events-none' : ''}`}>
+                    <button onClick={() => handleAccpetPassword(index)} className="bg-blue-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-blue-100 duration-200">Zaakceptuj</button>
+                    <button onClick={()=>handleDeletePassword(index)} className="bg-red-400 w-fit p-2 h-fit mr-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-red-100 duration-200">Usuń</button>
+                </div>
             </div>
         )
     })

@@ -4,7 +4,9 @@ const Accordion = ({ label, content, search }) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef(null);
 
-  useEffect(() => {
+
+
+useEffect(() => {
     if (isOpen) {
       contentRef.current.style.height = `${140}px`;
     } else {
