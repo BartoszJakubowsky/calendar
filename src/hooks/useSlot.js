@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { update } from "react-spring";
 // import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
+
+
 //slot example
 /*
 {
@@ -28,24 +30,27 @@ import { v4 as uuidv4 } from 'uuid';
 
 let isInitialized = false;
 let slots = [];
-export default function useWebSockets(message)
+
+export default function useSlot(message)
 {
 
-    
+    //only for client 
     const addNewSlot = newSlot => slots.push(newSlot);
-    
+    //on page onmount
     const removeOldSlot = oldSlot => 
     {   
         slots = slots.filter(slot => 
         {
-            if(
-                slot.calendar !== oldSlot.calendar ||
-                slot.date !== oldSlot.date ||
-                slot.weekIndex !== oldSlot.weekIndex ||
-                slot.day !== oldSlot.day || 
-                slot.time !== oldSlot.time ||
-                slot.slotIndex !== oldSlot.slotIndex
-                ) return true;
+            // if(
+            //     slot.calendar !== oldSlot.calendar ||
+            //     slot.date !== oldSlot.date ||
+            //     slot.weekIndex !== oldSlot.weekIndex ||
+            //     slot.day !== oldSlot.day || 
+            //     slot.time !== oldSlot.time ||
+            //     slot.slotIndex !== oldSlot.slotIndex
+            //     ) return true;
+            if (slot.id === oldSlot.id)
+                return true;
             else
                 return false;
         });
@@ -54,6 +59,8 @@ export default function useWebSockets(message)
     const updateSlot = newSlot =>
     {
             console.log(newSlot);
+             console.log('add')
+
             for (let i = 0; i < slots.length; i++) 
             {
             const oldSlot = slots[i];

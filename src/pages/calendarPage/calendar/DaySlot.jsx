@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import useWebSockets from "../../../hooks/useWebSockets";
+import useSlot from "../../../hooks/useSlot";
 import useCalendars from "../../../hooks/useCalendars";
 import { Transition } from "react-transition-group";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Day({calendarName, dayName, date, time, slotName, slotIndex, dayDate, slotOrder, weekIndex}) 
 {
@@ -17,10 +18,11 @@ export default function Day({calendarName, dayName, date, time, slotName, slotIn
         time,
         slotName,
         slotIndex,
-        sign: handleSign
+        sign: handleSign,
+        id: uuidv4()
     };
 
-    const {addNewSlot, updateSlot, removeOldSlot} = useWebSockets();
+    const {addNewSlot, updateSlot, removeOldSlot} = useSlot();
     const {convirm, setConvirm} = useCalendars();
     useEffect(() => 
     {
@@ -52,10 +54,13 @@ const handleClick = event =>
 
 const handleSignClick = (confirmed) =>
 {
+
     if (!confirmed)
         return
 
-    updateSlot({...thisSlot, sign: user.name});
+    const newSlot = {...thisSlot, sign: user.name}
+      
+    updateSlot(newSlot);
 }
 
 const handleUnsignClick = (confirmed) =>
@@ -83,7 +88,7 @@ const transitionStyles = {
 
 return (
   <button
-    className={`overflow-hidden w-full h-full border-2 border-red-200 duration-150 hover:backdrop-brightness-90 text-center
+    className={`overflow-hidden md:w-full w-40 h-full border-2 border-red-200 duration-150 hover:backdrop-brightness-90 text-center
       ${sign === '' ? '' : ''}
       ${sign !== user.name && sign !== '' ? 'cursor-not-allowed pointer-events-none' : ''}
     `}

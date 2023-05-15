@@ -15,7 +15,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
 
     if (isBlank)
         return (
-            <div className={` bg-gray-400 flex flex-col w-full border-l-2 border-black`} key={day}>
+            <div className={` bg-gray-400 flex flex-col w-full  border-l-2 border-black`} key={day}>
                 <div className={`h-10 border-black w-full opacity-0`}>
                 {day}
                 {/* slots name holder */}
@@ -33,20 +33,25 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
         //column
         <div className={`flex flex-col w-full bg-amber-100 border-l-2 border-black `}  key={day}>
             {/* //first cell in day column for day name*/}
-            <div className={`h-20 flex-none border-b-2 border-black w-full`}>
-                <div className='flex flex-col justify-center items-center'>
+            <div className={`h-20 flex-none border-b-2 border-black w-full bg-amber-200 flex flex-col`}>
+
+                {/* day and date */}
+                <div className='flex flex-col  justify-center items-center'>
                     <span className=' font-semibold'>{day}</span>
                     <span>{_dayDate}</span>
                 </div>
+                <div className='flex flex-row w-full h-full overflow-hidden'>
                 {/* slots name holder */}
-                <div className="overflow-hidden flex flex-none "> 
                 {slots.map((slot, index) => {
                 return (
-                    <span key={index} className="inline-block overflow-hidden w-full">{slot.name}</span>
+                    
+                    <span key={index} className="w-full h-full justify-center items-center overflow-hidden flex flex-wrap text-center border-2 break-words border-red-200">{slot.name}</span>
                 );
             })}
                 </div>
             </div>  
+
+            
             {/* rest of cells/days  based on time spaces */}
             {timeArr.map((time, index) =>
             {   

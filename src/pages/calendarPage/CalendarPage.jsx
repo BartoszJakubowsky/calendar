@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { useSprings, animated } from "react-spring";
 import classNames from "classnames";
 import Menu from '../../components/Menu'
@@ -6,13 +6,48 @@ import Month from "./calendar/Month";
 import useCalendars from '../../hooks/useCalendars';
 import Confirm from '../../components/Confirm';
 import {motion as m} from 'framer-motion';
+import useSlot from "../../hooks/useSlot";
+
+import io from "socket.io-client";
+import useSocket from '../../hooks/useSocket';
 
 export default function CalendarPage({calendar})
 {
 const {convirm} = useCalendars();
 const {name, date, slots, time} = calendar;
 const [displayedMonth, setDisplayedMonth] = useState(0); 
+const {updateSlot} = useSlot();
+const {setSocket, handleSocket} = useSocket();
+
+
 const monthCount = date.length;
+
+  useEffect(() => {
+
+      // const socket = io.connect();
+      const socket = io.connect("http://localhost:3002");
+      
+      socket.on("connected", (data) => 
+      {
+        setSocket(socket)  
+        console.log(data)
+      });
+
+      socket.on('message', data => 
+      {
+
+        console.log(data);
+          // updateSlot(data.slot)
+      })
+
+      return () => {
+        // Zamykanie połączenia socket.io po opuszczeniu komponentu
+        console.log('Websockets disconnect')
+        setSocket(false);
+        socket.disconnect();
+      };
+  }, []);
+
 
   const springs = useSprings(
     monthCount,

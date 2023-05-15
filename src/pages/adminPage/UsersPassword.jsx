@@ -76,7 +76,7 @@ export default function UserPassword({items, setMessage, updateAll})
     const acceptPassword = items.map((user, index)=>
     {
         return (
-            <div key={index} className='md:text-lg h-fit py-2 text-gray-700 border-b border-x border-gray-500 bg-slate-100 flex flex-row justify-between items-center'>
+            <div key={index} className='md:text-lg h-fit text-gray-700 border-b border-x border-gray-500 bg-slate-100 flex flex-row justify-between items-center'>
                 <div className='flex flex-col pl-2'>
                 <p>{user.name}</p>
                 <p>{user.mail}</p>
