@@ -16,9 +16,10 @@ function CalendarsProvider({children, url})
     // const [currentPath, setCurrentPath] = ('/');
     const currentPath = useLocation().pathname;
     const [calendars, setCalendars] = useState(tempCalendar);
-const [convirm, setConvirm] = useState(false);
+    const [convirm, setConvirm] = useState(false);
     const [calendarToEdit, setCalendarToEdit] = useState(false)
     const navigate = useNavigate();
+    
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -26,7 +27,6 @@ const [convirm, setConvirm] = useState(false);
             setCalendars(response.data);
           } catch (error) {
             console.error(error);
-            // Ponów zapytanie po pewnym czasie, na przykład po 5 sekundach
             setTimeout(fetchData, 5000);
           }
         };

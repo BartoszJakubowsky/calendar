@@ -1,4 +1,4 @@
-import './index.css';
+import './assets/index.css';
 import {CalendarsProvider} from './context/calendars'
 
 import React from "react";

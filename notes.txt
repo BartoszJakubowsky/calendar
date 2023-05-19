@@ -1,0 +1,21 @@
+# assets
+everything what's not js file -> global css, svgs, jpgs, etc.
+
+
+# __test__
+if so, in every single folder
+
+# data
+for config user files , constant variables 
+
+# utils 
+for simple functions
+
+# layouts
+for layouts components like navbar, Sidebar, etc. (optional, for huge apps)
+
+#lib
+for third party lib that's not part of the node modules
+
+#services 
+for integrating with api -> login etc.

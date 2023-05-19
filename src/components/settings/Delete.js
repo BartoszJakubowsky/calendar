@@ -1,5 +1,5 @@
 
-import Confirm from "../Confirm";
+import Confirm from "../ui/Confirm";
 import useCalendars from "../../hooks/useCalendars";
 import { useState } from "react";
 export default function Delete({calendar, children, message, submit, ...rest}) 
