@@ -1,4 +1,4 @@
-import { useState , useMemo} from "react";
+import { useState , useMemo, useEffect} from "react";
 import {motion as m} from 'framer-motion';
 import io from "socket.io-client";
 import { useParams } from "react-router-dom";
@@ -13,20 +13,35 @@ import Month from "./Month";
 import Confirm from '../../components/ui/Confirm';
 import MonthNavbar from "./MonthNavbar";
 import MonthCarosuel from "./MonthCarosuel";
-
-
+import LoadingPage from '../Loading/LoadingPage';
 
 export default function CalendarPage({})
 {
-const {calendars, navigate, convirm} = useCalendars();
+
+// 1 -> fetching true === loading screen
+// 2 -> fetching false === loading screen + background operations
+// background ready === motion effect
+
+
+
+//move useSlots here! it will prevent for multiple rerenders and boost up performance
+//add loading div place holder and useEffect to setIsLoading on false
+
+
+
+
+
+
+
+
+
+const {calendars, navigate, convirm, isFetching} = useCalendars();
 const {calendarName} = useParams();
 
+//check if calendar url match any calendar name
 const confirmCalendar = useMemo(()=>
 {
-  console.log('to url', calendarName);
-  //check if urlName matches calendar name
   const parseStringToUrl = string => string.replaceAll(' ', '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
   for (let i = 0; i < calendars.length; i++) 
   {
     const thisCalendar = calendars[i];
@@ -37,15 +52,31 @@ const confirmCalendar = useMemo(()=>
       return thisCalendar;
     }
   }
-
   return false;
-})
+}, [isFetching])
+
 const [calendar, setCalendar] = useState(confirmCalendar);
+
+useEffect(()=>
+{
+  console.log('komponent się zamontował');
+})
+useEffect(()=>
+{ 
+  setTimeout(() => {
+    setCalendar(confirmCalendar);
+  }, 1000);
+  
+}, [isFetching])
+  // This will run one time after the component mounts
+  
+const [displayedMonth, setDisplayedMonth] = useState(0); 
+if (!calendar)
+  return <LoadingPage/>
 
 if (!calendar)
   navigate('/brak_strony');
 
-const [displayedMonth, setDisplayedMonth] = useState(0); 
 
 const {name, date} = calendar;
 // const {updateSlot} = useSlot();
@@ -89,9 +120,10 @@ const {name, date} = calendar;
         // exit: { opacity: 0, x: -200, y: 0 },
         exit: { opacity: 0 },
   }
-  
-    const monthsCountForMonthCarousel = date.length;
+ 
+  const monthsCountForMonthCarousel = date.length;
     return(
+      <>
       <m.div 
         className=" absolute inset-0 flex items-center flex-col bg-red-100" 
         variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
@@ -102,16 +134,9 @@ const {name, date} = calendar;
         <MonthCarosuel calendar={calendar} monthsCountForMonthCarousel={monthsCountForMonthCarousel} displayedMonth={displayedMonth}/>
           </div>
       </m.div>
+      </>
       );
     
 }
-
-
-
-//renders name and "calandars look -> sends request for data"
-
-//date -> all the stuff
-
-// takes data -> sorts 
 
 

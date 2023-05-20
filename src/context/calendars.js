@@ -14,17 +14,19 @@ function CalendarsProvider({children, url})
     const tempCalendar = [{name: ''}, {name: ''}, {name: ''}]
     const [login, setLogin] = useState(useAuthenctication());
     // const [currentPath, setCurrentPath] = ('/');
-    const currentPath = useLocation().pathname;
     const [calendars, setCalendars] = useState(tempCalendar);
     const [convirm, setConvirm] = useState(false);
     const [calendarToEdit, setCalendarToEdit] = useState(false)
+    const [isFetching, setIsFetching] = useState(true);
     const navigate = useNavigate();
+    const currentPath = useLocation().pathname;
     
     useEffect(() => {
         const fetchData = async () => {
           try {
             const response = await axios.get('http://localhost:3001/calendars');
             setCalendars(response.data);
+            setIsFetching(false);
           } catch (error) {
             console.error(error);
             setTimeout(fetchData, 5000);
@@ -116,7 +118,8 @@ const toProvide =
     calendarToEdit, 
     setCalendarToEdit,
     deleteCalendar,
-    navigate
+    navigate,
+    isFetching
 }
 
 

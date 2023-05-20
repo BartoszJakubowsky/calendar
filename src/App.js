@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {lazy,Suspense} from 'react';
 import { Route, Routes, useLocation} from 'react-router-dom';
 import {motion as m} from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
@@ -12,9 +12,8 @@ import AdminPage from './pages/Admin/AdminPage'
 import CreateCalendarPage from './pages/Create/CreateCalendarPage'
 import NotFoundPage from './pages/NotFound/NotFoundPage'
 
-import LoadingIcon from './components/ui/LoadingIcon'
-
-const LazyCalendarPage = React.lazy(()=> import('./pages/Calendar/CalendarPage'));
+import LoadingPage from './pages/Loading/LoadingPage';
+const LazyCalendarPage = lazy(()=> import('./pages/Calendar/CalendarPage'));
 
 function App()
 {
@@ -23,36 +22,16 @@ function App()
       const location = useLocation();
 
       const formsPaths = ['/logowanie', '/haslo', '/rejestracja'];
-      const calendarPage = () =>         
-      {
-            const variantsForSuspense = 
-            {
-                  hidden: { opacity: 0, x: -200, y: 0 },
-                  enter: { opacity: 1, x: 0, y: 0 },
-                  exit: { opacity: 0, x: 0, y: -100 },
-            }
-
-            return (
-                  <Suspense fallback={
-                        <m.div className='absolute inset-0 justify-center bg-red-200 items-center flex' variants={variantsForSuspense} initial='hidden' animate='enter' transition={{type: 'linear'}} exit={{x: 200, transition: 0.2 }}>
-                              <LoadingIcon classname={' fill-red-500'}></LoadingIcon>
-                        </m.div>}>
-      
-                        <LazyCalendarPage/>
-                  </Suspense>
-            )
-      }
-            
-      
 
         return (<>
+                 <Suspense fallback={<LoadingPage/>}>
                   <AnimatePresence mode='wait'>
                         <Routes key={location.pathname} location={location}>
                               <Route path='/' element={<MainPage/>}/>
 
                               {formsPaths.map(form =><Route path={form} key={form} element={<LoginPage replace/>}/>)}
                               
-                              <Route path='/kalendarz/:calendarName' element={calendarPage()}></Route>
+                              <Route path='/kalendarz/:calendarName' element={<LazyCalendarPage/>}></Route>
                               
                               {isAdmin && 
                               <>
@@ -65,11 +44,11 @@ function App()
                                     calendarId={calendarToEdit?.id}/>}/>
                               <Route path='/admin' element={<AdminPage/>}/>   
                               </>}
-                              <Route path='*'element={<NotFoundPage/>}/>
+                              <Route path='*'element={<NotFoundPage replace/>}/>
 
                         </Routes>
-
                   </AnimatePresence>
+                  </Suspense>
                   </>)
 }
 
