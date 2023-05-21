@@ -1,5 +1,6 @@
 import './assets/index.css';
 import {CalendarsProvider} from './context/calendars'
+import {SlotsProvider} from './context/slots'
 
 import React from "react";
 import ReactDOM  from "react-dom/client";
@@ -13,7 +14,9 @@ const appUrl = window.appUrl || 'domyślny-adres-url';
 root.render(
             <BrowserRouter>
             <CalendarsProvider>
+                <SlotsProvider>
                     <App/>
+                </SlotsProvider>
             </CalendarsProvider>
             </BrowserRouter>
             );

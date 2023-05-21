@@ -1,75 +1,59 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { useTransition, animated } from 'react-spring';
-import { v4 as uuidv4 } from 'uuid';
-import useSocket from "../../hooks/useSocket";
 
-
-import useSlot from "../../hooks/useSlot";
 import useCalendars from "../../hooks/useCalendars";
 
-export default function Day({calendarName, dayName, date, time, slotName, slotIndex, dayDate, slotOrder, weekIndex}) 
+export default function Day({thisSlot, dayDate}) 
 {
     const user = {name: 'Bartosz Jakubowski', rights: 'user'};
     const [sign, setSign] = useState('');
-    const handleSign = newName => setSign(newName);
 
-    const {socket} = useSocket();
-
-    const thisSlot = 
-    {
-        calendar : calendarName,
-        date,
-        weekIndex,
-        day : dayName,
-        time,
-        slotName,
-        slotIndex,
-        sign: handleSign,
-        id: uuidv4()
-    };
-
-    const {addNewSlot, updateSlot, removeOldSlot} = useSlot();
+    // const thisSlot = 
+    // {
+    //     calendar : calendarName,
+    //     date,
+    //     weekIndex,
+    //     day : dayName,
+    //     time,
+    //     slotName,
+    //     slotIndex,
+    //     sign: handleSign,
+    //     id: uuidv4()
+    // };
     const {convirm, setConvirm} = useCalendars();
-    useEffect(() => 
-    {
-       addNewSlot(thisSlot)
-       //remove this listener from listeners
-       return () => removeOldSlot(thisSlot)
-    }, []);
+    
 
-
-// const handleSign = name => updateSlot({...thisSlot, })
 const handleClick = event =>
 {
     event.preventDefault();
 
+    //unsign
     if (sign === user.name)
     {
-        const message = `Czy na pewno chcesz wypisać się z dnia ${dayName.toLowerCase()} ${dayDate}, godzina ${time}?`
+        const message = `Czy na pewno chcesz wypisać się z dnia ${thisSlot.day.toLowerCase()} ${dayDate}, godzina ${thisSlot.time}?`
         const submit = "Wypisz mnie"    
         setConvirm({message : message, submit : submit, handleSubmit : handleUnsignClick})
         // handleUnsignClick(true);
 
     }
+    //sign
     else
     {
-        const message = `Czy na pewno chcesz zapisać się na ${time} w ${dayName.toLowerCase()} ${dayDate}?`
+        const message = `Czy na pewno chcesz zapisać się na ${thisSlot.time} w ${thisSlot.day.toLowerCase()} ${dayDate}?`
         const submit = "Zapisz mnie"
         setConvirm({message : message, submit : submit, handleSubmit : handleSignClick})
         // handleSignClick(true);
 
     }
 }
-
 const handleSignClick = (confirmed) =>
 {
 
     if (!confirmed)
         return
 
-    const newSlot = {...thisSlot, sign: user.name}
-    socket();
-    updateSlot(newSlot);
+    setSign(user.name);
+    thisSlot.sign(user.name)
 }
 
 const handleUnsignClick = (confirmed) =>
@@ -77,9 +61,10 @@ const handleUnsignClick = (confirmed) =>
     if (!confirmed)
         return
 
-    updateSlot({...thisSlot, sign: ''});
-}
+        setSign('');
+        thisSlot.sign('');
 
+}
 
 const duration = 300;
 const defaultStyle = {
@@ -120,7 +105,6 @@ const transitionStyles = {
       )}
     </button>
   );
-
 
 }
 

@@ -24,14 +24,14 @@ function App()
       const formsPaths = ['/logowanie', '/haslo', '/rejestracja'];
 
         return (<>
-                 <Suspense fallback={<LoadingPage/>}>
                   <AnimatePresence mode='wait'>
                         <Routes key={location.pathname} location={location}>
                               <Route path='/' element={<MainPage/>}/>
 
                               {formsPaths.map(form =><Route path={form} key={form} element={<LoginPage replace/>}/>)}
                               
-                              <Route path='/kalendarz/:calendarName' element={<LazyCalendarPage/>}></Route>
+                        
+                              <Route path='/kalendarz/:calendarName' element={<Suspense fallback={<LoadingPage/>}><LazyCalendarPage/></Suspense>}></Route>
                               
                               {isAdmin && 
                               <>
@@ -48,7 +48,6 @@ function App()
 
                         </Routes>
                   </AnimatePresence>
-                  </Suspense>
                   </>)
 }
 

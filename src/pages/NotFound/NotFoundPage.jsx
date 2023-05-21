@@ -11,7 +11,7 @@ export default function NotFoundPate()
     const [bounceAnimation, setBounceAnimation] = useState(false);
     useEffect(()=>
     {
-        setTimeout(()=> navigate('/'),3500);
+        setTimeout(()=> navigate('/'),2500);
     })
     
     setTimeout(() => {

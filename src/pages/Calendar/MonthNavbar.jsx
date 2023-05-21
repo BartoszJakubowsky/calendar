@@ -3,8 +3,6 @@ import classNames from "classnames";
 export default function MonthNavbar({displayedMonth,setDisplayedMonth, monthsCountForMonthCarousel}) 
 {
 
-
-
     const handleShowPrevMonthClick = () => {
         setDisplayedMonth((displayedMonth - 1 + monthsCountForMonthCarousel) % monthsCountForMonthCarousel);
       };

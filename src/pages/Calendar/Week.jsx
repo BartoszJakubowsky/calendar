@@ -11,6 +11,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
   const DAYS_OF_WEEK = ['PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA', 'NIEDZIELA'];
   const generateTimes = (timeStart, timeEnd, timeBetween) =>
   {
+    console.log('ile razy');
     const times = [];
     let currentTime = timeStart;
     
@@ -33,19 +34,21 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
  
   return(
     <div className={weekClassName}>
-     {allWeeksInMonth.map((week, index)=>
+     {allWeeksLeftInMonth.map((week, index)=>
         {
+
+          if (week.length === 0)
+          return false;
+
           return (
             <section key={index} className={`snap-start h-full w-full bg-gray-100 flex flex-row`}>
-            {/* time */}
             <Time timeArr={timeArr} 
             // className={dayTimeColumnClass}
             />
             {/* only days for this week */}
-
             {DAYS_OF_WEEK.map((day, dayIndex) => 
             {
-
+              
               let doesDayExist = false;
               let dayDate;
               for (let i = 0; i < week.length; i++) 
@@ -75,7 +78,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
               else
               return <DayColumn
                 // className={dayTimeColumnClass}
-                day={day.date}
+                day={day}
                 isActive={!!(allWeeksLeftInMonth[index]?.[dayIndex])}
                 isBlank={true}
                 slots={slots}

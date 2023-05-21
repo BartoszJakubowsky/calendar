@@ -1,58 +1,53 @@
+import { useEffect } from 'react';
+import useSlots from '../../hooks/useSlots';
+import DayColumnHeader from './DayColumnHeader';
 import DaySlot from './DaySlot';
 
 export default function DayColumn({day, isActive, isBlank, timeArr, slots, name, date, weekIndex, dayDate, ...rest}) 
 {
-    let _dayDate;
-    if (dayDate)
+
+    //format dd.mm.yyyy
+    const convertDate = (dayDate) =>
     {
-        
         const data = dayDate
         const _day = data.getDate().toString().padStart(2, "0");
         const _month = (data.getMonth() + 1).toString().padStart(2, "0");
         const _year = data.getFullYear().toString();
-        _dayDate = `${_day}.${_month}.${_year}`;
+        return `${_day}.${_month}.${_year}`;
     }
+
+    const handleSign = newSlot =>
+    {
+        console.log(newSlot);
+    }
+    const slotsArray = [];
+    const {updateSlotsArray} = useSlots();
+
+    useEffect(()=>
+    {
+        updateSlotsArray(slotsArray);
+    },[])
+
+
+
+
+    let _dayDate;
+
+    if (dayDate)
+        _dayDate = convertDate(dayDate);
 
     if (isBlank)
         return (
             <div className={` bg-gray-400 flex flex-col w-full  border-l-2 border-black`} key={day}>
-                <div className={`h-10 border-black w-full opacity-0`}>
-                {day}
-                {/* slots name holder */}
-                <div className="overflow-hidden flex flex-none opacity-0"> 
-                {slots.map((slot, index) => {
-                return (
-                    <span key={index} className="inline-block overflow-hidden w-full">{slot.name}</span>
-                );
-            })}
-                </div>
-            </div>
+               <DayColumnHeader dayDate={_dayDate} day={day} slots={slots} isBlank={isBlank}/>
             </div>
         )
+
     return (
         //column
         <div className={`flex flex-col w-full bg-amber-100 border-l-2 border-black `}  key={day}>
-            {/* //first cell in day column for day name*/}
-            <div className={`h-20 flex-none border-b-2 border-black w-40 bg-amber-200 flex flex-col`}>
+            <DayColumnHeader dayDate={_dayDate} day={day} slots={slots} isBlank={isBlank}/>
 
-                {/* day and date */}
-                <div className='flex flex-col  justify-center items-center'>
-                    <span className=' font-semibold'>{day}</span>
-                    <span>{_dayDate}</span>
-                </div>
-                <div className='flex flex-row w-full h-full overflow-hidden'>
-                {/* slots name holder */}
-                {slots.map((slot, index) => {
-                return (
-                    
-                    <span key={index} className="w-full h-full justify-center items-center overflow-hidden flex flex-wrap text-center border-2 break-words border-red-200">{slot.name}</span>
-                );
-            })}
-                </div>
-            </div>  
-
-            
-            {/* rest of cells/days  based on time spaces */}
             {timeArr.map((time, index) =>
             {   
                 //cell day
@@ -63,25 +58,31 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                         {/* slots in cells / slots holder */}
                         {slots.map(slot =>
                         {   
-                                          
-
-
                             let spaces = [];
+
                             for (let i = 0; i < slot.space; i++) 
                             {
                                 const key = name + day+ slot.name + time + i;
+
+                                const thisSlot = 
+                                {
+                                    calendar : name,
+                                    date,
+                                    weekIndex,
+                                    day,
+                                    time,
+                                    slotName : slot.name,
+                                    slotIndex : i,
+                                    sign: handleSign,
+                                };
+
+                                slotsArray.push(thisSlot);
+
                                 spaces.push(
                                    <DaySlot 
                                     key={key}
-                                    calendarName={name} 
-                                    dayName={day} 
                                     dayDate={_dayDate}
-                                    date={date} 
-                                    time={time} 
-                                    slotName={slot.name} 
-                                    slotIndex={i}
-                                    slotOrder={slot.order}
-                                    weekIndex={weekIndex}
+                                    thisSlot={thisSlot}
                                     />
                                 )
                             }

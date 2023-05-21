@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import classNames from "classnames";
 
 import HamburgerIcon from "./HamburgerIcon";
 import Slider from "./Slider";
@@ -10,7 +9,7 @@ export default function Menu({calendarName, theme, ...rest})
 
     useEffect(() => {
       const handlePopstate = () => {
-        setIsOpen(false); // Ustaw isOpen na false przy zmianie URL
+        setIsOpen(false); 
       };
   
       window.addEventListener("popstate", handlePopstate);

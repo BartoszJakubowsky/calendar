@@ -1,6 +1,7 @@
-import { useSprings, animated } from "react-spring";
+import {useMemo, useState } from "react";
+import {useSprings, animated } from "react-spring";
+
 import Month from "./Month";
-import { useEffect, useMemo, useState } from "react";
 
 export default function MonthCarosuel({calendar, displayedMonth, monthsCountForMonthCarousel}) 
 {
@@ -9,7 +10,7 @@ export default function MonthCarosuel({calendar, displayedMonth, monthsCountForM
 
     const renderMonths = useMemo(()=>
     {
-      return date.map((month, index) => <Month name={name} date={date[index]} slots={slots} time={time} />)
+      return date.map((month, index) => <Month name={name} date={date[index]} slots={slots} time={time}/>)
     }, [])
 
     const [months, setMonths] = useState(renderMonths);
@@ -30,9 +31,8 @@ export default function MonthCarosuel({calendar, displayedMonth, monthsCountForM
     return (
         <div className="relative w-full h-full">
             {monthCarousel.map((props, index) => (
-              <animated.div key={index} className="absolute w-full h-full pb-14" style={{ ...props }}>
+              <animated.div key={index} className="absolute w-full h-full pb-20" style={{ ...props }}>
                 {months ? months[index] : null}
-                {/* {arr[index]} */}
               </animated.div>
             ))}
     </div>

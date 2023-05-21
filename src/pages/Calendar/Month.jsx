@@ -1,11 +1,9 @@
 
 import classNames from "classnames";
-import useMobileDevice from "../../hooks/useMobileDevice";
 import Week from "./Week";
 
 export default function Month({name, date, slots, time}) 
 {
-    const isMobile = useMobileDevice();
     const className = classNames('');
     const thisYear = new Date().getFullYear();
 
@@ -13,7 +11,7 @@ export default function Month({name, date, slots, time})
     const MONTHS = ['STYCZEŃ', 'LUTY', 'MARZEC', 'KWIECIEŃ', 'MAJ', 'CZERWIEC', 'LIPIEC', 'SIERPIEŃ', 'WRZESIEŃ', 'PAŹDZIERNIK', 'LISTOPAD', 'GRUDZIEŃ'];
     const DAYS_OF_WEEK = ['NIEDZIELA', 'PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA'];
 
-    function getDaysInMonth(dateStr) {
+    function getDaysAndWeeksInMonth(dateStr) {
       const [monthStr, yearStr] = dateStr.split('.');
       const month = MONTHS.indexOf(monthStr.toUpperCase());
       const year = parseInt(yearStr, 10);
@@ -28,6 +26,7 @@ export default function Month({name, date, slots, time})
       const allWeeksInMonth = [];
       const allWeeksLeftInMonth = [];
     
+      //days
       for (let i = 1; i <= daysInMonth; i++) 
       {
         const date = new Date(year, month, i);
@@ -42,13 +41,13 @@ export default function Month({name, date, slots, time})
         if (date >= currentDate) 
           allDaysLeftInMonth.push(day);
         else
-          allDaysLeftInMonth.push({})
-
-          
+          allDaysLeftInMonth.push(false)
       }
     
       let currentWeek = [];
       let currentWeekLeft = [];
+
+      //weeks
       for (let i = 1; i <= daysInMonth; i++) 
       {
         const date = new Date(year, month, i);
@@ -71,12 +70,12 @@ export default function Month({name, date, slots, time})
           currentWeekLeft.push(day);
         }
       }
+
       if (currentWeek.length > 0) 
       {
         allWeeksInMonth.push(currentWeek);
-        allWeeksLeftInMonth.push(currentWeekLeft);
+        allWeeksLeftInMonth.push(currentWeek);
       }
-    
       return {
         allDaysInMonth: allDaysInMonth,
         allDaysLeftInMonth: allDaysLeftInMonth,
@@ -84,10 +83,13 @@ export default function Month({name, date, slots, time})
         allWeeksLeftInMonth: allWeeksLeftInMonth
       };
     }
-    const {allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth} = getDaysInMonth(date);
+    const {allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth} = getDaysAndWeeksInMonth(date);
     return (
         <div className={`w-full h-full`}>
-          {date}
+          {/* if padding will ever change remember to change padding in animated.div in MonthCarosuel to see the overflow x */}
+          <h3 className="flex justify-center items-center p-3 border-2 border-black font-semibold">
+            {date}
+          </h3>
           <Week 
             allDaysInMonth={allDaysInMonth} 
             allDaysLeftInMonth={allDaysLeftInMonth} 
