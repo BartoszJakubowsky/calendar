@@ -27,7 +27,6 @@ export default function MonthCarosuel({calendar, displayedMonth, monthsCountForM
           zIndex: index === displayedMonth ? 1 : 0,
         }))
       );
-
     return (
         <div className="relative w-full h-full">
             {monthCarousel.map((props, index) => (

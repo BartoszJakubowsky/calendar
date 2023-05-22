@@ -1,13 +1,25 @@
-import {useState } from "react";
-import { useTransition, animated } from 'react-spring';
-
+import {useEffect, useMemo, useState } from "react";
+import { useTransition, animated} from 'react-spring';
+import useSlots from '../../hooks/useSlots';
 import useCalendars from "../../hooks/useCalendars";
+import { calcLength } from "framer-motion";
 
-export default function Day({thisSlot, dayDate}) 
+export default function DaySlot({_thisSlot, dayDate}) 
 {
-    const user = {name: 'Bartosz Jakubowski', rights: 'user'};
-    const [sign, setSign] = useState('');
 
+
+  const {updateSlot, updateSlotsArray, emitMessage} = useSlots();
+  const [thisSlot, setThisSlot] = useState(_thisSlot);
+
+  useMemo(()=>
+  {
+    _thisSlot.handleSign = setThisSlot;
+    updateSlotsArray([_thisSlot]);
+  },[])
+
+    const user = {name: 'Bartosz Jakubowski', rights: 'user'};
+    const {convirm, setConvirm} = useCalendars();
+    const sign = thisSlot.sign;
     // const thisSlot = 
     // {
     //     calendar : calendarName,
@@ -17,11 +29,9 @@ export default function Day({thisSlot, dayDate})
     //     time,
     //     slotName,
     //     slotIndex,
-    //     sign: handleSign,
-    //     id: uuidv4()
+    //     handleSign: handleSign,
+    //     sign:,
     // };
-    const {convirm, setConvirm} = useCalendars();
-    
 
 const handleClick = event =>
 {
@@ -32,8 +42,8 @@ const handleClick = event =>
     {
         const message = `Czy na pewno chcesz wypisać się z dnia ${thisSlot.day.toLowerCase()} ${dayDate}, godzina ${thisSlot.time}?`
         const submit = "Wypisz mnie"    
-        setConvirm({message : message, submit : submit, handleSubmit : handleUnsignClick})
-        // handleUnsignClick(true);
+        // setConvirm({message : message, submit : submit, handleSubmit : handleUnsignClick})
+        handleUnsignClick(true);
 
     }
     //sign
@@ -41,19 +51,20 @@ const handleClick = event =>
     {
         const message = `Czy na pewno chcesz zapisać się na ${thisSlot.time} w ${thisSlot.day.toLowerCase()} ${dayDate}?`
         const submit = "Zapisz mnie"
-        setConvirm({message : message, submit : submit, handleSubmit : handleSignClick})
-        // handleSignClick(true);
+        // setConvirm({message : message, submit : submit, handleSubmit : handleSignClick})
+        handleSignClick(true);
 
     }
 }
+
 const handleSignClick = (confirmed) =>
 {
 
     if (!confirmed)
         return
 
-    setSign(user.name);
-    thisSlot.sign(user.name)
+    const newSlot = {...thisSlot, sign: user.name}
+    handleSign(newSlot);
 }
 
 const handleUnsignClick = (confirmed) =>
@@ -61,9 +72,16 @@ const handleUnsignClick = (confirmed) =>
     if (!confirmed)
         return
 
-        setSign('');
-        thisSlot.sign('');
+        const newSlot = {...thisSlot, sign: ''}
+        handleSign(newSlot);
+}
 
+const handleSign = newSlot =>
+{
+      emitMessage(newSlot);
+      setThisSlot(newSlot);
+
+        // setSign(newSlot.sign);
 }
 
 const duration = 300;

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useSlots from '../../hooks/useSlots';
 import DayColumnHeader from './DayColumnHeader';
 import DaySlot from './DaySlot';
@@ -16,40 +16,31 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
         return `${_day}.${_month}.${_year}`;
     }
 
-    const handleSign = newSlot =>
-    {
-        console.log(newSlot);
-    }
-    const slotsArray = [];
-    const {updateSlotsArray} = useSlots();
-
+    const {removeAllSlots} = useSlots();
+    
     useEffect(()=>
     {
-        updateSlotsArray(slotsArray);
+        return ()=>
+        {
+            removeAllSlots();
+        }
     },[])
-
-
-
 
     let _dayDate;
 
     if (dayDate)
         _dayDate = convertDate(dayDate);
 
-    if (isBlank)
+    
+    const daySlots = useMemo(()=>
+    {
+        if (isBlank)
+            return false
         return (
-            <div className={` bg-gray-400 flex flex-col w-full  border-l-2 border-black`} key={day}>
-               <DayColumnHeader dayDate={_dayDate} day={day} slots={slots} isBlank={isBlank}/>
-            </div>
-        )
-
-    return (
-        //column
-        <div className={`flex flex-col w-full bg-amber-100 border-l-2 border-black `}  key={day}>
-            <DayColumnHeader dayDate={_dayDate} day={day} slots={slots} isBlank={isBlank}/>
-
+            <>
             {timeArr.map((time, index) =>
             {   
+
                 //cell day
                 return (
                 <div
@@ -73,16 +64,13 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                                     time,
                                     slotName : slot.name,
                                     slotIndex : i,
-                                    sign: handleSign,
+                                    sign: '',
                                 };
-
-                                slotsArray.push(thisSlot);
-
                                 spaces.push(
                                    <DaySlot 
                                     key={key}
                                     dayDate={_dayDate}
-                                    thisSlot={thisSlot}
+                                    _thisSlot={thisSlot}
                                     />
                                 )
                             }
@@ -94,6 +82,15 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                         })}
                 </div>)
             })}
+            </>
+        )
+    },[])
+
+    return (
+        //column
+        <div className={`flex flex-col w-full ${isBlank? 'bg-gray-400 ' : 'bg-amber-100'}  border-l-2 border-black `}  key={day}>
+            <DayColumnHeader dayDate={_dayDate} day={day} slots={slots} isBlank={isBlank}/>
+            {daySlots}
         </div>
     )
 }

@@ -10,7 +10,6 @@ export default function Month({name, date, slots, time})
     const [month, year] = date.split('.');
     const MONTHS = ['STYCZEŃ', 'LUTY', 'MARZEC', 'KWIECIEŃ', 'MAJ', 'CZERWIEC', 'LIPIEC', 'SIERPIEŃ', 'WRZESIEŃ', 'PAŹDZIERNIK', 'LISTOPAD', 'GRUDZIEŃ'];
     const DAYS_OF_WEEK = ['NIEDZIELA', 'PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA'];
-
     function getDaysAndWeeksInMonth(dateStr) {
       const [monthStr, yearStr] = dateStr.split('.');
       const month = MONTHS.indexOf(monthStr.toUpperCase());

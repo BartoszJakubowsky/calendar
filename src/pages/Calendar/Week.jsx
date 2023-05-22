@@ -11,10 +11,8 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
   const DAYS_OF_WEEK = ['PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA', 'NIEDZIELA'];
   const generateTimes = (timeStart, timeEnd, timeBetween) =>
   {
-    console.log('ile razy');
     const times = [];
     let currentTime = timeStart;
-    
     while (currentTime <= timeEnd) {
       times.push(currentTime);
       const [hours, minutes] = currentTime.split(':');

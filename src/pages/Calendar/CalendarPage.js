@@ -18,7 +18,6 @@ export default function CalendarPage({})
 
 const {calendars, navigate, convirm, isFetching} = useCalendars();
 const {calendarName} = useParams();
-
 //all nasty code below is written in case of refresh page while rendering calendar page
 //code will check if data is still fetching and wait for it till the end
 
@@ -59,7 +58,7 @@ useEffect(()=>
     return () =>
     {
       if (slotsArray.length !== 0)
-      removeAllSlots();
+        removeAllSlots();
     }
 }, [])
 
@@ -67,7 +66,6 @@ if (!calendar)
   return <LoadingPage/>
 
 const {name, date} = calendar;
-
 
 const user = {name: 'Bartosz Jakubowski', rights: 'user'};
 
