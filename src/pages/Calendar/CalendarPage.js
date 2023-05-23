@@ -119,7 +119,7 @@ const user = {name: 'Bartosz Jakubowski', rights: 'user'};
           variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
           <Confirm message={convirm.message} submit={convirm.submit} handleSubmit={convirm.handleSubmit}/>
           <Menu calendarName={name} theme='bg-red-300'/>
-            <div className={`mt-4 w-11/12 h-[90%] md:mt-14 md:max-w-[90%] md:h-5/6 bg-red-300 md:mx-auto overflow-x-hidden rounded-sm text-xs overflow-hidden`}>
+            <div className={`mt-4 w-[95%] h-[90%] md:mt-6 md:max-w-[90%] md:[90%] bg-red-300 md:mx-auto overflow-x-hidden rounded-sm text-xs overflow-hidden border-2 border-black`}>
               <MonthNavbar displayedMonth={displayedMonth} setDisplayedMonth={setDisplayedMonth} monthsCountForMonthCarousel={monthsCountForMonthCarousel}/>      
               <MonthCarosuel calendar={calendar} monthsCountForMonthCarousel={monthsCountForMonthCarousel} displayedMonth={displayedMonth}/>
             </div>

@@ -10,7 +10,7 @@ export default function AdminCalendarCard({toggleIndex, calendar, navigation})
     const [isToggled, setToggled] = useState(false);
     const handleMouseEnter = () => {setToggled(true)}
     const handleMouseLeave = () => {setToggled(false); };
-const handleSettings = (event) =>
+    const handleSettings = (event) =>
     {
         event.stopPropagation();
         setCalendarToEdit(calendar);

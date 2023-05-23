@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useSpring, animated } from 'react-spring';
 import LoadingIcon from "../../components/ui/LoadingIcon";
+import CryptoJS from "crypto-js";
+import axios from "axios";
 
 export default function Login({mail, setMail, move}) 
 {
@@ -16,7 +18,7 @@ export default function Login({mail, setMail, move})
     const passwordCheck = password.length <= 3 || password === '';
 
     const [sent, setSent] = useState(false);
-
+    const [message, setMessage] = useState(false);
     
     const handleMailChange = (event) => 
     {   
@@ -48,6 +50,32 @@ export default function Login({mail, setMail, move})
         setPassword(event.target.value);
     }
 
+    const handleMessage = (message) =>
+    {
+        setMessage(message)
+
+        setTimeout(() => {
+            setMessage(false)
+        }, 2000);
+    }
+    
+    const handleAuth = (data) =>
+    {
+        if (!data.data.auth)
+            return 
+        
+        localStorage.setItem('token', data.data.token);
+        authFucn();
+    }
+
+    const authFucn = () =>
+    {
+        axios.get('http://localhost:3002/jwt', {
+            headers : {'x-access-token' : localStorage.getItem('token')}
+        })
+        .then(response => console.log(response))
+        .catch(err => console.log('error z tokenami', err));
+    }
 
     const handleSendClick = (event) =>
     {
@@ -63,17 +91,36 @@ export default function Login({mail, setMail, move})
 
 
         if (mailCheck || passwordCheck)
+        {
             setSent(false);
-        else
-            setSent(true);  
-    }
+            return;
+        }
 
+            const handleHashPassword = () => {
+                const hashed = CryptoJS.SHA256(password).toString();
+                return hashed;
+              };
+
+            const hashedPassword = handleHashPassword();
+            axios.post('http://localhost:3002/login', {mail: mail.trim(), password: hashedPassword}).then(response => 
+            {
+                setSent(true);
+                setTimeout(() => 
+                {
+                setSent(false)
+                console.log(response);
+                handleMessage(response.data.message)
+                handleAuth(response);
+                }, 1000);
+
+            }).catch(err => console.log('Błąd podczas wysyłania', err))
+
+    }
 
 
     const buttonAnimation = useSpring({
         opacity: sent ? 0 : 1,
-        transform: sent ? 'translateY(0%)' : 'translateY(100%)'
-       
+        transform: sent ? 'translateY(0%)' : 'translateY(100%)',
       });
     
       const messageAnimation = useSpring({
@@ -120,21 +167,26 @@ export default function Login({mail, setMail, move})
                         autoComplete="on"
                     />
                 </div>
-       
-              <div className="overflow-hidden">
-              <a
+                <a
                         className="text-xs text-purple-600 hover:underline cursor-pointer"
                         onClick={handlePasswordClick}
                     >
                         Zapomniałeś hasła?
                     </a>
+              <div className="overflow-hidden">
+              
+                {message? 
+                <animated.div style={buttonAnimation} className="w-full px-4 py-2 tracking-wide text-center rounded-md">
+                    {message}
+                </animated.div>
+                :
                 <animated.button
                     style={buttonAnimation}
                     className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
                     onClick={handleSendClick}
                 >
-                    Zaloguj się
-                </animated.button>
+                    {'Zaloguj się'}
+                </animated.button>}
 
                 <animated.div style={messageAnimation} className="w-full px-4 py-2 tracking-wide text-center flex justify-center flex-col">
                     Poczekaj, sprawdzamy twoje dane

@@ -36,7 +36,7 @@ export default function AdminPage()
         
           setTimeout(() => 
           {
-            const {user, userRegister, userPassword} = response.data;      
+            const {user, userRegister, userPassword} = response.data;    
             setUsers(user);
             setUsersPassword(userPassword);
             setUsersRegister(userRegister);

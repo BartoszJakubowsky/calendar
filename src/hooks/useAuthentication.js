@@ -1,12 +1,12 @@
-import Cookies from "js-cookie";
-
-//think about cookies or JWT
+import { useContext } from "react";
+import AuthContext from "../context/auth";
 
 function useAuthenctication()
 {
-
-    const isAdmin = true
-    return {isAdmin};
+    return useContext(AuthContext);
 }
 
 export default useAuthenctication;
+
+
+

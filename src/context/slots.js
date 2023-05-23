@@ -45,7 +45,6 @@ function SlotsProvider({children})
 
 
 
-
     let slotsArray = [];
     const updateSlotsArray = newSlots =>
     {
@@ -90,8 +89,17 @@ function SlotsProvider({children})
 
     }
 
+    const handleRecords = (records) =>
+    {
+        for (let i = 0; i < records.length; i++) 
+        {
+            const slot = records[i];
+            updateSlot(slot);
+        }
+    }
+
     const toProvide = 
-    {slotsArray, updateSlot ,updateSlotsArray, removeAllSlots, emitMessage};
+    {slotsArray, updateSlot ,updateSlotsArray, removeAllSlots, emitMessage, handleRecords};
     return (
         <SlotsContext.Provider value={toProvide}>
             {children}

@@ -12,7 +12,7 @@ import Menu from "../../components/menu/Menu";
 export default function CreateCalendarPage({calendarName, calendarDate, calendarTime, calendarSlots, calendarId}) 
 {
     
-    const entryCalendar = {name: calendarName, date: calendarDate, time: calendarTime, slots: calendarSlots, id:calendarId};
+    const entryCalendar = {name: calendarName, date: calendarDate, time: calendarTime, slots: calendarSlots, _id:calendarId};
     
     let canEdit;
     if (entryCalendar.name && entryCalendar.time && entryCalendar.slots && entryCalendar.id)
@@ -27,6 +27,7 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
     const [slotSettingsCard, setSlotSettingsCard] = useState(false);
     const [timeSettingCard, setTimeSettingsCard] = useState(false);
     const [date, setDate] = useState(calendarDate || []);
+
     const [isHover, setIsHover] = useState(false);
     const handleAdditional = addSettings => setAdditional(addSettings);
     const handleNameChange = event => setName(event.target.value);
@@ -51,7 +52,6 @@ export default function CreateCalendarPage({calendarName, calendarDate, calendar
             else
                 setIsHover(false);   
         }
-        console.log(date);
         const mainDivClassName = classNames(`md:w-3/4 w-3/4 h-fit 
                                             flex flex-col justify-start items-center 
                                             border-black border-2 mt-10 

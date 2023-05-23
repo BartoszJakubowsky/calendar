@@ -1,7 +1,7 @@
 export default function DayColumnHeader({dayDate, day, slots, isBlank}) 
 {
     return (
-        <div className={`h-20 flex-none border-b-2 border-black w-40 ${isBlank? 'bg-gray-300' :  'bg-amber-200'} flex flex-col`}>
+        <div className={`h-20 w-40 flex-none border-b-2 border-black ${isBlank? 'bg-gray-300' :  'bg-amber-200'} flex flex-col`}>
 
                 {/* day and date */}
                 <div className='flex flex-col  justify-center items-center'>

@@ -19,9 +19,8 @@ export default function MenuContent({handleClick})
             <li onClick={handleClick} ><NavLink to='/' className={(navData) => (navData.isActive ? activeClassName : normalClassName)}>Strona główna</NavLink></li>
             {calendars.map((calendar, index)=> 
                 { 
-                    if(calendar.name === '') 
-                    return;  
-
+                    if(calendar.name === '' || calendar === undefined) 
+                    return false;
                     return <li key={index}>
                             <NavLink 
                                 className={(navData) => (navData.isActive ? activeClassName : normalClassName)} 

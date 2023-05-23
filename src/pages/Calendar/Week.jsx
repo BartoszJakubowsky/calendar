@@ -6,8 +6,11 @@ import DayColumn from './DayColumn';
 import Time from './Time';
 
 
-export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth, time, name, slots, date}) 
+export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth, calendar, date}) 
 {
+
+
+  const {time, name, slots} = calendar;
   const DAYS_OF_WEEK = ['PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA', 'NIEDZIELA'];
   const generateTimes = (timeStart, timeEnd, timeBetween) =>
   {
@@ -67,11 +70,10 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 isActive={!!(allWeeksLeftInMonth[index]?.[dayIndex])} 
                 isBlank={false}
                 timeArr={timeArr}
-                slots={slots}
-                name={name}
                 date={date}
                 weekIndex={index}
                 key={dayIndex}
+                calendar={calendar}
                 />
               else
               return <DayColumn
@@ -79,8 +81,8 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 day={day}
                 isActive={!!(allWeeksLeftInMonth[index]?.[dayIndex])}
                 isBlank={true}
-                slots={slots}
                 key={dayIndex}
+                calendar={calendar}
                 />
             })}
             

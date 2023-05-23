@@ -2,8 +2,11 @@
 import classNames from "classnames";
 import Week from "./Week";
 
-export default function Month({name, date, slots, time}) 
+export default function Month({calendar, date}) 
 {
+
+
+
     const className = classNames('');
     const thisYear = new Date().getFullYear();
 
@@ -37,7 +40,7 @@ export default function Month({name, date, slots, time})
         };
 
         allDaysInMonth.push(day)
-        if (date >= currentDate) 
+        if (date > currentDate) 
           allDaysLeftInMonth.push(day);
         else
           allDaysLeftInMonth.push(false)
@@ -64,7 +67,7 @@ export default function Month({name, date, slots, time})
           date: date
         };
         currentWeek.push(day);
-        if (date >= currentDate) 
+        if (date > currentDate) 
         {
           currentWeekLeft.push(day);
         }
@@ -86,7 +89,7 @@ export default function Month({name, date, slots, time})
     return (
         <div className={`w-full h-full`}>
           {/* if padding will ever change remember to change padding in animated.div in MonthCarosuel to see the overflow x */}
-          <h3 className="flex justify-center items-center p-3 border-2 border-black font-semibold">
+          <h3 className="flex justify-center items-center p-2 border-b-2 border-black font-semibold">
             {date}
           </h3>
           <Week 
@@ -94,10 +97,9 @@ export default function Month({name, date, slots, time})
             allDaysLeftInMonth={allDaysLeftInMonth} 
             allWeeksInMonth={allWeeksInMonth} 
             allWeeksLeftInMonth={allWeeksLeftInMonth} 
-            time={time} 
-            slots={slots} 
-            name={name} 
-            date={date}/>
+            calendar={calendar}
+            date={date}
+            />
         </div>
     )
 

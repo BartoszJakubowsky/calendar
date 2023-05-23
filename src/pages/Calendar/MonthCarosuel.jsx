@@ -6,11 +6,11 @@ import Month from "./Month";
 export default function MonthCarosuel({calendar, displayedMonth, monthsCountForMonthCarousel}) 
 {
 
-    const {name, date, slots, time} = calendar;
+    const {date} = calendar;
 
     const renderMonths = useMemo(()=>
     {
-      return date.map((month, index) => <Month name={name} date={date[index]} slots={slots} time={time}/>)
+      return date.map((month, index) => <Month calendar={calendar} date={date[index]}/>)
     }, [])
 
     const [months, setMonths] = useState(renderMonths);
@@ -30,7 +30,8 @@ export default function MonthCarosuel({calendar, displayedMonth, monthsCountForM
     return (
         <div className="relative w-full h-full">
             {monthCarousel.map((props, index) => (
-              <animated.div key={index} className="absolute w-full h-full pb-20" style={{ ...props }}>
+              //pb for overflow x visibility
+              <animated.div key={index} className="absolute w-full h-full pb-[72px]" style={{ ...props }}>
                 {months ? months[index] : null}
               </animated.div>
             ))}

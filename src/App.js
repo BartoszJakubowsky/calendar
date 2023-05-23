@@ -41,7 +41,9 @@ function App()
                                     calendarDate={calendarToEdit?.date} 
                                     calendarTime={calendarToEdit?.time} 
                                     calendarSlots={calendarToEdit?.slots}
-                                    calendarId={calendarToEdit?.id}/>}/>
+                                    calendarId={calendarToEdit?._id}
+                                    />}
+                                    />
                               <Route path='/admin' element={<AdminPage/>}/>   
                               </>}
                               <Route path='*'element={<NotFoundPage replace/>}/>

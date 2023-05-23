@@ -3,9 +3,11 @@ import useSlots from '../../hooks/useSlots';
 import DayColumnHeader from './DayColumnHeader';
 import DaySlot from './DaySlot';
 
-export default function DayColumn({day, isActive, isBlank, timeArr, slots, name, date, weekIndex, dayDate, ...rest}) 
+export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIndex, dayDate, calendar, ...rest}) 
 {
-
+    const {_id, name, slots, records} = calendar
+    const {handleRecords} = useSlots();
+    const calendarID = _id;
     //format dd.mm.yyyy
     const convertDate = (dayDate) =>
     {
@@ -20,6 +22,9 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
     
     useEffect(()=>
     {
+
+        handleRecords(records);
+
         return ()=>
         {
             removeAllSlots();
@@ -45,7 +50,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                 return (
                 <div
                     key={index} 
-                    className="flex flex-row w-full h-full  border-b-2 border-black">
+                    className="flex flex-row w-full h-full border-b-2 border-black">
                         {/* slots in cells / slots holder */}
                         {slots.map(slot =>
                         {   
@@ -65,12 +70,14 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                                     slotName : slot.name,
                                     slotIndex : i,
                                     sign: '',
+                                    calendarID,
                                 };
                                 spaces.push(
                                    <DaySlot 
                                     key={key}
                                     dayDate={_dayDate}
                                     _thisSlot={thisSlot}
+                                    
                                     />
                                 )
                             }
@@ -83,6 +90,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, slots, name,
                 </div>)
             })}
             </>
+
         )
     },[])
 
