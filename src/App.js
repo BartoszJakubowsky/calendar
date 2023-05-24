@@ -1,53 +1,74 @@
-import React, {lazy,Suspense} from 'react';
+import React, {lazy,Suspense, useMemo} from 'react';
 import { Route, Routes, useLocation} from 'react-router-dom';
 import {motion as m} from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
+import { useNavigate } from "react-router-dom";
 
 import useCalendars from './hooks/useCalendars';
-import useAuthenctication from './hooks/useAuthentication';
+import useAuthentication from './hooks/useAuthentication';
 
 import LoginPage from './pages/Login/LoginPage'
 import MainPage from './pages/Main/MainPage'
-import AdminPage from './pages/Admin/AdminPage'
-import CreateCalendarPage from './pages/Create/CreateCalendarPage'
 import NotFoundPage from './pages/NotFound/NotFoundPage'
-
 import LoadingPage from './pages/Loading/LoadingPage';
+const CreateCalendarPage = lazy(()=> import( './pages/Create/CreateCalendarPage'));
+const AdminPage = lazy(()=> import( './pages/Admin/AdminPage'));
 const LazyCalendarPage = lazy(()=> import('./pages/Calendar/CalendarPage'));
 
 function App()
 {
-      const {isAdmin} = useAuthenctication();
-      const {login, calendars, calendarToEdit, currentPath} = useCalendars();
-      const location = useLocation();
-
+      const {isAdmin, isAuthenticated} = useAuthentication();
+      const {calendarToEdit, navigate} = useCalendars();
+      let location = useLocation();
       const formsPaths = ['/logowanie', '/haslo', '/rejestracja'];
 
+      useMemo(()=>
+      {
+            if (isAuthenticated === false)
+            {
+                  // location = '/logowanie';
+                  navigate('/logowanie');
+            }
+            else if (isAuthenticated)
+            {
+                  // navigate('/');
+            }
+            
+      }, [isAuthenticated])
+      const suspenseElement = (child) =>
+      {
+            return (
+            <Suspense fallback={<LoadingPage/>}>
+                  {child}
+            </Suspense>
+            )
+      }             
         return (<>
                   <AnimatePresence mode='wait'>
                         <Routes key={location.pathname} location={location}>
-                              <Route path='/' element={<MainPage/>}/>
+                              {isAuthenticated}
+                              <Route path='/' element={isAuthenticated? <MainPage/> : <LoadingPage/>}/>
 
                               {formsPaths.map(form =><Route path={form} key={form} element={<LoginPage replace/>}/>)}
                               
                         
-                              <Route path='/kalendarz/:calendarName' element={<Suspense fallback={<LoadingPage/>}><LazyCalendarPage/></Suspense>}></Route>
+                              <Route path='/kalendarz/:calendarName' element={suspenseElement(<LazyCalendarPage/>)}></Route>
                               
                               {isAdmin && 
                               <>
                               <Route path='/ustawienia' element={
-                                    <CreateCalendarPage 
+                                    suspenseElement(<CreateCalendarPage 
                                     calendarName={calendarToEdit?.name} 
                                     calendarDate={calendarToEdit?.date} 
                                     calendarTime={calendarToEdit?.time} 
                                     calendarSlots={calendarToEdit?.slots}
                                     calendarId={calendarToEdit?._id}
-                                    />}
+                                    />)}
                                     />
-                              <Route path='/admin' element={<AdminPage/>}/>   
+                              <Route path='/admin' element={suspenseElement(<AdminPage/>)}/>   
                               </>}
                               <Route path='*'element={<NotFoundPage replace/>}/>
-
+                              
                         </Routes>
                   </AnimatePresence>
                   </>)

@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
 import useCalendars from "../../hooks/useCalendars";
 import classNames from "classnames";
-import useAuthenctication from "../../hooks/useAuthentication";
+import useAuthentication from "../../hooks/useAuthentication";
 
 
 export default function MenuContent({handleClick}) 
 {
-    const {isAdmin} = useAuthenctication();
+    const {isAdmin} = useAuthentication();
     const {calendars} = useCalendars();
     const activeClassName = classNames('text-black text-xl font-semibold border-l-2 border-black pl-1');
     const normalClassName = classNames(' text-xl pl-2 text-slate-100 hover:text-white duration-150 ');

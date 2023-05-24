@@ -3,17 +3,15 @@ import { useSpring, animated } from 'react-spring';
 import LoadingIcon from "../../components/ui/LoadingIcon";
 import CryptoJS from "crypto-js";
 import axios from "axios";
-
+import useAuthentication from "../../hooks/useAuthentication";
 export default function Login({mail, setMail, move}) 
 {
 
+    const {setAuthenticate} = useAuthentication();
+
     const [password, setPassword] = useState('');
-
-
     const [mailError, setMailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-
-
     const mailCheck = mail.length <= 5 || mail === '';
     const passwordCheck = password.length <= 3 || password === '';
 
@@ -28,7 +26,6 @@ export default function Login({mail, setMail, move})
 
         setMail(event.target.value);
     }
-
 
     const handleRegisterClick = () => 
     {
@@ -64,17 +61,10 @@ export default function Login({mail, setMail, move})
         if (!data.data.auth)
             return 
         
-        localStorage.setItem('token', data.data.token);
-        authFucn();
-    }
-
-    const authFucn = () =>
-    {
-        axios.get('http://localhost:3002/jwt', {
-            headers : {'x-access-token' : localStorage.getItem('token')}
-        })
-        .then(response => console.log(response))
-        .catch(err => console.log('error z tokenami', err));
+        setTimeout(() => {
+            localStorage.setItem('token', data.data.token);
+            setAuthenticate(true);    
+        }, 1000);
     }
 
     const handleSendClick = (event) =>
@@ -113,7 +103,7 @@ export default function Login({mail, setMail, move})
                 handleAuth(response);
                 }, 1000);
 
-            }).catch(err => console.log('Błąd podczas wysyłania', err))
+            }).catch(err => console.log('Błąd podczas logowania', err))
 
     }
 

@@ -1,12 +1,21 @@
-import { createContext, useState} from "react";
+import { createContext, useEffect, useState} from "react";
 import useWebsockets from "../hooks/useWebsockets";
 import io from "socket.io-client";
-
+import useAuthentication from "../hooks/useAuthentication";
 const SlotsContext = createContext();
 
 
 function SlotsProvider({children}) 
 {
+    const {isAuthenticated} = useAuthentication();
+    console.log(isAuthenticated);
+    if (!isAuthenticated)
+    return (
+        <SlotsContext.Provider value={null}>
+            {children}
+        </SlotsContext.Provider>
+    )
+
 
     const socket = io.connect("http://localhost:3002");
         

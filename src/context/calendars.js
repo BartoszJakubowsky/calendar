@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect} from "react";
-import useAuthenctication from '../hooks/useAuthentication';
+import { createContext, useState, useEffect, useMemo} from "react";
+import useAuthentication from '../hooks/useAuthentication';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation } from "react-router-dom";
@@ -15,29 +15,45 @@ function CalendarsProvider({children, url})
     // const [login, setLogin] = useState(useAuthenctication());
     // const [currentPath, setCurrentPath] = ('/');
     const [calendars, setCalendars] = useState(tempCalendar);
-    const [convirm, setConvirm] = useState(false);
+    const [confirm, setConfirm] = useState(false);
     const [calendarToEdit, setCalendarToEdit] = useState(false)
     const [isFetching, setIsFetching] = useState(true);
 
     const navigate = useNavigate();
     const currentPath = useLocation().pathname;
 
-    useEffect(() => {
+    const {isAuthenticated, setAuthenticate} = useAuthentication();
+    const skipPaths = ['/logowanie', '/haslo', '/rejestracja', '/admin'];
+    useMemo(() => {
+
+        if (skipPaths.includes(currentPath))
+            return;
+
         const fetchData = async () => {
           try {
             const response = await axios.get('http://localhost:3002/calendar');
+
             setCalendars(response.data);
             setIsFetching(false);
+
+           
+                
           } catch (error) {
-            console.error(error);
-            setTimeout(fetchData, 5000);
+            if (error.response.status !== 401)
+                setTimeout(fetchData, 5000);
           }
         };
     
         fetchData();
       }, [currentPath]);
 
-//To change -> given with started app
+      useState(()=>
+      {
+        if (!isAuthenticated)
+        setAuthenticate(true);
+
+      }, [isFetching])
+
 const calendarNames = calendars.map((calendar, index) =>
     {
         return {name: calendar.name, order: index}
@@ -98,14 +114,12 @@ const handleCalendarCreate = async (oldCalendar, newCalendar) =>
         updateCalendar(oldCalendar, newCalendar)
 }
 
-
-
 const toProvide = 
 {
     currentPath, 
     calendarNames, 
-    convirm, 
-    setConvirm, 
+    confirm, 
+    setConfirm, 
     calendars, 
     createCalendar,
     handleCalendarCreate, 

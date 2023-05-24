@@ -1,6 +1,7 @@
-import { createContext } from 'react';
+import { createContext, useMemo, useState } from 'react';
 import axios from 'axios'
 import { useNavigate }  from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 const AuthContext = createContext();
 
 
@@ -8,77 +9,64 @@ const AuthContext = createContext();
     {
         const navigate = useNavigate();
 
+
+        const [isAuthenticated, setAuthenticate] = useState(null);
+        const [user, setUser] = useState(false);
+
+
+
         axios.interceptors.request.use(
             config => {
               const token = localStorage.getItem('token');
               if (token) {
-                config.headers['Authorization'] = 'Bearer ' + token
+                // config.headers['x-access-token'] = 'Bearer ' + token;
+                config.headers['x-access-token'] = token;
+                // config.headers['Authorization'] = 'Bearer ' + token
               }
-              // config.headers['Content-Type'] = 'application/json';
               return config
             },
             error => {
               Promise.reject(error)
             }
           )
-          const initial = async () =>
-          {
-            await axios.get('http://localhost:3002/initial')
-            .then(response => 
-                {
-                    if (!response)
-                        navigate('/logowanie')
-                })
-          }
-        
-
-
           axios.interceptors.response.use(
             response => {
               return response
             },
-            function (error) {
-            //   const originalRequest = error.config
-                console.log(error)
+          function (error) {
               if (error.response.status === 401) 
               {
-                navigate('/logowanie')
+                console.log(error);
+                // localStorage.removeItem('token');
+                setAuthenticate(false);
                 return Promise.reject(error)
               }
-          
-            //   if (error.response.status === 401 && !originalRequest._retry) {
-            //     originalRequest._retry = true
-            //     const refreshToken = localStorageService.getRefreshToken()
-            //     return axios
-            //       .post('/auth/token', {
-            //         refresh_token: refreshToken
-            //       })
-            //       .then(res => {
-            //         if (res.status === 201) {
-            //           localStorageService.setToken(res.data)
-            //           axios.defaults.headers.common['Authorization'] =
-            //             'Bearer ' + localStorageService.getAccessToken()
-            //           return axios(originalRequest)
-            //         }
-            //       })
-            //   }
               return Promise.reject(error)
             }
           )
+        
+        //token getter, user setter
+        useMemo(()=>
+        {
+          const getToken = () => 
+          {
+            const token = localStorage.getItem('token');
+            if (!token)
+              return false;
 
+            return jwt_decode(token);
+          }
+          const token = getToken();
+          console.log(token);
+          if (token)
+            setUser(token.user);
 
+        }, [isAuthenticated])
 
-
-
-
-
-
-
-
-        const isAdmin = true;
+        const isAdmin = user? user.isAdmin : false;
 
         const toProvide = 
-        {isAdmin};
+        {isAdmin, isAuthenticated, setAuthenticate, user};
 
         return (
             <AuthContext.Provider value={toProvide}>

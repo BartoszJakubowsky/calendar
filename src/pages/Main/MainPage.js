@@ -1,7 +1,7 @@
 
 import {motion as m} from 'framer-motion';
 import useCalendars from '../../hooks/useCalendars';
-import useAuthenctication from "../../hooks/useAuthentication";
+import useAuthentication from "../../hooks/useAuthentication";
 
 import CalendarCard from "./CalendarCard";
 import AdminCalendarCard from "./AdminCalendarCart";
@@ -10,7 +10,7 @@ import Menu from "../../components/menu/Menu";
 function MainPage({className}) 
 {
     const {calendars,navigate, convirm, setCalendarToEdit, currentPath} = useCalendars();
-    const {isAdmin} = useAuthenctication();
+    const {isAdmin} = useAuthentication();
 
     const navigation = (calendarName) => 
     {   

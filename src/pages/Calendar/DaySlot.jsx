@@ -3,6 +3,7 @@ import { useTransition, animated} from 'react-spring';
 import useSlots from '../../hooks/useSlots';
 import useCalendars from "../../hooks/useCalendars";
 import { calcLength } from "framer-motion";
+import useAuthentication from "../../hooks/useAuthentication";
 
 export default function DaySlot({_thisSlot, dayDate}) 
 {
@@ -10,14 +11,13 @@ export default function DaySlot({_thisSlot, dayDate})
 
   const {updateSlot, updateSlotsArray, emitMessage} = useSlots();
   const [thisSlot, setThisSlot] = useState(_thisSlot);
-
+  const {user} = useAuthentication();
   useMemo(()=>
   {
     _thisSlot.handleSign = setThisSlot;
     updateSlotsArray([_thisSlot]);
   },[])
 
-    const user = {name: 'Bartosz Jakubowski', rights: 'user'};
     const {convirm, setConvirm} = useCalendars();
     const sign = thisSlot.sign;
     // const thisSlot = 

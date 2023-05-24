@@ -2,8 +2,6 @@ import { useState , useMemo, useEffect} from "react";
 import {motion as m} from 'framer-motion';
 import { useParams } from "react-router-dom";
 
-
-import useWebsockets from '../../hooks/useWebsockets';
 import useCalendars from '../../hooks/useCalendars';
 import useSlots from "../../hooks/useSlots";
 
@@ -16,7 +14,7 @@ import LoadingPage from '../Loading/LoadingPage';
 export default function CalendarPage({})
 {
 
-const {calendars, navigate, convirm, isFetching} = useCalendars();
+const {calendars, navigate, confirm, isFetching} = useCalendars();
 const {calendarName} = useParams();
 //all nasty code below is written in case of refresh page while rendering calendar page
 //code will check if data is still fetching and wait for it till the end
@@ -69,38 +67,6 @@ const {name, date} = calendar;
 
 const user = {name: 'Bartosz Jakubowski', rights: 'user'};
 
-// const {updateSlot} = useSlot();
-// const {setSocket, handleSocket} = useSocket();
-
-//   useEffect(() => {
-
-//       // const socket = io.connect();
-//       const socket = io.connect("http://localhost:3002");
-
-//       const emit = socket.emit('message', {test: 'test'});
-      
-//       socket.on("connected", (data) => 
-//       {
-//         setSocket(emit)  
-//         console.log(data)
-//       });
-
-//       socket.on('message', data => 
-//       {
-
-//         console.log(data);
-//           // updateSlot(data.slot)
-//       })
-
-//       return () => {
-//         // Zamykanie połączenia socket.io po opuszczeniu komponentu
-//         console.log('Websockets disconnect')
-//         setSocket(false);
-//         socket.disconnect();
-//       };
-//   }, []);
-
-  
 
 
   const variantsForCalendarPage = 
@@ -117,7 +83,7 @@ const user = {name: 'Bartosz Jakubowski', rights: 'user'};
         <m.div 
           className=" absolute inset-0 flex items-center flex-col bg-red-100" 
           variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
-          <Confirm message={convirm.message} submit={convirm.submit} handleSubmit={convirm.handleSubmit}/>
+          <Confirm message={confirm.message} submit={confirm.submit} handleSubmit={confirm.handleSubmit}/>
           <Menu calendarName={name} theme='bg-red-300'/>
             <div className={`mt-4 w-[95%] h-[90%] md:mt-6 md:max-w-[90%] md:[90%] bg-red-300 md:mx-auto overflow-x-hidden rounded-sm text-xs overflow-hidden border-2 border-black`}>
               <MonthNavbar displayedMonth={displayedMonth} setDisplayedMonth={setDisplayedMonth} monthsCountForMonthCarousel={monthsCountForMonthCarousel}/>      
