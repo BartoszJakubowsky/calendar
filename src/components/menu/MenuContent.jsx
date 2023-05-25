@@ -11,7 +11,7 @@ export default function MenuContent({handleClick})
     const activeClassName = classNames('text-black text-xl font-semibold border-l-2 border-black pl-1');
     const normalClassName = classNames(' text-xl pl-2 text-slate-100 hover:text-white duration-150 ');
 
-    const hClassName = classNames("mt-20 text-4xl font-semibold text-white border-b-4 border-white mb-4 cursor-default");
+    const hClassName = classNames("mt-10 text-4xl font-semibold text-white border-b-4 border-white mb-4 cursor-default");
     return (<div>
 
         <h3 className={hClassName}>Menu</h3>
@@ -28,9 +28,11 @@ export default function MenuContent({handleClick})
         </ul>
         <h3 className={hClassName}>Pozostałe</h3>
         <ul>
+            <li onClick={handleClick}><NavLink to='/konto' className={(navData) => (navData.isActive ? activeClassName : normalClassName)}>Konto</NavLink></li>
             <li onClick={handleClick}><NavLink to='/logowanie' className={(navData) => (navData.isActive ? activeClassName : normalClassName)}>Wyloguj się</NavLink></li>
             {isAdmin? 
             <>
+            <h3 className={hClassName}>Admin</h3>
             <li onClick={handleClick}><NavLink to='/ustawienia' className={(navData) => (navData.isActive ? activeClassName : normalClassName)}>Stwórz wózek</NavLink></li>
             <li onClick={handleClick}><NavLink to='/admin' className={(navData) => (navData.isActive ? activeClassName : normalClassName)}>Panel administratora</NavLink></li>
             </>

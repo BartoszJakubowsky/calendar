@@ -12,13 +12,14 @@ export default function DaySlot({_thisSlot, dayDate})
   const {updateSlot, updateSlotsArray, emitMessage} = useSlots();
   const [thisSlot, setThisSlot] = useState(_thisSlot);
   const {user} = useAuthentication();
+  const {setMessage} = useCalendars();
   useMemo(()=>
   {
     _thisSlot.handleSign = setThisSlot;
     updateSlotsArray([_thisSlot]);
   },[])
 
-    const {convirm, setConvirm} = useCalendars();
+    const {setConfirm} = useCalendars();
     const sign = thisSlot.sign;
     // const thisSlot = 
     // {
@@ -42,8 +43,8 @@ const handleClick = event =>
     {
         const message = `Czy na pewno chcesz wypisać się z dnia ${thisSlot.day.toLowerCase()} ${dayDate}, godzina ${thisSlot.time}?`
         const submit = "Wypisz mnie"    
-        // setConvirm({message : message, submit : submit, handleSubmit : handleUnsignClick})
-        handleUnsignClick(true);
+        setConfirm({message : message, submit : submit, handleSubmit : handleUnsignClick})
+        // handleUnsignClick(true);
 
     }
     //sign
@@ -51,8 +52,8 @@ const handleClick = event =>
     {
         const message = `Czy na pewno chcesz zapisać się na ${thisSlot.time} w ${thisSlot.day.toLowerCase()} ${dayDate}?`
         const submit = "Zapisz mnie"
-        // setConvirm({message : message, submit : submit, handleSubmit : handleSignClick})
-        handleSignClick(true);
+        setConfirm({message : message, submit : submit, handleSubmit : handleSignClick})
+        // handleSignClick(true);
 
     }
 }
@@ -74,12 +75,15 @@ const handleUnsignClick = (confirmed) =>
 
         const newSlot = {...thisSlot, sign: ''}
         handleSign(newSlot);
+        setMessage('Zostałeś wypisany!')
 }
 
 const handleSign = newSlot =>
 {
       emitMessage(newSlot);
+      setMessage('Zostałeś zapisany!')
       setThisSlot(newSlot);
+
 
         // setSign(newSlot.sign);
 }
@@ -108,7 +112,7 @@ const transitionStyles = {
 
   return (
     <button
-      className={`overflow-hidden w-full h-full border-2 border-red-200 duration-150 hover:backdrop-brightness-90 text-center
+      className={`overflow-hidden w-full h-full border-2 border-red-200 duration-150 hover:backdrop-brightness-90 text-center active:bg-red-300
         ${sign === '' ? '' : ''}
         ${sign !== user.name && sign !== '' ? 'cursor-not-allowed pointer-events-none' : ''}
       `}

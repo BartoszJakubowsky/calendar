@@ -67,7 +67,7 @@ const variantsForCreateCalendarPage =
         exit: { opacity: 0, x: 0, y: -100 },
   }
     return(
-        <div className="flex w-screen h-screen bg-pink-400 overflow-hidden duration-75 justify-center items-start">
+        <div className="flex w-screen h-screen bg-pink-300 overflow-hidden duration-75 justify-center items-start">
             <Menu className='flex' theme=' bg-blue-300'/>
             <m.div variants={variantsForCreateCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit' 
                 className={mainDivClassName}

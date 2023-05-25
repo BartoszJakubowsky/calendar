@@ -102,7 +102,7 @@ export default function Register({mail, setMail, moveBack})
                 return hashed;
               };
             const hashedPassword = handleHashPassword();
-            axios.post('http://localhost:3002/register/submit', {name: name.trim() + ' ' + surname.trim() , mail: mail.trim(), password: hashedPassword, permissions: ['User'], records: []}).then(response => 
+            axios.post('/register/submit', {name: name.trim() + ' ' + surname.trim() , mail: mail.trim(), password: hashedPassword, permissions: ['User'], records: []}).then(response => 
             {
                 // if(response.data.message)
                 //     setLoginStatus(response.data.message);

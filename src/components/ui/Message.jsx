@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import {useSprings, useTransition, animated, config} from 'react-spring';
 
 
-export default function Message({message, theme = false}) 
+export default function Message({message, theme}) 
 {
 
     const [showOld, setShowOld] = useState('');
@@ -13,7 +13,6 @@ export default function Message({message, theme = false})
       if (message)
         setShowOld(message)
     },[message])
-
     
     const transitions = useTransition(message, {
         from: { opacity: 0, transform: 'translateY(-100%)' },
@@ -31,7 +30,7 @@ export default function Message({message, theme = false})
             {transitions((style, state) => state ? (
             <animated.div
               style={style}
-              className={` ${theme === false? ' bg-sky-200' : theme } font-medium px-2 z-20 absolute top-2 cursor-default m-auto left-0 right-0 h-10 w-fit border-2 border-gr rounded-md flex items-center justify-center text-center cursor-fault text-w`}
+              className={` ${!theme? ' bg-sky-200' : theme } font-medium px-2 z-20 absolute top-2 cursor-default m-auto left-0 right-0 h-10 w-fit border-2 border-gr rounded-md flex items-center justify-center text-center cursor-fault text-w`}
             >
               {message || showOld}
             </animated.div>

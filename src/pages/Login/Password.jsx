@@ -62,7 +62,7 @@ export default function Password({mail, setMail, moveBack})
               };
 
             const hashedPassword = handleHashPassword();
-            axios.post('http://localhost:3002/password/submit', {mail: mail.trim(), password: hashedPassword}).then(response => 
+            axios.post('/password/submit', {mail: mail.trim(), password: hashedPassword}).then(response => 
             {
        
                 setTimeout(() => 

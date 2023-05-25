@@ -1,20 +1,19 @@
 import { createContext, useMemo, useState } from 'react';
 import axios from 'axios'
-import { useNavigate }  from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+
 const AuthContext = createContext();
 
 
     function AuthProvider({children}) 
     {
-        const navigate = useNavigate();
 
 
         const [isAuthenticated, setAuthenticate] = useState(null);
         const [user, setUser] = useState(false);
-
-
-
+        // axios.defaults.baseURL = 'http://localhost:3002';
+        axios.defaults.baseURL = window.location.origin;
+        console.log(axios.defaults.baseURL);
         axios.interceptors.request.use(
             config => {
               const token = localStorage.getItem('token');
@@ -37,7 +36,7 @@ const AuthContext = createContext();
               if (error.response.status === 401) 
               {
                 console.log(error);
-                // localStorage.removeItem('token');
+                localStorage.removeItem('token');
                 setAuthenticate(false);
                 return Promise.reject(error)
               }
@@ -52,18 +51,48 @@ const AuthContext = createContext();
           {
             const token = localStorage.getItem('token');
             if (!token)
-              return false;
+              {
+                setAuthenticate(false);
+                return false;
+              }
 
             return jwt_decode(token);
           }
+          const getNewToken = (oldToken) =>
+          {
+            const currentTime = Math.floor(Date.now() / 1000); 
+            const timeLeft = oldToken.exp - currentTime; 
+
+            if (timeLeft > 300) 
+              return;
+
+              console.log('newToken set');
+              const user = token.user;  
+              axios.post('/token', user)
+              .then(response => 
+                {
+                  const token = response.data.token;
+                  localStorage.setItem('token', token);
+                })
+              .catch(err => console.log(err))
+              console.log('czas', token);
+          }
           const token = getToken();
-          console.log(token);
           if (token)
+          {
+            getNewToken(token);
             setUser(token.user);
+          }
 
         }, [isAuthenticated])
 
-        const isAdmin = user? user.isAdmin : false;
+        // useEffect(()=>
+        // {
+        //   if (isAuthenticated === false)
+        //     // window.location.href = 'http://localhost:3000/logowanie';
+        // }, [])
+
+        const isAdmin = user && user.permissions && user.permissions.includes('Admin');
 
         const toProvide = 
         {isAdmin, isAuthenticated, setAuthenticate, user};

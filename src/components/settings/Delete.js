@@ -6,8 +6,7 @@ export default function Delete({calendar, children, message, submit, ...rest})
 {
 
 
-    const {convirm, setConvirm, deleteCalendar} = useCalendars();
-
+    const {setConfirm, deleteCalendar} = useCalendars();
 
 
     const handleDeleteCalendar = response =>
@@ -20,10 +19,10 @@ export default function Delete({calendar, children, message, submit, ...rest})
     }
     
     
-    const handleClick = event =>
+const handleClick = event =>
     {
         event.stopPropagation();
-        setConvirm(<Confirm message={message} additional={rest.additional} submit={submit} handleSubmit={handleDeleteCalendar}/>)
+        setConfirm(<Confirm message={message} additional={rest.additional} submit={submit} handleSubmit={handleDeleteCalendar}/>)
     }
 
 

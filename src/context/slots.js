@@ -8,7 +8,6 @@ const SlotsContext = createContext();
 function SlotsProvider({children}) 
 {
     const {isAuthenticated} = useAuthentication();
-    console.log(isAuthenticated);
     if (!isAuthenticated)
     return (
         <SlotsContext.Provider value={null}>
@@ -17,12 +16,10 @@ function SlotsProvider({children})
     )
 
 
-    const socket = io.connect("http://localhost:3002");
+    const socket = io.connect(window.location.origin);
         
     socket.on("connected", (data) => 
     {
-        console.log('Websockets connected');
-        console.log(data)
     });
 
     socket.on('sign', data => 

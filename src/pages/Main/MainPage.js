@@ -6,10 +6,11 @@ import useAuthentication from "../../hooks/useAuthentication";
 import CalendarCard from "./CalendarCard";
 import AdminCalendarCard from "./AdminCalendarCart";
 import Menu from "../../components/menu/Menu";
+import Confirm from '../../components/ui/Confirm';
 
 function MainPage({className}) 
 {
-    const {calendars,navigate, convirm, setCalendarToEdit, currentPath} = useCalendars();
+    const {calendars,navigate, confirm, setCalendarToEdit, currentPath} = useCalendars();
     const {isAdmin} = useAuthentication();
 
     const navigation = (calendarName) => 
@@ -52,18 +53,19 @@ function MainPage({className})
 
     return <div className="h-screen ">
             <Menu className='flex'/>
+            <Confirm message={confirm.message} submit={confirm.submit} additional={confirm.additional} handleSubmit={confirm.handleSubmit}/>
             <m.div 
-                className={'flex flex-wrap justify-center mt-[40%] md:mt-[20%]'} 
+                className={'flex flex-wrap justify-center mt-[10%] md:mt-[20%]'} 
                 layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{type: 'spring', stiffness: 110, damping: 12}} exit={currentPath === '/logowanie'?{ opacity: 0, transition: 0.2} : {opacity: 0, x: 0, y: -100, transition: 0.2}}>
                     
                     {createCalendarCard}
 
-                    <CalendarCard
+                    {/* <CalendarCard
                         key={'logowanie'}
                         calendar = {''}
                         onClick = {()=>handleCalendarCreate('logowanie')}
                         >{"Logowanie"}
-                    </CalendarCard>
+                    </CalendarCard> */}
 
 
                     {isAdmin && <CalendarCard
@@ -72,7 +74,6 @@ function MainPage({className})
                         onClick = {()=>handleCalendarCreate('ustawienia')}
                         >{"Dodaj nowy wózek"}
                     </CalendarCard>}
-                    {convirm}
             </m.div>
             </div>
 }

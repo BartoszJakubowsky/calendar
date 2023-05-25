@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSpring, animated } from 'react-spring';
 import LoadingIcon from "../../components/ui/LoadingIcon";
 import CryptoJS from "crypto-js";
@@ -7,7 +7,16 @@ import useAuthentication from "../../hooks/useAuthentication";
 export default function Login({mail, setMail, move}) 
 {
 
-    const {setAuthenticate} = useAuthentication();
+    const {isAuthenticated, setAuthenticate} = useAuthentication();
+
+
+    useEffect(()=>
+    {
+        localStorage.removeItem('token');
+        if (isAuthenticated)
+            setAuthenticate(false);
+    }, [])
+
 
     const [password, setPassword] = useState('');
     const [mailError, setMailError] = useState(false);
@@ -92,7 +101,7 @@ export default function Login({mail, setMail, move})
               };
 
             const hashedPassword = handleHashPassword();
-            axios.post('http://localhost:3002/login', {mail: mail.trim(), password: hashedPassword}).then(response => 
+            axios.post('/login', {mail: mail.trim(), password: hashedPassword}).then(response => 
             {
                 setSent(true);
                 setTimeout(() => 
@@ -141,6 +150,8 @@ export default function Login({mail, setMail, move})
                         required 
                         autoComplete="on"
                     />
+                </div>
+
                     <label
                         // for="password"
                         className={`block text-sm font-semibold ${passwordError? ' valid text-red-300' : 'text-gray-800'}`}
@@ -156,7 +167,6 @@ export default function Login({mail, setMail, move})
                         required 
                         autoComplete="on"
                     />
-                </div>
                 <a
                         className="text-xs text-purple-600 hover:underline cursor-pointer"
                         onClick={handlePasswordClick}

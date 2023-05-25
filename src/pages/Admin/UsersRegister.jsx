@@ -21,7 +21,7 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
     {
         const user = [items[index]];
         setUserIndex(index);
-        axios.post('http://localhost:3002/register/add', user).then(response => 
+        axios.post('/register/add', user).then(response => 
         {  
             
 
@@ -45,7 +45,7 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
         if (acceptedUsersToRegister.length === 0)
             return;
             
-        axios.post('http://localhost:3002/register/add', acceptedUsersToRegister).then(response => 
+        axios.post('/register/add', acceptedUsersToRegister).then(response => 
         {
             
                 if (!response)
@@ -64,7 +64,7 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
     {
             setUserIndex(index)
             const deleteUserFromRegister = items[index];
-            axios.delete(`http://localhost:3002/register/delete`, {data: {id: deleteUserFromRegister._id} }).then(response => 
+            axios.delete(`/register/delete`, {data: {id: deleteUserFromRegister._id} }).then(response => 
             {
                     if (!response)
                             setMessage('Coś poszło nie tak');   
@@ -83,7 +83,7 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
     const registerComponent = items.map((user, index)=>
     {
         return (
-            <div key={index} className='md:text-lg text-gray-700 border-b border-x border-gray-500 bg-slate-100 flex flex-row justify-between items-center'>
+            <div key={index} className='md:text-lg text-gray-700 border-b border-x border-gray-500 bg-slate-100 flex flex-row justify-between items-center py-2'>
                 <div className='flex flex-col pl-2'>
                 <p>{user.name}</p>
                 <p>{user.mail}</p>
@@ -103,9 +103,9 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
         
         
       <m.div className=" relative w-full h-full bg-blue-300 overflow-auto" variants={variantsForUsersPasswords} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
-        {items.length === 1 ? false : <div className="w-full md:h-20 bg-white border-x border-b-blue-300 border-b border-blue-300 flex flex-col">
-        {items.length === 0? <div className='bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white cursor-default'>Brak nowych użytkowników 😁</div> : false}
-        {items.length <= 2? false : <button onClick={handleAccpetAll} className="bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-slate-100 duration-200">
+        {items.length === 1 ? false : <div className="w-full h-14 md:h-20 bg-white border-x border-b-blue-300 border-b border-blue-300 flex flex-col ">
+        {items.length === 0? <div className='bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white cursor-default'>Brak próśb o zarejestrowanie 😁</div> : false}
+        {items.length <2? false : <button onClick={handleAccpetAll} className="bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-slate-100 duration-200">
             Zaakceptuj wszystkich
         </button>}
       </div>}

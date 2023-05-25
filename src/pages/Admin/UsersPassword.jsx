@@ -20,7 +20,7 @@ export default function UserPassword({items, setMessage, updateAll})
     {
         const user = [items[index]];
         setUserIndex(index)
-        axios.post('http://localhost:3002/password/add', user).then(response => 
+        axios.post('/password/add', user).then(response => 
         {  
             
                 if (!response)
@@ -39,7 +39,7 @@ export default function UserPassword({items, setMessage, updateAll})
     {
         const user = items;
         setAllIndex(true);
-        axios.post('http://localhost:3002/password/add', user).then(response => 
+        axios.post('/password/add', user).then(response => 
         {  
 
                 if (!response)
@@ -57,7 +57,7 @@ export default function UserPassword({items, setMessage, updateAll})
     {
             setUserIndex(index)
             const deleteUserFromPassword = items[index];
-            axios.delete(`http://localhost:3002/password/delete`, {data: {id: deleteUserFromPassword._id} }).then(response => 
+            axios.delete(`/password/delete`, {data: {id: deleteUserFromPassword._id} }).then(response => 
             {
                     if (!response)
                             setMessage('Coś poszło nie tak');   
@@ -76,7 +76,7 @@ export default function UserPassword({items, setMessage, updateAll})
     const acceptPassword = items.map((user, index)=>
     {
         return (
-            <div key={index} className='md:text-lg h-fit text-gray-700 border-b border-x border-gray-500 bg-slate-100 flex flex-row justify-between items-center'>
+            <div key={index} className='md:text-lg h-fit text-gray-700 border-b border-x border-gray-500 bg-slate-100 flex flex-row justify-between items-center py-2'>
                 <div className='flex flex-col pl-2'>
                 <p>{user.name}</p>
                 <p>{user.mail}</p>
