@@ -108,12 +108,12 @@ export default function AdminPage()
     return (<>
     <Menu className='flex' theme='bg-amber-300'/>
     <Confirm message={confirm.message} submit={confirm.submit} additional={confirm.additional} handleSubmit={confirm.handleSubmit}/>
-    <m.div className="flex w-screen h-screen relative justify-center items-start overflow-hidden" variants={variantsForAdminPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
+    <m.div className="flex w-screen h-screen overflow-hidden  justify-center items-start" variants={variantsForAdminPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
     <Message message={message}/>
     {/* <Confirm message={convirm.message || false} submit={convirm.submit || false} handleSubmit={convirm.handleSubmit || false}/> */}
-        <div className="mt-12 h-full text-xs w-11/12 md:text-base md:w-3/4 md:1/2">
+      <div className="mt-12 h-full overflow-hidden text-xs w-11/12 md:text-base md:w-3/4 md:1/2">
                 <AdminPageNav display={display} setDisplay={setDisplay} users={users} usersPassword={usersPassword} usersRegister={usersRegister}/>
-            <div className="relative w-full overflow-hidden z-10">
+            <div className="relative w-full h-[80%] overflow-hidden z-10">
             
             {pagesToShow[display]}
 

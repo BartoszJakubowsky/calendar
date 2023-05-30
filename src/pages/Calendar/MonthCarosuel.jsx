@@ -10,7 +10,7 @@ export default function MonthCarosuel({calendar, displayedMonth, monthsCountForM
 
     const renderMonths = useMemo(()=>
     {
-      return date.map((month, index) => <Month calendar={calendar} date={date[index]}/>)
+      return date.map((month, index) => <Month key={index} calendar={calendar} date={date[index]}/>)
     }, [])
 
     const [months, setMonths] = useState(renderMonths);
@@ -31,7 +31,7 @@ export default function MonthCarosuel({calendar, displayedMonth, monthsCountForM
         <div className="relative w-full h-full">
             {monthCarousel.map((props, index) => (
               //pb for overflow x visibility
-              <animated.div key={index} className="absolute w-full h-full pb-[72px]" style={{ ...props }}>
+              <animated.div key={index} className="absolute w-full h-full" style={{ ...props }}>
                 {months ? months[index] : null}
               </animated.div>
             ))}

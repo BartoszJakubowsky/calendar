@@ -94,12 +94,12 @@ export default function Password({mail, setMail, moveBack})
                Zresetuj hasło
             </h1>
             <p className="mt-2 text-xs font-light text-center text-gray-700 flex flex-col ">
-                    <a
+                    <p
                         className="font-medium text-purple-600 hover:underline cursor-pointer"
                         onClick={()=>moveBack(1)}
                     >
                         lub wróć do logowania
-                    </a>
+                    </p>
                 </p>
             <form className="mt-6">
                 <div className="mb-2">
@@ -155,7 +155,7 @@ export default function Password({mail, setMail, moveBack})
                     />
               <div className="overflow-hidden">
                 {message? 
-                <animated.div style={buttonAnimation} className="w-full px-4 py-2 tracking-wide text-center rounded-md">
+                <animated.div style={buttonAnimation} className="w-full px-4 py-2 tracking-wide text-center rounded-md h-10">
                     {message}
                 </animated.div>:<animated.button
                     style={buttonAnimation}

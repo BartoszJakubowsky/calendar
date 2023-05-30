@@ -52,10 +52,11 @@ export default function Calendars({setMessage})
           exit: { opacity: 0, x: 0, y: -200},
     }
     return (
-        <m.div className="w-full h-full bg-blue-300 overflow-auto" variants={variantsForCalendars} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
+        <m.div className="w-full h-fit bg-blue-300" variants={variantsForCalendars} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
             <div className="w-full h-14 md:h-20 bg-white border-x border-b-blue-300 border-b border-blue-300 flex flex-col ">
                 <button onClick={handleCreateCalendar} className="bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-slate-100 duration-200">Stwórz nowy kalendarz</button>
             </div>
+            <div className="overflow-y-scroll h-full">
             {calendars.map((calendar, index) =>
             {
                 return (
@@ -71,6 +72,7 @@ export default function Calendars({setMessage})
                 </div>
                 )
             })}
+            </div>
         </m.div>
     )
 }

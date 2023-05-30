@@ -13,7 +13,6 @@ export default function Users({items, setMessage, updateAll}) {
   
 
   const filteredItems = items.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
-
   //slot example
 //   {
 //     "calendar": "Środa Wielkopolska",
@@ -41,9 +40,9 @@ export default function Users({items, setMessage, updateAll}) {
         exit: { opacity: 0, x: 0, y: -100},
   }
   return (
-    <m.div className="w-full h-full bg-blue-300 overflow-auto" variants={variantsForUsers} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
-      <div className="w-full h-14 md:h-20 bg-white border-x border-b-blue-300 border-b border-blue-300 flex flex-col ">
-        <label className="text-slate-600 ml-2 mt-2">
+    <m.div className="w-full h-full overflow-hidden pb-20 bg-blue-300" variants={variantsForUsers} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
+      <div className=" w-full h-14 md:h-20 bg-white border-x border-b-blue-300 border-b border-blue-300 flex flex-col ">
+        <label className="text-slate-600 ml-2 mt-2 sticky">
           Wyszukaj użytkownika
         </label>
         <input
@@ -53,18 +52,21 @@ export default function Users({items, setMessage, updateAll}) {
           className="border-2 border-slate-200 w-80 ml-2 focus:border-slate-400 text-slate-600 focus:outline-none"
         />
       </div>
-      {filteredItems.map((item, index) => 
-      {
-        return (
-            <Accordion
-            label={item.name}
-            content={<User item={item} setMessage={setMessage} updateAll={updateAll}/>}
-            key={index}
-            search={search}
-    />
-        )
-      }
-    )}
+      <div className="overflow-y-scroll h-full">
+        {filteredItems.map((item, index) => 
+        {
+          return (
+              <Accordion
+              label={item.name}
+              content={<User item={item} setMessage={setMessage} updateAll={updateAll}/>}
+              key={index}
+              search={search}
+      />
+          )
+        }
+      )}
+      </div>
+      <p className="flex w-full justify-center items-start font-bold text-1xl">-</p>
     </m.div>
   );
 }

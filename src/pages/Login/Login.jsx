@@ -33,7 +33,7 @@ export default function Login({mail, setMail, move})
         if (mailError && !mailCheck)
             setMailError(false);
 
-        setMail(event.target.value);
+    setMail(event.target.value);
     }
 
     const handleRegisterClick = () => 
@@ -99,18 +99,17 @@ export default function Login({mail, setMail, move})
                 const hashed = CryptoJS.SHA256(password).toString();
                 return hashed;
               };
-
+              setSent(true);
             const hashedPassword = handleHashPassword();
             axios.post('/login', {mail: mail.trim(), password: hashedPassword}).then(response => 
             {
-                setSent(true);
-                setTimeout(() => 
-                {
-                setSent(false)
-                console.log(response);
-                handleMessage(response.data.message)
-                handleAuth(response);
-                }, 1000);
+                    setTimeout(() => 
+                    {
+                    setSent(false)
+                    console.log(response);
+                    handleMessage(response.data.message)
+                    handleAuth(response);
+                    }, 1000);
 
             }).catch(err => console.log('Błąd podczas logowania', err))
 
@@ -129,7 +128,7 @@ export default function Login({mail, setMail, move})
 
       
     return (
-        <div className=" w-11/12 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
+        <div className="w-11/12 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zaloguj się
             </h1>
@@ -167,16 +166,16 @@ export default function Login({mail, setMail, move})
                         required 
                         autoComplete="on"
                     />
-                <a
-                        className="text-xs text-purple-600 hover:underline cursor-pointer"
+                <p
+                        className="text-xs text-purple-600 hover:underline cursor-pointer mt-1"
                         onClick={handlePasswordClick}
                     >
                         Zapomniałeś hasła?
-                    </a>
+                    </p>
               <div className="overflow-hidden">
               
                 {message? 
-                <animated.div style={buttonAnimation} className="w-full px-4 py-2 tracking-wide text-center rounded-md">
+                <animated.div style={buttonAnimation} className="w-full px-4 py-2 tracking-wide text-center rounded-md h-10">
                     {message}
                 </animated.div>
                 :
@@ -198,12 +197,12 @@ export default function Login({mail, setMail, move})
             <p className="mt-8 text-xs font-light text-center text-gray-700 flex flex-col ">
                     
                     Nie masz jeszcze konta?
-                    <a
+                    <p
                         className="font-medium text-purple-600 hover:underline cursor-pointer"
                         onClick={handleRegisterClick}
                     >
                         Wyślij prośbę o rejestrację
-                    </a>
+                    </p>
                 </p>
         </div>
 );

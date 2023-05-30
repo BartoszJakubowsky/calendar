@@ -44,14 +44,14 @@ function MainPage({className})
                     onClick={()=>navigation(`kalendarz/${calendar.name}`)}
                     >
                     {/* here's link */}
-                    <div>{calendar.name}</div>
+                    <p className='text-center'>{calendar.name}</p>
                     {isAdmin && <AdminCalendarCard toggleIndex={index} calendar={calendar} navigation={navigation} />}
                     </CalendarCard>
                
                 
         })
 
-    return <div className="h-screen ">
+    return <div className="h-screen overflow-auto">
             <Menu className='flex'/>
             <Confirm message={confirm.message} submit={confirm.submit} additional={confirm.additional} handleSubmit={confirm.handleSubmit}/>
             <m.div 

@@ -5,7 +5,7 @@ import Week from "./Week";
 export default function Month({calendar, date}) 
 {
 
-
+  console.log(calendar);
 
     const className = classNames('');
     const thisYear = new Date().getFullYear();

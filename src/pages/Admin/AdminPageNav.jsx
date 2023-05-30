@@ -75,7 +75,7 @@ export default function AdminPageNav({display, setDisplay, users, usersPassword,
     );
 
     return (<>
-        <nav className="relative w-full h-10 bg-blue-200 flex flex-row rounded-sm border-2 border-slate-500 ">
+        <nav className="relative w-full h-10 bg-blue-200 flex flex-row rounded-sm border-2 border-slate-500 sticky ">
             <m.button className={`${buttonsClassNames} ${display === 0? activeButtonClassName : ''}`} onClick={()=>handleButtonClick(0)} variants={variants[0]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>Użytkownicy</m.button>
             <m.button className={`${buttonsClassNames} ${display === 1? activeButtonClassName : ''}`} onClick={()=>handleButtonClick(1)} variants={variants[1]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'><p className='relative w-fit'>Nowe hasła{usersPassword.length === 0? false :pingElement}</p></m.button>
             <m.button className={`${buttonsClassNames} ${display === 2? activeButtonClassName : ''}`} onClick={()=>handleButtonClick(2)} variants={variants[2]} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'><p className='relative w-fit'>Nowe konta{usersRegister.length === 0 ? false  :pingElement}</p></m.button>

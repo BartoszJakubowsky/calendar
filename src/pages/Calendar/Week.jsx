@@ -31,8 +31,8 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
   }
   const [timeArr, setTimeArr] = useState(generateTimes(time.timeFrom, time.timeTo, time.timeSpace));
 
-  const weekClassName = classNames('w-full h-full overflow-y-scroll overflow-x-scroll snap snap-y snap-mandatory');
- 
+  const weekClassName = classNames('w-full h-full snap snap-y snap-mandatory md:block ');
+  // const weekClassName = classNames('w-full h-full overflow-y-scroll overflow-x-scroll snap snap-y snap-mandatory flex flex-col');
   return(
     <div className={weekClassName}>
      {allWeeksLeftInMonth.map((week, index)=>
@@ -47,6 +47,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
             // className={dayTimeColumnClass}
             />
             {/* only days for this week */}
+            <div className="flex flex-row w-full h-full overflow-x-scroll">
             {DAYS_OF_WEEK.map((day, dayIndex) => 
             {
               
@@ -85,7 +86,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 calendar={calendar}
                 />
             })}
-            
+            </div>
           </section>
           )
         })}

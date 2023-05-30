@@ -21,9 +21,9 @@ export default function Register({mail, setMail, moveBack})
     const [passwordError, setPasswordError] = useState(false);
 
 
-    const mailCheck = mail.length <= 5 || mail === '';
-    const nameCheck = name.length <=3 || name === '';
-    const surnameCheck = surname.length <= 3 || surname === '';
+    const mailCheck = mail.length <= 4 || mail === '';
+    const nameCheck = name.length <=2 || name === '';
+    const surnameCheck = surname.length <= 2 || surname === '';
     const passwordCheck = password.length <= 3 || password === '' || password !== secondPassword;
 
     const [sent, setSent] = useState(false);
@@ -37,8 +37,6 @@ export default function Register({mail, setMail, moveBack})
 
         setMail(event.target.value);
     }
-
-
     const handleNameChange = (event) => 
     {
         if (nameError && !nameCheck)
@@ -53,8 +51,6 @@ export default function Register({mail, setMail, moveBack})
 
         setSurname(event.target.value);
     }
-
-
     const handlePasswordChange = (event) => 
     {
 
@@ -70,7 +66,6 @@ export default function Register({mail, setMail, moveBack})
             
         setSecondPassword(event.target.value);
     }
-
     const handleSendClick = (event) =>
     {
         event.preventDefault();
@@ -132,17 +127,17 @@ export default function Register({mail, setMail, moveBack})
 
       
     return (
-        <div className=" w-11/12 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
+        <div className=" w-11/12 md:w-1/2 px-6 py-10 m-auto bg-white rounded-md shadow-md">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zarejestruj się
             </h1>
             <p className="mt-2 text-xs font-light text-center text-gray-700 flex flex-col ">
-                    <a
+                    <p
                         className="font-medium text-purple-600 hover:underline cursor-pointer"
                         onClick={()=>moveBack(1)}
                     >
                         lub wróć do logowania
-                    </a>
+                    </p>
                 </p>
             <form className="mt-6">
                 <div className="mb-2">
@@ -231,7 +226,7 @@ export default function Register({mail, setMail, moveBack})
        
               <div className="overflow-hidden">
                { message? 
-                <animated.div style={buttonAnimation} className="w-full px-4 py-2 tracking-wide text-center rounded-md">
+                <animated.div style={buttonAnimation} className="w-full px-4 tracking-wide text-center rounded-md h-10">
                     {message}
                 </animated.div>
                :<animated.button
@@ -243,7 +238,7 @@ export default function Register({mail, setMail, moveBack})
                 </animated.button>}
 
              
-                <animated.div style={messageAnimation} className="w-full px-4 py-2 tracking-wide text-center flex justify-center flex-col">
+                <animated.div style={messageAnimation} className="w-full px-4 tracking-wide text-center flex justify-center flex-col">
                     Poczekaj, sprawdzamy twoje dane
                   <LoadingIcon classname='fill-purple-700'/>
                 </animated.div>

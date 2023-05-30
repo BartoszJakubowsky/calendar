@@ -8,12 +8,10 @@ const AuthContext = createContext();
     function AuthProvider({children}) 
     {
 
-
         const [isAuthenticated, setAuthenticate] = useState(null);
         const [user, setUser] = useState(false);
-        // axios.defaults.baseURL = 'http://localhost:3002';
-        axios.defaults.baseURL = window.location.origin;
-        console.log(axios.defaults.baseURL);
+        axios.defaults.baseURL = 'http://localhost:3002';
+        // axios.defaults.baseURL = window.location.origin;
         axios.interceptors.request.use(
             config => {
               const token = localStorage.getItem('token');

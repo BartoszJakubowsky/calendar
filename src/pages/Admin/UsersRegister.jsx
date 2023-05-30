@@ -102,14 +102,16 @@ export default function UserRegister({items, setMessage, updateAll, setConvirm})
     return (
         
         
-      <m.div className=" relative w-full h-full bg-blue-300 overflow-auto" variants={variantsForUsersPasswords} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
+      <m.div className=" relative w-full h-fit bg-blue-300" variants={variantsForUsersPasswords} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
         {items.length === 1 ? false : <div className="w-full h-14 md:h-20 bg-white border-x border-b-blue-300 border-b border-blue-300 flex flex-col ">
         {items.length === 0? <div className='bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white cursor-default'>Brak próśb o zarejestrowanie 😁</div> : false}
         {items.length <2? false : <button onClick={handleAccpetAll} className="bg-slate-400 w-fit p-2 mt-2 h-fit ml-2 rounded-sm btn ripple  text-white  active:scale-110 hover:text-black hover:bg-slate-100 duration-200">
             Zaakceptuj wszystkich
         </button>}
       </div>}
+      <div className='h-fit overflow-y-scroll'>
             {registerComponent}
+        </div>
         </m.div>
         
     )
