@@ -2,12 +2,18 @@ import { useEffect, useMemo, useState } from 'react';
 import useSlots from '../../hooks/useSlots';
 import DayColumnHeader from './DayColumnHeader';
 import DaySlot from './DaySlot';
+import classNames from 'classnames';
 
-export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIndex, dayDate, calendar, ...rest}) 
+export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIndex, dayDate, calendar, heigh,...rest}) 
 {
     const {_id, name, slots, records} = calendar
     const {handleRecords} = useSlots();
     const calendarID = _id;
+
+
+
+
+
     //format dd.mm.yyyy
     const convertDate = (dayDate) =>
     {
@@ -31,16 +37,23 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
         }
     },[])
 
+    if (calendar.bannedDays.includes(day.toUpperCase()))
+        return false;
+
     let _dayDate;
 
     if (dayDate)
         _dayDate = convertDate(dayDate);
 
     
-    const daySlots = useMemo(()=>
-    {
+    const daySlots = ()=>
+    {   
+        console.log('ile');
         if (isBlank)
-            return false
+            return (
+                <div className={`flex w-full h-full bg-red-200`}>
+                 </div>
+            )
         return (
             <>
             {timeArr.map((time, index) =>
@@ -50,7 +63,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
                 return (
                 <div
                     key={index} 
-                    className="flex flex-row w-full h-full border-b-2 border-black">
+                    className={`flex flex-row w-full h-full border-black`}>
                         {/* slots in cells / slots holder */}
                         {slots.map(slot =>
                         {   
@@ -71,6 +84,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
                                     slotIndex : i,
                                     sign: '',
                                     calendarID,
+                                    fullDate: _dayDate,
                                 };
                                 spaces.push(
                                    <DaySlot 
@@ -82,7 +96,8 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
                                 )
                             }
                         //slot holder
-                        return <div key={slot.name} className={`flex flex-col w-full h-full order-${slot.order} overflow-hidden`}>
+                        const slotHolderClassName = classNames(`flex flex-col w-full md:h-full order-${slot.order} overflow-hidden ${heigh}`)
+                        return <div key={slot.name} className={slotHolderClassName}>
                                 {spaces}
                                 </div>
                            
@@ -92,13 +107,13 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
             </>
 
         )
-    },[])
+    };
 
     return (
         //column
-        <div className={`flex flex-col w-full ${isBlank? 'bg-gray-400 ' : 'bg-amber-100'}  border-l-2 border-black `}  key={day}>
+        <div className={`flex flex-col w-full h-fit md:h-full ${isBlank? 'bg-gray-400 ' : 'bg-amber-100'}  border-l-2 border-black `}  key={day}>
             <DayColumnHeader dayDate={_dayDate} day={day} slots={slots} isBlank={isBlank}/>
-            {daySlots}
+            {daySlots()}
         </div>
     )
 }
