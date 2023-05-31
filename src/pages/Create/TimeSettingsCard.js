@@ -14,15 +14,23 @@ export default function TimeSettingsCard({calendarTimeFrom, calendarTimeTo, cale
     const [timeTo, setTimeTo] = useState(calendarTimeTo || '');
     const [timeSpace, setTimeSpace] = useState(calendarTimeSpace || '');
 
+    const [timeFromError, setTimeFromError] = useState(false);
+    const [timeToError, setTimeToError] = useState(false);
+    const [timeSpaceError, setTimeSpaceError] = useState(false);
 
-    const handleTimeFromChange = event => setTimeFrom(event.target.value);
-    const handleTimeToChange = event => setTimeTo(event.target.value);
+    const handleTimeFromChange = event => {setTimeFrom(event.target.value); if(timeToError) setTimeFromError(false)}
+    const handleTimeToChange = event => {setTimeTo(event.target.value); if(timeToError) setTimeToError(false)}
     const handleTimeSpaceChange = event => 
     {
         const chosedTimeSpace = event.target.value;
 
         if (chosedTimeSpace !== timeTo)
-          setTimeSpace(chosedTimeSpace);
+        {
+            if (timeSpaceError)
+                setTimeSpaceError(false);
+            
+            setTimeSpace(chosedTimeSpace);
+        }
         else
             return 
     }
@@ -32,22 +40,54 @@ export default function TimeSettingsCard({calendarTimeFrom, calendarTimeTo, cale
     {
         event.preventDefault();
 
+        if (!checkTime())
+            return;
+
         onChange({timeFrom,timeTo, timeSpace});
         handleCloseClick();
     };
+    const checkTime = () => 
+    {
+
+        let timeFromFlag = false;
+        let timeToFlag = false;
+        let timesSpaceFlag = false;
+        if (timeFrom === '')
+        {
+            setTimeFromError(true)
+            timeFromFlag = true;
+        }    
+
+        if (timeTo === '')
+        {
+            setTimeToError(true)
+            timeToFlag = true;
+        }
+
+        if (timeSpace === '')
+        {
+            setTimeSpaceError(true)
+            timesSpaceFlag = true;
+        }
+
+        if (timeFromFlag || timeToFlag || timesSpaceFlag)
+            return false;
+        else
+            return true;
+    }
  
     const timeInputClassName = 'w-20 h-10 font-semibold'
     return (
         <div className="  bg-transparent absolute w-full h-full">
-            <div className="bg-white w-72 h-fit mx-auto mt-24 border-2 border-black relative rounded-md flex flex-col">
+            <div className="bg-white md:w-72 w-5/6 h-fit mx-auto mt-24 border-2 border-black relative flex flex-col">
                 <h3
-                className=" bg-violet-200 py-2 uppercase font-semibold rounded-t-md mb-2 pl-2"
+                className=" bg-pink-200 py-2 uppercase font-semibold mb-2 pl-2"
                 >Ustawienia czasu
                 <Close onClick={handleCloseClick}/>
                     
                 </h3>
                 <div className="flex-row">
-                    <label className="mx-2">Godziny od:</label>
+                    <label className={`mx-2 duration-75  ${timeFromError? 'valid text-red-300' : 'text-normal'}`}>Godziny od:</label>
                     <input 
                         className={timeInputClassName}
                         type='time' 
@@ -58,7 +98,7 @@ export default function TimeSettingsCard({calendarTimeFrom, calendarTimeTo, cale
                     />
                     </div>
                 <div className="flex-row">
-                    <label className="mx-2">Godziny do:</label>
+                    <label className={`mx-2 duration-75  ${timeToError? 'valid text-red-300' : 'text-normal'}`}>Godziny do:</label>
                     <input 
                         type='time' 
                         // min={6} 
@@ -70,7 +110,7 @@ export default function TimeSettingsCard({calendarTimeFrom, calendarTimeTo, cale
                  </div>
 
                  <div className="flex-row">
-                    <label className="mx-2">Czas slotów:</label>
+                    <label className={`mx-2 duration-75  ${timeSpaceError? 'valid text-red-300' : 'text-normal'}`}>Czas slotów:</label>
                     <input 
                         type='time' 
                         value={timeSpace} 

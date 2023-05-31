@@ -44,6 +44,7 @@ export default function UserPage()
     const sortedCalendarsRecors = calendars.map((calendar)=>
     {
         const sorted = sortRecords(calendar.records);
+        console.log(sorted);
         return (
             <div key={calendar.name} className=' flex flex-col'>
              <h3 className='h-10 bg-slate-300 text-lg font-bold border-2 border-slate-500 flex justify-center items-center'>{calendar.name}</h3>   
@@ -58,7 +59,7 @@ export default function UserPage()
         <>
         <Menu className='flex'/>
         <m.div className='w-screen h-screen justify-center overflow-auto flex bg-amber-200' variants={variantsForSuspense} initial='hidden' animate='enter'  exit='exit'>
-            <div className='md:w-3/4 w-11/12 bg-white md:mt-10 mt-14 flex flex-col'>
+            <div className='md:w-3/4 w-11/12 h-fit bg-white md:mt-10 mt-14 flex flex-col'>
                 {sortedCalendarsRecors}
             </div>
         </m.div>
