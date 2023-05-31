@@ -12,7 +12,7 @@ export default function MonthNavbar({displayedMonth,setDisplayedMonth, monthsCou
       };
 
     return (
-        <div className="bg-blue-400 w-full h-10 flex justify-start sticky top-0 z-10">
+        <div className="bg-blue-400 w-full h-10 flex justify-start">
         <button
           className={classNames(
               "py-2 px-4  text-white",

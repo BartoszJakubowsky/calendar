@@ -89,10 +89,9 @@ export default function Month({calendar, date})
     return (
         <div className={`w-full h-full`}>
           {/* if padding will ever change remember to change padding in animated.div in MonthCarosuel to see the overflow x */}
-          <h3 className="flex justify-center items-center p-2 border-b-2 border-black font-semibold sticky top-10 bg-yellow-200">
+          <h3 className="flex justify-center items-center p-2 border-b-2 border-black font-semibold">
             {date}
           </h3>
-          <div className="w-full h-[calc(100%_-_4.60rem)]">
           <Week 
             allDaysInMonth={allDaysInMonth} 
             allDaysLeftInMonth={allDaysLeftInMonth} 
@@ -101,7 +100,6 @@ export default function Month({calendar, date})
             calendar={calendar}
             date={date}
             />
-            </div>
         </div>
     )
 

@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 
 
 
-export default function AdditionalSettings({calendarTime, calendarSlots, onChange, slotCard, timeCard, ...rest}) 
+export default function AdditionalSettings({calendarTime, calendarSlots, onChange, slotCard, timeCard}) 
 {
 
     const [time, setTime] = useState(calendarTime || false);
@@ -72,10 +72,10 @@ export default function AdditionalSettings({calendarTime, calendarSlots, onChang
 
 
     return (
-        <div className={`flex  text-cyan-900 cursor-pointer text-lg ease-out ${rest.className}`}>
+        <div className='flex  text-cyan-900 cursor-pointer text-lg ease-out'>
             <Time value={time} onChange={handleTimeChange} timeCard={timeCard}/>
-            <AddSlot slotCard={slotCard} onChange={handleSlotChange} slots={slots} />
-            <Slots slots={slots} slotCard={slotCard} onChange={handleSlotChange}/>
+            <AddSlot slotCard={slotCard} onChange={handleSlotChange}/>
+            <Slots value={slots} slotCard={slotCard} onChange={handleSlotChange}/>
         </div>
     )
 }

@@ -35,8 +35,8 @@ export default function SelectMonths({year, handleYear, setDate, date})
     const renderMonths = avaibleMonths.map(month=>
         {
 
-            const classes = classNames("text-sm uppercase text-center px-1 py-2 m-1 cursor-pointer duration-150 active:bg-sky-400 active:scale-110 ",
-            date.includes(month.toUpperCase() + '.' +year.toString())? 'bg-pink-200 hover:bg-pink-300' : 'bg-sky-200 hover:bg-sky-300'
+            const classes = classNames("text-sm uppercase text-center px-1 py-2 m-1 cursor-pointer duration-150 active:bg-lime-400 active:scale-110 ",
+            date.includes(month.toUpperCase() + '.' +year.toString())? 'bg-yellow-200 hover:bg-yellow-300' : 'bg-lime-200 hover:bg-lime-300'
             )
             
             return (
@@ -61,7 +61,7 @@ export default function SelectMonths({year, handleYear, setDate, date})
             <span className=" font-semibold text-cyan-900 pointer-events-none">{year}</span>
             <ArrowRight className={`${arrowClassName} ${rightArrowClassName}`} onClick={()=>handleYear(++year)}/>
             </div>
-        <ul className="flex flex-row justify-start w-full overflow-hidden overflow-x-scroll  md:overflow-x-auto">
+        <ul className="flex flex-row justify-start w-full overflow-hidden hover:overflow-x-auto">
             {renderMonths}
         </ul>
         </div>

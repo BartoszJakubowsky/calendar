@@ -78,15 +78,13 @@ function App()
                                     calendarDate={calendarToEdit?.date} 
                                     calendarTime={calendarToEdit?.time} 
                                     calendarSlots={calendarToEdit?.slots}
-                                    calendarBannedDays={calendarToEdit?.bannedDays}
-                                    calendarAutoMonth={calendarToEdit?.autoMonth}
                                     calendarId={calendarToEdit?._id}
                                     />)}
                                     /> : <Route path='/ustawienia' element={suspenseElement(<CreateCalendarPage/>)}
                                           />}
                               <Route path='/admin' element={suspenseElement(<AdminPage/>)}/>   
                               </>}
-                              <Route path='/ss'element={<NotFoundPage replace/>}/>
+                              <Route path='*'element={<NotFoundPage replace/>}/>
                               
                         </Routes>
                   </AnimatePresence>

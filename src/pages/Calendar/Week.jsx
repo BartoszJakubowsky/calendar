@@ -30,45 +30,11 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
     return times;
   }
   const [timeArr, setTimeArr] = useState(generateTimes(time.timeFrom, time.timeTo, time.timeSpace));
-  const stickyLeftSpace = [
-    'left-0',
-    'left-1',
-    'left-2',
-    'left-3',
-    'left-4',
-    'left-5',
-    'left-6',
-    'left-7',
-    'left-8',
-  ]
 
-
-  const getSpaceOfSlot = () =>
-  {
-    let spaceToReturn = 0;
-    for (let i = 0; i < slots.length; i++) 
-    {
-
-      const slot = slots[i];
-      const spaceToInt = parseInt(slot.space);
-
-      if (spaceToReturn < spaceToInt)
-        spaceToReturn = spaceToInt;
-    }
-
-    const heigh = `h-[${spaceToReturn*100}px]`
-    // const heigh = `h-24`
-    console.log(heigh);
-
-
-    return heigh;
-
-  }
-
-  const heighOfSlot = getSpaceOfSlot();
-
+  const weekClassName = classNames('w-full h-full snap snap-y snap-mandatory md:block ');
+  // const weekClassName = classNames('w-full h-full overflow-y-scroll overflow-x-scroll snap snap-y snap-mandatory flex flex-col');
   return(
-    <div className={'w-full h-full snap snap-y snap-mandatory flex overflow-x-scroll'}>
+    <div className={weekClassName}>
      {allWeeksLeftInMonth.map((week, index)=>
         {
 
@@ -76,11 +42,12 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
           return false;
 
           return (
-            <section key={index} className={`snap-start min-w-full min-h-full border-black bg-gray-100 flex flex-row overflow-y-scroll sticky ${index === 0 || index ===  allWeeksLeftInMonth.length-1 ? 'left-0' : `${stickyLeftSpace[index]} border-l-2`}`}>
-            <Time timeArr={timeArr} heigh={heighOfSlot}
+            <section key={index} className={`snap-start h-full w-full bg-gray-100 flex flex-row`}>
+            <Time timeArr={timeArr} 
             // className={dayTimeColumnClass}
             />
             {/* only days for this week */}
+            <div className="flex flex-row w-full h-full overflow-x-scroll">
             {DAYS_OF_WEEK.map((day, dayIndex) => 
             {
               
@@ -108,7 +75,6 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 weekIndex={index}
                 key={dayIndex}
                 calendar={calendar}
-                heigh={heighOfSlot}
                 />
               else
               return <DayColumn
@@ -120,6 +86,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 calendar={calendar}
                 />
             })}
+            </div>
           </section>
           )
         })}

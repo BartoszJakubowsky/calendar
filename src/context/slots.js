@@ -16,8 +16,7 @@ function SlotsProvider({children})
     )
 
 
-    // const socket = io.connect(window.location.origin);
-    const socket = io.connect('http://localhost:3002/');
+    const socket = io.connect(window.location.origin);
         
     socket.on("connected", (data) => 
     {
@@ -34,7 +33,6 @@ function SlotsProvider({children})
 
     const emitMessage = message =>
     {
-        console.log('emit');
         socket.emit('message', {message, id: socket.id});
     }
 

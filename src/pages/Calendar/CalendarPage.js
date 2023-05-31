@@ -51,7 +51,6 @@ useEffect(()=>
 
 const [displayedMonth, setDisplayedMonth] = useState(0); 
 const {slotsArray ,removeAllSlots} = useSlots();
-
 useEffect(()=>
 {
     return () =>
@@ -64,13 +63,17 @@ useEffect(()=>
 if (!calendar)
   return <LoadingPage/>
 
-  const {name, date} = calendar;
+const {name, date} = calendar;
+
+const user = {name: 'Bartosz Jakubowski', rights: 'user'};
+
+
 
   const variantsForCalendarPage = 
   {
         hidden: { opacity: 0, x: -200, y: 0 },
         enter: { opacity: 1, x: 0, y: 0 },
-      // exit: { opacity: 0, x: -200, y: 0 },
+        // exit: { opacity: 0, x: -200, y: 0 },
         exit: { opacity: 0 },
   }
  
@@ -83,7 +86,7 @@ if (!calendar)
           <Confirm message={confirm.message} submit={confirm.submit} handleSubmit={confirm.handleSubmit}/>
           <Message message={message} theme='bg-yellow-100'/>
           <Menu calendarName={name} theme='bg-red-300'/>
-            <div className={`mt-4 w-[95%] h-[90%] md:mt-6 md:max-w-[90%] md:[90%] bg-red-300 md:mx-auto rounded-sm text-xs  border-2 border-black overflow-hidden`}>
+            <div className={`mt-4 w-[95%] h-[90%] md:mt-6 md:max-w-[90%] md:[90%] bg-red-300 md:mx-auto rounded-sm text-xs  border-2 border-black overflow-y-scroll overflow-hidden`}>
               <MonthNavbar displayedMonth={displayedMonth} setDisplayedMonth={setDisplayedMonth} monthsCountForMonthCarousel={monthsCountForMonthCarousel}/>      
               <MonthCarosuel calendar={calendar} monthsCountForMonthCarousel={monthsCountForMonthCarousel} displayedMonth={displayedMonth}/>
             </div>
