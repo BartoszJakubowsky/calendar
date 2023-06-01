@@ -47,7 +47,7 @@ export default function UserPage()
         console.log(sorted);
         return (
             <div key={calendar.name} className=' flex flex-col'>
-             <h3 className='h-10 bg-slate-300 text-lg font-bold border-2 border-slate-500 flex justify-center items-center'>{calendar.name}</h3>   
+             <h3 className='h-10 bg-slate-300 text-lg font-bold border-2 border-slate-500 flex justify-center items-center sticky top-0 z-[2]'>{calendar.name}</h3>   
              {sorted.map((month, index)=>
              {
                 return <RecordHolder key={index} month={month}/>
@@ -57,9 +57,9 @@ export default function UserPage()
     })
     return (
         <>
-        <Menu className='flex'/>
-        <m.div className='w-screen h-screen justify-center overflow-auto flex bg-amber-200' variants={variantsForSuspense} initial='hidden' animate='enter'  exit='exit'>
-            <div className='md:w-3/4 w-11/12 h-fit bg-white md:mt-10 mt-14 flex flex-col'>
+        <Menu className='flex' theme={'bg-slate-400'}/>
+        <m.div className='w-screen h-screen justify-center overflow-hidden flex bg-zinc-100' variants={variantsForSuspense} initial='hidden' animate='enter'  exit='exit'>
+            <div className='md:w-3/4 w-11/12 md:mt-10 mt-14 flex flex-col overflow-y-scroll md:overflow-auto'>
                 {sortedCalendarsRecors}
             </div>
         </m.div>

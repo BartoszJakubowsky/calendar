@@ -22,9 +22,9 @@ export default function Menu({calendarName, theme, ...rest})
 
 
   return (
-    <div className={rest.className? rest.className : `bg-red-400 flex items-center justify-center w-full h-12`}>
+    <div className={rest.className? rest.className : ` bg-violet-400 text-white flex items-center justify-center w-full h-12`}>
         <HamburgerIcon  onClick={handleMenuClick} className='scale-75 absolute left-0 top-0 z-40' isOpen={isOpen} setIsOpen={setIsOpen} />          
-        {calendarName? <h1 className="cursor-default flex font-semibold">{calendarName}</h1> : false}
+        {calendarName? <h1 className="cursor-default flex font-semibold ">{calendarName}</h1> : false}
         <Slider isOpen={isOpen} setIsOpen={setIsOpen} theme={theme}/>
     </div>
        );

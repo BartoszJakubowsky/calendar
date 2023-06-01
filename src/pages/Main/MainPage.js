@@ -7,6 +7,7 @@ import CalendarCard from "./CalendarCard";
 import AdminCalendarCard from "./AdminCalendarCart";
 import Menu from "../../components/menu/Menu";
 import Confirm from '../../components/ui/Confirm';
+import Background from './Background';
 
 function MainPage({className}) 
 {
@@ -52,12 +53,12 @@ function MainPage({className})
         })
 
     return <div className="h-screen overflow-auto">
-            <Menu className='flex'/>
+            <Menu className='flex' theme={'bg-slate-400'}/>
+            <Background/>
             <Confirm message={confirm.message} submit={confirm.submit} additional={confirm.additional} handleSubmit={confirm.handleSubmit}/>
             <m.div 
                 className={'flex flex-wrap justify-center mt-[10%] md:mt-[20%]'} 
-                layout initial={{y: '100%'}} animate={{y: "0%"}} transition={{type: 'spring', stiffness: 110, damping: 12}} exit={currentPath === '/logowanie'?{ opacity: 0, transition: 0.2} : {opacity: 0, x: 0, y: -100, transition: 0.2}}>
-                    
+                layout initial={{y: '-100%'}} animate={{y: "0%"}} transition={{type: 'spring', stiffness: 110, damping: 12}} exit={currentPath === '/logowanie'?{ opacity: 0, transition: 0.2} : {opacity: 0, x: 0, y: -100, transition: 0.2}}>
                     {createCalendarCard}
 
                     {/* <CalendarCard

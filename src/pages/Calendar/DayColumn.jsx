@@ -4,11 +4,13 @@ import DayColumnHeader from './DayColumnHeader';
 import DaySlot from './DaySlot';
 import classNames from 'classnames';
 
-export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIndex, dayDate, calendar, heigh,...rest}) 
+export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIndex, dayDate, calendar, heigh,  slotMessage, setSlotMessage,...rest}) 
 {
     const {_id, name, slots, records} = calendar
     const {handleRecords} = useSlots();
     const calendarID = _id;
+
+    
 
 
 
@@ -48,16 +50,17 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
     
     const daySlots = ()=>
     {   
-        console.log('ile');
         if (isBlank)
-            return (
-                <div className={`flex w-full h-full bg-red-200`}>
-                 </div>
-            )
+            return false;
+            // return (
+            //     <div className={`flex w-full h-full bg-red-200`}>
+            //      </div>
+            // )
         return (
             <>
             {timeArr.map((time, index) =>
             {   
+
 
                 //cell day
                 return (
@@ -95,8 +98,8 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
                                     />
                                 )
                             }
-                        //slot holder
-                        const slotHolderClassName = classNames(`flex flex-col w-full md:h-full order-${slot.order} overflow-hidden ${heigh}`)
+                        //slot holder -> day
+                        const slotHolderClassName = classNames(`flex flex-col w-full md:h-full order-${slot.order} overflow-hidden ${heigh.toString()}`)
                         return <div key={slot.name} className={slotHolderClassName}>
                                 {spaces}
                                 </div>
@@ -111,8 +114,8 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
 
     return (
         //column
-        <div className={`flex flex-col w-full h-fit md:h-full ${isBlank? 'bg-gray-400 ' : 'bg-amber-100'}  border-l-2 border-black `}  key={day}>
-            <DayColumnHeader dayDate={_dayDate} day={day} slots={slots} isBlank={isBlank}/>
+        <div className={`flex flex-col w-full h-fit md:h-full ${isBlank? ' ' : 'bg-zinc-100'}  border-l-[2px] border-black `}  key={day}>
+            <DayColumnHeader dayDate={_dayDate} timeArr={timeArr} day={day} slots={slots} isBlank={isBlank}  slotMessage={slotMessage} setSlotMessage={setSlotMessage} calendar={calendar}/>
             {daySlots()}
         </div>
     )

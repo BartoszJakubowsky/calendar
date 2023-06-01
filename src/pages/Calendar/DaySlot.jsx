@@ -112,7 +112,7 @@ const transitionStyles = {
 
   return (
     <button
-      className={`overflow-hidden w-full h-full border-2 border-red-200 duration-150 hover:backdrop-brightness-90 text-center active:bg-red-300
+      className={`overflow-hidden w-full h-full border-[1px] border-gray-400 duration-150 hover:backdrop-brightness-90 text-center active:bg-zinc-200
         ${sign === '' ? '' : ''}
         ${sign !== user.name && sign !== '' ? 'cursor-not-allowed pointer-events-none' : ''}
       `}

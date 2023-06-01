@@ -11,6 +11,7 @@ import MonthNavbar from "./MonthNavbar";
 import MonthCarosuel from "./MonthCarosuel";
 import LoadingPage from '../Loading/LoadingPage';
 import Message from "../../components/ui/Message";
+import CalendarMessageSettings from "./AdminSettings/CalendarMessageSettings";
 
 export default function CalendarPage({})
 {
@@ -18,7 +19,7 @@ const {calendars, navigate, confirm, isFetching, message} = useCalendars();
 const {calendarName} = useParams();
 //all nasty code below is written in case of refresh page while rendering calendar page
 //code will check if data is still fetching and wait for it till the end
-
+const [slotMessage, setSlotMessage] = useState(false);
 const confirmCalendar = useMemo(()=>
 {
   const parseStringToUrl = string => string.replaceAll(' ', '_').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -78,14 +79,15 @@ if (!calendar)
     return(
       <>
         <m.div 
-          className=" w-screen h-screen flex items-center flex-col bg-red-100" 
+          className=" w-screen h-screen flex items-center flex-col bg-zinc-100" 
           variants={variantsForCalendarPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
           <Confirm message={confirm.message} submit={confirm.submit} handleSubmit={confirm.handleSubmit}/>
-          <Message message={message} theme='bg-yellow-100'/>
-          <Menu calendarName={name} theme='bg-red-300'/>
-            <div className={`mt-4 w-[95%] h-[90%] md:mt-6 md:max-w-[90%] md:[90%] bg-red-300 md:mx-auto rounded-sm text-xs  border-2 border-black overflow-hidden`}>
+          <Message message={message} theme='bg-purple-200'/>
+          <Menu calendarName={name} theme='bg-slate-400'/>
+          <CalendarMessageSettings  slotMessage={slotMessage} setSlotMessage={setSlotMessage}/>
+            <div className={`mt-4 w-[95%] h-[90%] md:mt-6 md:max-w-[90%] md:[90% md:mx-auto rounded-sm text-xs  border-2 border-black overflow-hidden`}>
               <MonthNavbar displayedMonth={displayedMonth} setDisplayedMonth={setDisplayedMonth} monthsCountForMonthCarousel={monthsCountForMonthCarousel}/>      
-              <MonthCarosuel calendar={calendar} monthsCountForMonthCarousel={monthsCountForMonthCarousel} displayedMonth={displayedMonth}/>
+              <MonthCarosuel calendar={calendar} monthsCountForMonthCarousel={monthsCountForMonthCarousel} displayedMonth={displayedMonth} slotMessage={slotMessage} setSlotMessage={setSlotMessage}/>
             </div>
         </m.div>
         </>

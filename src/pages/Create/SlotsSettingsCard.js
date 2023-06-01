@@ -38,7 +38,7 @@ export default function SlotsSettingsCard({name, space ,order, close, onChange, 
     const handleSpaceChange = event => 
     {
         const slotNumber = event.target.value;
-        if (slotNumber > 10 || slotNumber === 0)
+        if (slotNumber > 6 || slotNumber === 0)
             return
         else
             setSlotSpace(slotNumber);

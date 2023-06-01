@@ -98,6 +98,8 @@ const updateCalendar = async (oldCalendar, newCalendar) =>
     // })
     // .then(response => response.json())
     newCalendar._id = oldCalendar._id;
+
+    console.log(newCalendar);
     axios.put(`/calendar`, newCalendar)
     .then(respond => setCalendars(calendars.map((calendar, index)=>
     {
@@ -153,7 +155,8 @@ const toProvide =
     navigate,
     isFetching,
     message, 
-    setMessage
+    setMessage,
+    updateCalendar
 }
 
 

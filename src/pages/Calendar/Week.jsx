@@ -6,7 +6,7 @@ import DayColumn from './DayColumn';
 import Time from './Time';
 
 
-export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth, calendar, date}) 
+export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth, calendar, date, slotMessage,setSlotMessage}) 
 {
 
 
@@ -56,19 +56,30 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
         spaceToReturn = spaceToInt;
     }
 
-    const heigh = `h-[${spaceToReturn*100}px]`
-    // const heigh = `h-24`
-    console.log(heigh);
+    const heighsForSpaces = [
+      {space: 1, heigh: 'h-10'},
+      {space: 2, heigh: 'h-20'},
+      {space: 3, heigh: 'h-32'},
+      {space: 4, heigh: 'h-40'},
+      {space: 5, heigh: 'h-52'},
+      {space: 6, heigh: 'h-60'},
+    ]
 
+    for (let i = 0; i < heighsForSpaces.length; i++) 
+    {
+      const settings = heighsForSpaces[i];
 
-    return heigh;
+      if (settings.space === spaceToReturn)
+        return settings.heigh
+    }
+    
 
   }
 
   const heighOfSlot = getSpaceOfSlot();
 
   return(
-    <div className={'w-full h-full snap snap-y snap-mandatory flex overflow-x-scroll'}>
+    <div className={'w-full h-full snap snap-y snap-mandatory flex overflow-x-scroll  '}>
      {allWeeksLeftInMonth.map((week, index)=>
         {
 
@@ -76,7 +87,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
           return false;
 
           return (
-            <section key={index} className={`snap-start min-w-full min-h-full border-black bg-gray-100 flex flex-row overflow-y-scroll sticky ${index === 0 || index ===  allWeeksLeftInMonth.length-1 ? 'left-0' : `${stickyLeftSpace[index]} border-l-2`}`}>
+            <section key={index} className={`snap-start min-w-full min-h-full border-black bg-gray-300 flex flex-row overflow-y-scroll sticky ${index === 0 || index ===  allWeeksLeftInMonth.length-1 ? 'left-0' : `${stickyLeftSpace[index]} border-l-2`}`}>
             <Time timeArr={timeArr} heigh={heighOfSlot}
             // className={dayTimeColumnClass}
             />
@@ -96,6 +107,8 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                   break;
                 }
               }
+              
+
               if (doesDayExist)
               return <DayColumn 
                 // className={dayTimeColumnClass} 
@@ -109,6 +122,8 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 key={dayIndex}
                 calendar={calendar}
                 heigh={heighOfSlot}
+                slotMessage={slotMessage}
+                setSlotMessage={setSlotMessage}
                 />
               else
               return <DayColumn
@@ -120,6 +135,7 @@ export default function Week({ allDaysInMonth, allDaysLeftInMonth, allWeeksInMon
                 calendar={calendar}
                 />
             })}
+            
           </section>
           )
         })}

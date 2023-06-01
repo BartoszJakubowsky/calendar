@@ -2,7 +2,7 @@
 import classNames from "classnames";
 import Week from "./Week";
 
-export default function Month({calendar, date}) 
+export default function Month({calendar, date,  slotMessage, setSlotMessage}) 
 {
 
   console.log(calendar);
@@ -19,6 +19,9 @@ export default function Month({calendar, date})
       const year = parseInt(yearStr, 10);
       const daysInMonth = new Date(year, month + 1, 0).getDate();
       const currentDate = new Date();
+      currentDate.setHours(0);
+      currentDate.setMinutes(0);
+      currentDate.setSeconds(0);
       const currentYear = currentDate.getFullYear();
       const currentMonth = currentDate.getMonth();
       const currentDay = currentDate.getDate();
@@ -39,8 +42,12 @@ export default function Month({calendar, date})
           date: date
         };
 
+        if (calendar.bannedDays.includes(day.day))
+          continue;
+
         allDaysInMonth.push(day)
-        if (date > currentDate) 
+        currentDate.setHours(0, 0, 0, 0);
+        if (date.getTime() >= currentDate.getTime()) 
           allDaysLeftInMonth.push(day);
         else
           allDaysLeftInMonth.push(false)
@@ -66,32 +73,45 @@ export default function Month({calendar, date})
           day: DAYS_OF_WEEK[dayOfWeek],
           date: date
         };
+
+        if (calendar.bannedDays.includes(day.day))
+          continue;
+
         currentWeek.push(day);
-        if (date > currentDate) 
+        currentDate.setHours(0, 0, 0, 0);
+        if (date.getTime() >= currentDate.getTime()) 
         {
           currentWeekLeft.push(day);
         }
       }
-
-      if (currentWeek.length > 0) 
-      {
         allWeeksInMonth.push(currentWeek);
         allWeeksLeftInMonth.push(currentWeek);
-      }
+
       return {
         allDaysInMonth: allDaysInMonth,
         allDaysLeftInMonth: allDaysLeftInMonth,
         allWeeksInMonth: allWeeksInMonth.filter(subarray => subarray.length > 0),
-        allWeeksLeftInMonth: allWeeksLeftInMonth
+        allWeeksLeftInMonth: allWeeksLeftInMonth.filter(subarray => subarray.length > 0),
       };
     }
+
+
     const {allDaysInMonth, allDaysLeftInMonth, allWeeksInMonth, allWeeksLeftInMonth} = getDaysAndWeeksInMonth(date);
+
+    if (allWeeksLeftInMonth.length === 0)
+      return (
+        <div className={`w-full h-full flex justify-center items-start mt-[10%] text-sm md:text-base underline pointer-events-none`}>
+          <h3>Brak miesięcy do wyświetlenia</h3>
+        </div>
+      );
+
     return (
         <div className={`w-full h-full`}>
           {/* if padding will ever change remember to change padding in animated.div in MonthCarosuel to see the overflow x */}
-          <h3 className="flex justify-center items-center p-2 border-b-2 border-black font-semibold sticky top-10 bg-yellow-200">
+          <h3 className="flex justify-center items-center p-2 border-b-2 border-black font-semibold sticky top-10 bg-gray-100">
             {date}
           </h3>
+
           <div className="w-full h-[calc(100%_-_4.60rem)]">
           <Week 
             allDaysInMonth={allDaysInMonth} 
@@ -100,6 +120,8 @@ export default function Month({calendar, date})
             allWeeksLeftInMonth={allWeeksLeftInMonth} 
             calendar={calendar}
             date={date}
+            slotMessage={slotMessage}
+            setSlotMessage={setSlotMessage}
             />
             </div>
         </div>

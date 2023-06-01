@@ -3,14 +3,14 @@ import {useSprings, animated } from "react-spring";
 
 import Month from "./Month";
 
-export default function MonthCarosuel({calendar, displayedMonth, monthsCountForMonthCarousel}) 
+export default function MonthCarosuel({calendar, displayedMonth, monthsCountForMonthCarousel, slotMessage,setSlotMessage}) 
 {
 
     const {date} = calendar;
 
     const renderMonths = useMemo(()=>
     {
-      return date.map((month, index) => <Month key={index} calendar={calendar} date={date[index]}/>)
+      return date.map((month, index) => <Month key={index} calendar={calendar} date={date[index]}  slotMessage={slotMessage} setSlotMessage={setSlotMessage}/>)
     }, [])
 
     const [months, setMonths] = useState(renderMonths);

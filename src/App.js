@@ -86,7 +86,7 @@ function App()
                                           />}
                               <Route path='/admin' element={suspenseElement(<AdminPage/>)}/>   
                               </>}
-                              <Route path='/ss'element={<NotFoundPage replace/>}/>
+                              <Route path='/'element={<NotFoundPage replace/>}/>
                               
                         </Routes>
                   </AnimatePresence>
