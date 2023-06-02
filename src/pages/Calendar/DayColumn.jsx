@@ -79,7 +79,7 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
                     key={index} 
                     className={`relative flex flex-row w-full h-full border-black`}>
                         {showSlotMessage}
-s                        {/* slots in cells / slots holder */}
+                        {/* slots in cells / slots holder */}
                         {slots.map(slot =>
                         {   
                             let spaces = [];
