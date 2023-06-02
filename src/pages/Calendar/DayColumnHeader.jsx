@@ -15,7 +15,7 @@ export default function DayColumnHeader({dayDate, day, slots, isBlank, slotMessa
             return;
     
       pressTimer = setTimeout(() => {
-        setSlotMessage({ dayDate, timeArr, calendar})
+        setSlotMessage({ dayDate, timeArr})
       }, 1000);
     };
   

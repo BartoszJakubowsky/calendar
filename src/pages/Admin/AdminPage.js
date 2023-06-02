@@ -106,7 +106,7 @@ export default function AdminPage()
       </m.div>
     )
     return (<>
-    <Menu className='flex' theme='bg-amber-300'/>
+    <Menu className='flex' theme={'bg-slate-400'}/>
     <Confirm message={confirm.message} submit={confirm.submit} additional={confirm.additional} handleSubmit={confirm.handleSubmit}/>
     <m.div className="flex w-screen h-screen overflow-hidden  justify-center items-start" variants={variantsForAdminPage} initial='hidden' animate='enter' transition={{type: 'linear'}} exit='exit'>
     <Message message={message}/>

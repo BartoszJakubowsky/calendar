@@ -7,7 +7,6 @@ export default function MonthCarosuel({calendar, displayedMonth, monthsCountForM
 {
 
     const {date} = calendar;
-
     const renderMonths = useMemo(()=>
     {
       return date.map((month, index) => <Month key={index} calendar={calendar} date={date[index]}  slotMessage={slotMessage} setSlotMessage={setSlotMessage}/>)

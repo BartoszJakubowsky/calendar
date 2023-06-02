@@ -1,20 +1,21 @@
 import AddCalendarMessageSettings from "./AddCalendarMessageSettings";
 import {motion as m} from 'framer-motion';
 import { useSprings, animated } from "react-spring";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import MenageCalendarMessageSettings from "./MenageCalendarMessageSettings";
 import { Socket } from "socket.io-client";
 
-export default function CalendarMessageSettings({slotMessage, setSlotMessage}) 
+export default function CalendarMessageSettings({slotMessage, setSlotMessage, calendar}) 
 {
 
 
     //messagestructure
     //{dayDate: '...', time: [...], }
     const [displayedFrom, setDisplayedFrom] = useState(0); 
-    const [thisSlotMessage, setThisSlotMessage] = useState(false);
-    const {timeArr, dayDate, calendar} = slotMessage;
+    const [globalSlotMessage, setGlobalSlotMessage] = useState(false);
+    const {timeArr, dayDate} = slotMessage;
+    
 
     // if (timeArr && _dayDate)
     // {
@@ -31,27 +32,37 @@ export default function CalendarMessageSettings({slotMessage, setSlotMessage})
     const handleSetSlotMessage = (slotMessage) =>
     {
         if (!slotMessage)
-        setThisSlotMessage(false);
+        {
+            setGlobalSlotMessage(false);
+        }
         else
         {
-            setThisSlotMessage(slotMessage);
-            setDisplayedFrom(1)
-
+            setGlobalSlotMessage(slotMessage);
         }
-
+            setDisplayedFrom(1)
     }
 
-    const formToShow = [
-    <MenageCalendarMessageSettings timeArr={timeArr} dayDate={dayDate} closeModal={setSlotMessage} handleSetSlotMessage={handleSetSlotMessage} setDisplayedFrom={setDisplayedFrom} calendar={calendar} />, 
-    <AddCalendarMessageSettings timeArr={timeArr} dayDate={dayDate} setDisplayedFrom={setDisplayedFrom} calendar={calendar} slotMessage={thisSlotMessage}/>]
 
+    const formToShow = [
+    <MenageCalendarMessageSettings 
+    timeArr={timeArr} 
+    dayDate={dayDate} 
+    closeModal={setSlotMessage} 
+    handleSetSlotMessage={handleSetSlotMessage} 
+    setDisplayedFrom={setDisplayedFrom} 
+    calendar={calendar} />, 
+    
+    <AddCalendarMessageSettings 
+    timeArr={timeArr} 
+    dayDate={dayDate} 
+    setDisplayedFrom={setDisplayedFrom} 
+    calendar={calendar} 
+    globalSlotMessage={globalSlotMessage} 
+    setGlobalSlotMessage={setGlobalSlotMessage}
+    displayedFrom={displayedFrom}
+    />]
 
     const formCount = formToShow.length;
-
-
-    
-
- 
 
     const springs = useSprings(
         formCount,
@@ -65,6 +76,8 @@ export default function CalendarMessageSettings({slotMessage, setSlotMessage})
         zIndex: index === displayedFrom ? 1 : 0
         }))
     );
+
+
     if (!slotMessage)
     return false;
 

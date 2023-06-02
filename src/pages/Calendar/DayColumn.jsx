@@ -2,17 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import useSlots from '../../hooks/useSlots';
 import DayColumnHeader from './DayColumnHeader';
 import DaySlot from './DaySlot';
+import CalendarColumnMessageSlot from './CalendarColumnMessageSlot';
 import classNames from 'classnames';
 
 export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIndex, dayDate, calendar, heigh,  slotMessage, setSlotMessage,...rest}) 
 {
-    const {_id, name, slots, records} = calendar
+    const {_id, name, slots, records, slotMessages} = calendar
     const {handleRecords} = useSlots();
     const calendarID = _id;
 
     
-
-
 
 
 
@@ -47,6 +46,9 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
     if (dayDate)
         _dayDate = convertDate(dayDate);
 
+    const filteredMessages = slotMessages.filter(message => message.dayDate === _dayDate);
+
+    
     
     const daySlots = ()=>
     {   
@@ -60,17 +62,30 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
             <>
             {timeArr.map((time, index) =>
             {   
+                const slotMessage = filteredMessages.find(message => message.selectedTimes.includes(time));
+
+                let showSlotMessage = false;
+                if (slotMessage)
+                {
+                    const key = slotMessages.thisSlotMessage + time;
+                    showSlotMessage =  <CalendarColumnMessageSlot key={key} slotMessage={slotMessage} time={time}/>
+
+                }
 
 
                 //cell day
                 return (
                 <div
                     key={index} 
-                    className={`flex flex-row w-full h-full border-black`}>
-                        {/* slots in cells / slots holder */}
+                    className={`relative flex flex-row w-full h-full border-black`}>
+                        {showSlotMessage}
+s                        {/* slots in cells / slots holder */}
                         {slots.map(slot =>
                         {   
                             let spaces = [];
+
+                            // if (showSlotMessage)
+                            // spaces.push(showSlotMessage)
 
                             for (let i = 0; i < slot.space; i++) 
                             {
@@ -94,12 +109,12 @@ export default function DayColumn({day, isActive, isBlank, timeArr, date, weekIn
                                     key={key}
                                     dayDate={_dayDate}
                                     _thisSlot={thisSlot}
-                                    
                                     />
                                 )
                             }
+
                         //slot holder -> day
-                        const slotHolderClassName = classNames(`flex flex-col w-full md:h-full order-${slot.order} overflow-hidden ${heigh.toString()}`)
+                        const slotHolderClassName = classNames(`relative flex flex-col w-full md:h-full order-${slot.order} overflow-hidden ${heigh.toString()}`)
                         return <div key={slot.name} className={slotHolderClassName}>
                                 {spaces}
                                 </div>

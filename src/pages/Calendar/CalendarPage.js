@@ -1,5 +1,5 @@
 import { useState , useMemo, useEffect} from "react";
-import {motion as m} from 'framer-motion';
+import {LayoutGroupContext, motion as m} from 'framer-motion';
 import { useParams } from "react-router-dom";
 
 import useCalendars from '../../hooks/useCalendars';
@@ -34,9 +34,14 @@ const confirmCalendar = useMemo(()=>
     }
   }
   return false;
-}, [isFetching])
+}, [isFetching, calendars])
 
 const [calendar, setCalendar] = useState(confirmCalendar);
+
+useEffect(()=>
+{
+  setCalendar(confirmCalendar);
+},[calendars])
 
 useEffect(()=>
 { 
@@ -84,7 +89,7 @@ if (!calendar)
           <Confirm message={confirm.message} submit={confirm.submit} handleSubmit={confirm.handleSubmit}/>
           <Message message={message} theme='bg-purple-200'/>
           <Menu calendarName={name} theme='bg-slate-400'/>
-          <CalendarMessageSettings  slotMessage={slotMessage} setSlotMessage={setSlotMessage}/>
+          <CalendarMessageSettings  slotMessage={slotMessage} setSlotMessage={setSlotMessage} calendar={calendar}/>
             <div className={`mt-4 w-[95%] h-[90%] md:mt-6 md:max-w-[90%] md:[90% md:mx-auto rounded-sm text-xs  border-2 border-black overflow-hidden`}>
               <MonthNavbar displayedMonth={displayedMonth} setDisplayedMonth={setDisplayedMonth} monthsCountForMonthCarousel={monthsCountForMonthCarousel}/>      
               <MonthCarosuel calendar={calendar} monthsCountForMonthCarousel={monthsCountForMonthCarousel} displayedMonth={displayedMonth} slotMessage={slotMessage} setSlotMessage={setSlotMessage}/>

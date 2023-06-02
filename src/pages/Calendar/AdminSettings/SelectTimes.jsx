@@ -1,8 +1,11 @@
 import classNames from "classnames";
-export default function SelectTimes({selectedTimes, setSelectedTimes, timeArr}) 
+export default function SelectTimes({selectedTimes, setSelectedTimes, timeArr, setTimesError, selectedTimesError}) 
 {
     const handleDayClick = index =>
     {
+        if (selectedTimesError)
+            setTimesError(false);
+
         const chosedTime = timeArr[index].toUpperCase();
         if (selectedTimes.includes(chosedTime))
             setSelectedTimes(selectedTimes.filter(time => {return time !== chosedTime}))

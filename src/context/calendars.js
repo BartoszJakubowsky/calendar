@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Message from '../components/ui/Message';
+import { visualElementStore } from "framer-motion";
 const CalendarsContext = createContext();
 
 function CalendarsProvider({children, url})
@@ -99,15 +100,15 @@ const updateCalendar = async (oldCalendar, newCalendar) =>
     // .then(response => response.json())
     newCalendar._id = oldCalendar._id;
 
-    console.log(newCalendar);
     axios.put(`/calendar`, newCalendar)
     .then(respond => setCalendars(calendars.map((calendar, index)=>
     {
+
         if(calendar._id === newCalendar._id && respond)
         {
-            return newCalendar;
+            return {...newCalendar};
         }
-        return calendar
+        return {...calendar}
     })))
     .catch(error => console.error(error));
 }

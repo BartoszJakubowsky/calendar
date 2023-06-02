@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 export default function User({item, setMessage, updateAll}) 
 {
@@ -13,7 +13,13 @@ export default function User({item, setMessage, updateAll})
     const [slots, setSlots] = useState(item.records || []);
     
     const [activeUser, setActiveUser] = useState(false);
-
+    
+    useEffect(()=>
+    {
+        setFullName(item.name)
+        setMail(item.mail);
+        setPermissions(item.permissions);
+    },[item])
 
 
 

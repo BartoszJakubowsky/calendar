@@ -1,6 +1,6 @@
 import React, {lazy,Suspense, useEffect} from 'react';
 import { Route, Routes, useLocation, useNavigate, Navigate} from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, visualElementStore } from 'framer-motion';
 
 import useCalendars from './hooks/useCalendars';
 import useAuthentication from './hooks/useAuthentication';
@@ -28,7 +28,13 @@ function App()
             {
                   if (location.pathname === '/logowanie')
                         navigate('/', { replace: true });
+                  else
+                  {
+                        navigate(location.pathname)
+                  }
+                  
             }
+
       }, [isAuthenticated])
 
       const suspenseElement = (child) =>
