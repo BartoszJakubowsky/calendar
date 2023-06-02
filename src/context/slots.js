@@ -16,8 +16,8 @@ function SlotsProvider({children})
     )
 
 
-    const socket = io.connect(window.location.origin);
-    // const socket = io.connect('http://localhost:3002/');
+    // const socket = io.connect(window.location.origin);
+    const socket = io.connect('http://localhost:3002/');
         
     socket.on("connected", (data) => 
     {

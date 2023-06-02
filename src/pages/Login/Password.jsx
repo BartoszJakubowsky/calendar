@@ -89,7 +89,7 @@ export default function Password({mail, setMail, moveBack})
 
       
     return (
-        <div className="w-11/12 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md overflow-hidden">
+        <div className="w-11/12 md:w-[30rem] p-6 m-auto bg-white rounded-md shadow-md overflow-hidden">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zresetuj hasło
             </h1>

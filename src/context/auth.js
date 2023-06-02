@@ -1,6 +1,7 @@
 import { createContext, useMemo, useState } from 'react';
 import axios from 'axios'
 import jwt_decode from 'jwt-decode';
+import { useLocation } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -10,8 +11,11 @@ const AuthContext = createContext();
 
         const [isAuthenticated, setAuthenticate] = useState(null);
         const [user, setUser] = useState(false);
-        // axios.defaults.baseURL = 'http://localhost:3002';
-        axios.defaults.baseURL = window.location.origin;
+
+        const location = useLocation();
+        console.log(location.pathname);
+        axios.defaults.baseURL = 'http://localhost:3002';
+        // axios.defaults.baseURL = window.location.origin;
         axios.interceptors.request.use(
             config => {
               const token = localStorage.getItem('token');

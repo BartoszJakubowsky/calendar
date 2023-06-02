@@ -128,7 +128,7 @@ export default function Login({mail, setMail, move})
 
       
     return (
-        <div className="w-11/12 md:w-1/2 p-6 m-auto bg-white rounded-md shadow-md">
+        <div className="w-11/12 md:w-[30rem] p-6 m-auto bg-white rounded-md shadow-md">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zaloguj się
             </h1>

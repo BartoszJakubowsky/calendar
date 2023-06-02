@@ -127,7 +127,7 @@ export default function Register({mail, setMail, moveBack})
 
       
     return (
-        <div className=" w-11/12 md:w-1/2 px-6 py-10 m-auto bg-white rounded-md shadow-md">
+        <div className=" w-11/12 md:w-[30rem] px-6 py-10 m-auto bg-white rounded-md shadow-md">
             <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                Zarejestruj się
             </h1>

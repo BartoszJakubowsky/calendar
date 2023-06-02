@@ -21,7 +21,7 @@ function App()
       const formsPaths = ['/logowanie', '/haslo', '/rejestracja'];
       const location = useLocation();
       const navigate = useNavigate();
-
+      console.log(location.pathname);
       useEffect(()=>
       {
             if (isAuthenticated)
